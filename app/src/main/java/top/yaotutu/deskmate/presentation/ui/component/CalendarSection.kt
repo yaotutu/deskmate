@@ -11,15 +11,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import java.util.Calendar
 
 @Composable
@@ -33,8 +32,7 @@ fun CalendarSection(
         // 月份标题
         Text(
             text = "${month + 1}月 $year",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold,
+            style = MaterialTheme.typography.headlineSmall,
             color = Color.Black,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
@@ -50,7 +48,7 @@ fun CalendarSection(
             listOf("日", "一", "二", "三", "四", "五", "六").forEach { day ->
                 Text(
                     text = day,
-                    fontSize = 14.sp,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = Color(0xFF888888),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f)
@@ -60,7 +58,7 @@ fun CalendarSection(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // 日历格子
+        // 日历格子 - 显示完整月份
         val calendar = Calendar.getInstance().apply {
             set(Calendar.YEAR, year)
             set(Calendar.MONTH, month)
@@ -100,7 +98,7 @@ fun CalendarSection(
         // 渲染日历
         weeks.forEachIndexed { index, week ->
             if (index > 0) {
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(6.dp))
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -111,7 +109,7 @@ fun CalendarSection(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
-                            .padding(3.dp),
+                            .padding(1.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         if (day != null) {
@@ -121,12 +119,12 @@ fun CalendarSection(
                                         color = if (day == currentDay) Color(0xFF2196F3) else Color.Transparent,
                                         shape = CircleShape
                                     )
-                                    .padding(6.dp),
+                                    .padding(4.dp),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
                                     text = day.toString(),
-                                    fontSize = 14.sp,
+                                    style = MaterialTheme.typography.bodySmall,
                                     color = if (day == currentDay) Color.White else Color.Black,
                                     textAlign = TextAlign.Center
                                 )

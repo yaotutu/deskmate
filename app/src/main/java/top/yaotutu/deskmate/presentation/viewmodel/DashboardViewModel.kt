@@ -47,12 +47,12 @@ class DashboardViewModel : ViewModel() {
             notifications = listOf(
                 Notification(
                     id = "1",
-                    sender = "来自 John 的消息",
+                    sender = "John",
                     message = "在路上了,很快就到!"
                 ),
                 Notification(
                     id = "2",
-                    sender = "来自 Lisa Chen 的邮件",
+                    sender = "Lisa Chen",
                     message = "下午2点的营销会议"
                 )
             ),

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -21,9 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import top.yaotutu.deskmate.R
 import top.yaotutu.deskmate.presentation.ui.component.CalendarSection
@@ -67,8 +66,7 @@ fun DashboardScreen(
                     // 通知标题
                     Text(
                         text = "通知",
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.SemiBold,
+                        style = MaterialTheme.typography.headlineLarge,
                         color = Color.Black
                     )
 
@@ -89,7 +87,7 @@ fun DashboardScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(280.dp)
+                            .height(200.dp)
                             .background(
                                 color = Color.LightGray,
                                 shape = RoundedCornerShape(12.dp)
@@ -99,12 +97,12 @@ fun DashboardScreen(
                         // 这里使用占位符,实际应该加载图片
                         Text(
                             text = "风景图片",
-                            color = Color.Gray,
-                            fontSize = 18.sp
+                            style = MaterialTheme.typography.labelMedium,
+                            color = Color.Gray
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(40.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
 
                     // 新闻
                     NewsSection(newsItems = uiState.newsItems)
@@ -121,7 +119,7 @@ fun DashboardScreen(
                         }
                     )
 
-                    Spacer(modifier = Modifier.height(40.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
 
                     CalendarSection(
                         year = uiState.currentYear,

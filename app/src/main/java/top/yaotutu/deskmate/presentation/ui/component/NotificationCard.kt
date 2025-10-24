@@ -5,13 +5,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.data.model.Notification
 
 @Composable
@@ -30,13 +29,12 @@ fun NotificationCard(
     ) {
         Text(
             text = notification.sender,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.SemiBold,
+            style = MaterialTheme.typography.titleMedium,
             color = Color.Black
         )
         Text(
             text = notification.message,
-            fontSize = 15.sp,
+            style = MaterialTheme.typography.bodyLarge,
             color = Color(0xFF666666),
             modifier = Modifier.padding(top = 6.dp)
         )

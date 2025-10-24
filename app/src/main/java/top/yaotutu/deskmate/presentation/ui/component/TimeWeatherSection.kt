@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.R
@@ -30,10 +29,8 @@ fun TimeWeatherSection(
         // 时间
         Text(
             text = time,
-            fontSize = 96.sp,
-            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.displayLarge,
             color = Color.Black,
-            lineHeight = 96.sp,
             maxLines = 1
         )
 
@@ -42,15 +39,14 @@ fun TimeWeatherSection(
         // 日期
         Text(
             text = date,
-            fontSize = 22.sp,
-            color = Color.Black,
-            fontWeight = FontWeight.Normal
+            style = MaterialTheme.typography.headlineMedium,
+            color = Color.Black
         )
 
         // 农历
         Text(
             text = lunarDate,
-            fontSize = 20.sp,
+            style = MaterialTheme.typography.headlineSmall,
             color = Color(0xFF666666)
         )
 
@@ -61,13 +57,12 @@ fun TimeWeatherSection(
             // 使用文本表示太阳图标
             Text(
                 text = "☀",
-                fontSize = 56.sp,
+                style = MaterialTheme.typography.displayMedium.copy(fontSize = 56.sp),
                 color = Color(0xFFFFB900)
             )
             Text(
                 text = " $temperature°C",
-                fontSize = 52.sp,
-                fontWeight = FontWeight.Normal,
+                style = MaterialTheme.typography.displayMedium,
                 color = Color.Black
             )
         }
