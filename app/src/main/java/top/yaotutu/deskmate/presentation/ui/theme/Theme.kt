@@ -1,4 +1,4 @@
-package top.yaotutu.deskmate.ui.theme
+package top.yaotutu.deskmate.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

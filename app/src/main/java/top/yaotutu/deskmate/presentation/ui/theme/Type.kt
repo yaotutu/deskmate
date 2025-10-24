@@ -1,4 +1,4 @@
-package top.yaotutu.deskmate.ui.theme
+package top.yaotutu.deskmate.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
