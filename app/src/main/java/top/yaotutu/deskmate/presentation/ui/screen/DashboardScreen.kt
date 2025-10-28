@@ -1,35 +1,25 @@
 package top.yaotutu.deskmate.presentation.ui.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import top.yaotutu.deskmate.R
-import top.yaotutu.deskmate.presentation.ui.component.CalendarSection
-import top.yaotutu.deskmate.presentation.ui.component.NewsSection
-import top.yaotutu.deskmate.presentation.ui.component.NotificationCard
-import top.yaotutu.deskmate.presentation.ui.component.TimeWeatherSection
-import top.yaotutu.deskmate.presentation.ui.component.TodoSection
+import top.yaotutu.deskmate.presentation.ui.component.*
 import top.yaotutu.deskmate.presentation.viewmodel.DashboardViewModel
 
 @Composable
@@ -42,91 +32,75 @@ fun DashboardScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFFF8F8F8))
-            .padding(24.dp)
+            .background(Color(0xFF000000))  // Metro 风格：纯黑背景
+            .padding(8.dp)
     ) {
-        // 主要内容区域 - 三栏布局
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.spacedBy(24.dp)
-        ) {
-                // 左侧栏 - 时间、天气、通知
-                Column(
-                    modifier = Modifier.weight(1f)
+        // Windows Phone 动态瓷砖布局 - 单屏布局
+        TileGridContainer(modifier = Modifier.fillMaxSize()) { baseCellSize, dynamicGap, columns ->
+            // 使用 CompositionLocal 提供网格参数，简化组件使用
+            ProvideTileGrid(baseCellSize = baseCellSize, dynamicGap = dynamicGap, columns = columns) {
+                // 使用 Row + horizontalScroll 实现整体横向滚动
+                Row(
+                    modifier = Modifier.horizontalScroll(rememberScrollState())
                 ) {
-                    TimeWeatherSection(
-                        time = uiState.currentTime,
-                        date = uiState.currentDate,
-                        lunarDate = uiState.lunarDate,
-                        temperature = uiState.temperature
-                    )
-
-                    Spacer(modifier = Modifier.height(32.dp))
-
-                    // 通知标题
-                    Text(
-                        text = "通知",
-                        style = MaterialTheme.typography.headlineLarge,
-                        color = Color.Black
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    // 通知列表
-                    uiState.notifications.forEach { notification ->
-                        NotificationCard(notification = notification)
-                        Spacer(modifier = Modifier.height(16.dp))
-                    }
-                }
-
-                // 中间栏 - 图片和新闻
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    // 图片
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                            .background(
-                                color = Color.LightGray,
-                                shape = RoundedCornerShape(12.dp)
-                            ),
-                        contentAlignment = Alignment.Center
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(dynamicGap)
                     ) {
-                        // 这里使用占位符,实际应该加载图片
-                        Text(
-                            text = "风景图片",
-                            style = MaterialTheme.typography.labelMedium,
-                            color = Color.Gray
-                        )
-                    }
+                        // 第一行：时间 + 天气
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(dynamicGap)
+                        ) {
+                            // 时钟瓷砖 - 错峰动画索引 0
+                            StaggerEnterAnimation(index = 0) {
+                                ClockTile(
+                                    time = uiState.currentTime,
+                                    date = uiState.currentDate,
+                                    lunarDate = uiState.lunarDate
+                                )
+                            }
 
-                    Spacer(modifier = Modifier.height(32.dp))
-
-                    // 新闻
-                    NewsSection(newsItems = uiState.newsItems)
-                }
-
-                // 右侧栏 - 待办和日历
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    TodoSection(
-                        todoItems = uiState.todoItems,
-                        onTodoToggle = { todoId ->
-                            viewModel.toggleTodoItem(todoId)
+                            // 天气瓷砖 - 错峰动画索引 1
+                            StaggerEnterAnimation(index = 1) {
+                                WeatherTile(
+                                    temperature = uiState.temperature,
+                                    icon = "☀"
+                                )
+                            }
                         }
-                    )
 
-                    Spacer(modifier = Modifier.height(32.dp))
+                        // 第二行：日历 + 待办 + 新闻
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(dynamicGap)
+                        ) {
+                            // 日历瓷砖 - 错峰动画索引 2
+                            StaggerEnterAnimation(index = 2) {
+                                CalendarTile(
+                                    month = "十月",
+                                    day = uiState.currentDay
+                                )
+                            }
 
-                    CalendarSection(
-                        year = uiState.currentYear,
-                        month = uiState.currentMonth,
-                        currentDay = uiState.currentDay
-                    )
+                            // 待办瓷砖 - 错峰动画索引 3
+                            StaggerEnterAnimation(index = 3) {
+                                TodoTile(
+                                    title = "待办",
+                                    items = listOf("买菜", "打电话给水管工")
+                                )
+                            }
+
+                            // 新闻瓷砖 - 错峰动画索引 4
+                            StaggerEnterAnimation(index = 4) {
+                                NewsTile(
+                                    newsItems = listOf(
+                                        "头条" to "科技板块飙升\n全球市场反弹",
+                                        "国际" to "可再生能源\n技术新突破"
+                                    )
+                                )
+                            }
+                        }
+                    }
                 }
             }
+        }
     }
 }
