@@ -126,3 +126,62 @@ fun Tile(
         }
     }
 }
+
+/**
+ * 瓷砖容器 - 支持任意尺寸（用于变体系统）
+ *
+ * 与上面的 Tile 函数类似，但支持直接传递列数和行数
+ *
+ * @param columns 瓷砖占用的列数
+ * @param rows 瓷砖占用的行数
+ * @param backgroundColor 背景颜色
+ * @param baseCellSize 基础格子尺寸
+ * @param dynamicGap 动态间距
+ * @param onClick 点击回调
+ * @param clickEffect 点击效果
+ * @param contentPadding 内容内边距（null 时根据瓷砖尺寸自动选择）
+ * @param modifier 修饰符
+ * @param content 内容
+ */
+@Composable
+fun Tile(
+    columns: Int,
+    rows: Int,
+    backgroundColor: Color,
+    baseCellSize: Dp,
+    dynamicGap: Dp,
+    onClick: () -> Unit = {},
+    clickEffect: TileClickEffect = TileClickEffect.PRESS_SCALE,
+    contentPadding: Dp? = null,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    // 计算瓷砖实际尺寸
+    val tileWidth = TileGrid.calculateTileWidth(baseCellSize, columns, dynamicGap)
+    val tileHeight = TileGrid.calculateTileHeight(baseCellSize, rows, dynamicGap)
+
+    // 根据瓷砖尺寸自动选择内边距
+    val totalCells = columns * rows
+    val padding = contentPadding ?: when {
+        totalCells <= 2 -> 12.dp      // 小瓷砖：紧凑内边距
+        totalCells <= 8 -> 16.dp      // 中等瓷砖：标准内边距
+        else -> 20.dp                 // 大瓷砖：宽松内边距
+    }
+
+    TileWithInteraction(
+        effect = clickEffect,
+        onTap = onClick,
+        modifier = modifier
+    ) {
+        Box(
+            modifier = Modifier
+                .width(tileWidth)
+                .height(tileHeight)
+                .clip(RectangleShape)  // Metro 风格：直角瓷砖
+                .background(backgroundColor)
+                .padding(padding)
+        ) {
+            content()
+        }
+    }
+}

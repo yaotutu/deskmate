@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import top.yaotutu.deskmate.presentation.ui.component.tiles.registerAllTileVariants
 import top.yaotutu.deskmate.presentation.ui.screen.DashboardScreen
 import top.yaotutu.deskmate.presentation.ui.theme.DeskmateTheme
 
@@ -16,6 +17,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // 初始化瓷砖变体注册表
+        registerAllTileVariants()
 
         // 隐藏系统导航栏和状态栏
         WindowCompat.setDecorFitsSystemWindows(window, false)

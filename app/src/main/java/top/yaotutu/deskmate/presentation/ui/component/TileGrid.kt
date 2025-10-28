@@ -151,12 +151,12 @@ object TileGrid {
  * 并通过回调传递给子组件
  *
  * @param modifier 修饰符
- * @param content 接收网格参数的内容 lambda
+ * @param content 接收网格参数的内容 lambda（增加了 screenHeight 参数）
  */
 @Composable
 fun TileGridContainer(
     modifier: Modifier = Modifier,
-    content: @Composable (baseCellSize: Dp, dynamicGap: Dp, columns: Int) -> Unit
+    content: @Composable (baseCellSize: Dp, dynamicGap: Dp, columns: Int, screenHeight: Dp) -> Unit
 ) {
     BoxWithConstraints(modifier = modifier) {
         // 获取屏幕尺寸
@@ -172,7 +172,7 @@ fun TileGridContainer(
         // 步骤3: 计算动态间距（填满宽度）
         val dynamicGap = TileGrid.calculateDynamicGap(screenWidth, columns, baseCellSize)
 
-        // 传递参数给子组件
-        content(baseCellSize, dynamicGap, columns)
+        // 传递参数给子组件（包含实际屏幕高度）
+        content(baseCellSize, dynamicGap, columns, screenHeight)
     }
 }

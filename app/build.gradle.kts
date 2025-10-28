@@ -67,7 +67,7 @@ dependencies {
     // implementation(libs.retrofit.converter.kotlinx.serialization)
     // implementation(libs.okhttp)
     // implementation(libs.okhttp.logging.interceptor)
-    // implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.serialization.json)
 
     // Database (可选，按需使用)
     // implementation(libs.androidx.room.runtime)

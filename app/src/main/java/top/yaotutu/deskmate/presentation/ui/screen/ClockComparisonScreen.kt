@@ -48,7 +48,7 @@ fun ClockComparisonScreen(
             .background(Color(0xFF1E1E1E))
             .padding(8.dp)
     ) {
-        TileGridContainer(modifier = Modifier.fillMaxSize()) { baseCellSize, dynamicGap, columns ->
+        TileGridContainer(modifier = Modifier.fillMaxSize()) { baseCellSize, dynamicGap, columns, _ ->
             ProvideTileGrid(baseCellSize = baseCellSize, dynamicGap = dynamicGap, columns = columns) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
