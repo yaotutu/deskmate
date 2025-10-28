@@ -11,10 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import top.yaotutu.deskmate.presentation.ui.component.AnimationType
-import top.yaotutu.deskmate.presentation.ui.component.BaseTile
-import top.yaotutu.deskmate.presentation.ui.component.FlipContent
-import top.yaotutu.deskmate.presentation.ui.component.TileSpec
+import top.yaotutu.deskmate.presentation.ui.component.base.AnimationType
+import top.yaotutu.deskmate.presentation.ui.component.base.BaseTile
+import top.yaotutu.deskmate.presentation.ui.component.base.FlipContent
+import top.yaotutu.deskmate.presentation.ui.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.ui.theme.MetroTileColors
 
 /**

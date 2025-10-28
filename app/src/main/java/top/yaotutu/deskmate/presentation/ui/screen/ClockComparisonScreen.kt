@@ -11,7 +11,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
-import top.yaotutu.deskmate.presentation.ui.component.*
+import top.yaotutu.deskmate.presentation.ui.component.base.TileGridContainer
+import top.yaotutu.deskmate.presentation.ui.component.legacy.ProvideTileGrid
+import top.yaotutu.deskmate.presentation.ui.component.legacy.ClockTile
+import top.yaotutu.deskmate.presentation.ui.component.legacy.EnhancedClockTile
+import top.yaotutu.deskmate.presentation.ui.component.base.TileGrid
 import java.text.SimpleDateFormat
 import java.util.*
 

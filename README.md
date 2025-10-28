@@ -47,6 +47,17 @@ app/src/main/java/top/yaotutu/deskmate/
 └── utils/                 # 工具类
 ```
 
+
+| variant 值  | 对应组件              | 尺寸  | 说明   |
+  |------------|-------------------|-----|------|
+| "simple"   | ClockSimpleTile   | 1×1 | 简洁时钟 |
+| "standard" | ClockStandardTile | 2×2 | 标准时钟 |
+| "detailed" | ClockDetailedTile | 4×2 | 详细时钟 |
+| "large"    | ClockLargeTile    | 4×4 | 超大时钟 |
+| "tall"     | ClockTallTile     | 2×4 | 垂直时钟 |
+| "compact"  | ClockCompactTile  | 2×1 | 紧凑时钟 |
+
+
 ## 开始使用
 
 ### 环境要求

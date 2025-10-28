@@ -1,116 +1,68 @@
 {
+  "comment": "时钟组件尺寸展示 - 演示所有时钟变体",
   "tiles": [
     {
       "type": "clock",
-      "variant": "simple",
-      "columns": 1,
-      "rows": 1,
-      "comment": "第1列开始: simple 1x1"
-    },
-    {
-      "type": "clock",
-      "variant": "simple",
-      "columns": 1,
-      "rows": 1,
-      "comment": "第1列: + simple 1x1, 总高2"
+      "variant": "tall",
+      "columns": 2,
+      "rows": 4,
+      "comment": "第2列: 垂直时钟 2×4 (脉冲动画)"
     },
     {
       "type": "clock",
       "variant": "standard",
       "columns": 2,
       "rows": 2,
-      "comment": "第1列: + standard 2x2, 总高4, 列宽扩展到2"
+      "comment": "第3列: 标准时钟 2×2 (无动画)"
     },
     {
       "type": "clock",
       "variant": "simple",
       "columns": 1,
       "rows": 1,
-      "comment": "第2列: 高度超限, 新列, simple 1x1"
+      "comment": "第4列: 简洁时钟 1×1 (无动画)"
     },
     {
       "type": "clock",
       "variant": "simple",
       "columns": 1,
       "rows": 1,
-      "comment": "第2列: + simple 1x1, 总高2"
-    },
-    {
-      "type": "clock",
-      "variant": "simple",
-      "columns": 1,
-      "rows": 1,
-      "comment": "第2列: + simple 1x1, 总高3"
-    },
-    {
-      "type": "clock",
-      "variant": "simple",
-      "columns": 1,
-      "rows": 1,
-      "comment": "第2列: + simple 1x1, 总高4"
-    },
-    {
-      "type": "clock",
-      "variant": "detailed",
-      "columns": 4,
-      "rows": 2,
-      "comment": "第3列: 高度超限, 新列, detailed 4x2"
+      "comment": "第4列: 简洁时钟 1×1"
     },
     {
       "type": "clock",
       "variant": "standard",
       "columns": 2,
       "rows": 2,
-      "comment": "第3列: + standard 2x2, 总高4, 列宽保持4"
+      "comment": "第4列: 标准时钟 2×2"
     },
     {
-      "type": "weather",
-      "variant": "default",
+      "type": "clock",
+      "variant": "compact",
       "columns": 2,
-      "rows": 2,
-      "comment": "第4列: 高度超限, 新列, weather 2x2"
+      "rows": 1,
+      "comment": "第5列: 紧凑时钟 2×1 (无动画)"
     },
     {
-      "type": "calendar",
-      "variant": "default",
+      "type": "clock",
+      "variant": "compact",
       "columns": 2,
-      "rows": 2,
-      "comment": "第4列: + calendar 2x2, 总高4"
+      "rows": 1,
+      "comment": "第5列: 紧凑时钟 2×1"
     },
     {
       "type": "clock",
       "variant": "simple",
       "columns": 1,
       "rows": 1,
-      "comment": "第5列: 高度超限, 新列, simple 1x1"
-    },
-    {
-      "type": "clock",
-      "variant": "standard",
-      "columns": 2,
-      "rows": 2,
-      "comment": "第5列: + standard 2x2, 总高3, 列宽扩展到2"
+      "comment": "第5列: 简洁时钟 1×1"
     },
     {
       "type": "clock",
       "variant": "simple",
       "columns": 1,
       "rows": 1,
-      "comment": "第5列: + simple 1x1, 总高4"
-    },
-    {
-      "type": "todo",
-      "variant": "default",
-      "columns": 2,
-      "rows": 3,
-      "comment": "第6列: 高度超限, 新列, todo 2x3"
-    },
-    {
-      "type": "clock",
-      "variant": "simple",
-      "columns": 1,
-      "rows": 1,
-      "comment": "第6列: + simple 1x1, 总高4"
+      "comment": "第5列: 简洁时钟 1×1"
     }
   ]
 }

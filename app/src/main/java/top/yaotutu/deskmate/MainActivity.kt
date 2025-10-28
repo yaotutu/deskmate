@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import top.yaotutu.deskmate.presentation.ui.component.tiles.registerAllTileVariants
+import top.yaotutu.deskmate.presentation.ui.component.factory.registerAllTileVariants
 import top.yaotutu.deskmate.presentation.ui.screen.DashboardScreen
 import top.yaotutu.deskmate.presentation.ui.theme.DeskmateTheme
 

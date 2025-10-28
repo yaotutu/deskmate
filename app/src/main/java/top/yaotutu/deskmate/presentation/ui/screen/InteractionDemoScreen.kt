@@ -11,7 +11,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import top.yaotutu.deskmate.presentation.ui.component.*
+import top.yaotutu.deskmate.presentation.ui.component.base.TileGridContainer
+import top.yaotutu.deskmate.presentation.ui.component.legacy.ProvideTileGrid
+import top.yaotutu.deskmate.presentation.ui.component.interaction.TileClickEffect
+import top.yaotutu.deskmate.presentation.ui.component.interaction.TileTapFlipTrigger
+import top.yaotutu.deskmate.presentation.ui.component.base.Tile
+import top.yaotutu.deskmate.presentation.ui.component.base.TileSize
+import top.yaotutu.deskmate.presentation.ui.component.base.TileGrid
 
 /**
  * 瓷砖交互动效演示页面
