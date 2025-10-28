@@ -44,8 +44,8 @@ object TileFactory {
     ) {
         // 使用 StaggerEnterAnimation 实现错峰入场动画
         StaggerEnterAnimation(index = index) {
-            // 对于 clock 类型，使用变体系统
-            if (config.type == "clock") {
+            // 对于 clock 和 animation_demo 类型，使用变体系统
+            if (config.type == "clock" || config.type == "animation_demo") {
                 CreateVariantTile(config, uiState, modifier)
             } else {
                 // 其他类型保持原有逻辑（向后兼容）

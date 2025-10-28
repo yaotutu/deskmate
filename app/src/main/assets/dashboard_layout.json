@@ -1,68 +1,96 @@
 {
-  "comment": "时钟组件尺寸展示 - 演示所有时钟变体",
+  "comment": "完整组件展示 - 所有尺寸、所有动画类型",
   "tiles": [
     {
+      "comment": "=== 区域1: FLIP 翻转动画展示 ===",
+      "type": "clock",
+      "variant": "detailed",
+      "columns": 4,
+      "rows": 2
+    },
+    {
+      "type": "clock",
+      "variant": "standard",
+      "columns": 2,
+      "rows": 2
+    },
+    {
+      "comment": "--- 第二行：大型翻转动画 ---",
+      "type": "clock",
+      "variant": "large",
+      "columns": 4,
+      "rows": 4
+    },
+    {
+      "comment": "=== 区域2: PULSE 脉冲动画展示 ===",
       "type": "clock",
       "variant": "tall",
       "columns": 2,
-      "rows": 4,
-      "comment": "第2列: 垂直时钟 2×4 (脉冲动画)"
+      "rows": 4
     },
     {
-      "type": "clock",
+      "comment": "--- 第三行：天气脉冲动画 ---",
+      "type": "weather",
       "variant": "standard",
       "columns": 2,
-      "rows": 2,
-      "comment": "第3列: 标准时钟 2×2 (无动画)"
+      "rows": 2
     },
     {
-      "type": "clock",
-      "variant": "simple",
-      "columns": 1,
-      "rows": 1,
-      "comment": "第4列: 简洁时钟 1×1 (无动画)"
-    },
-    {
-      "type": "clock",
-      "variant": "simple",
-      "columns": 1,
-      "rows": 1,
-      "comment": "第4列: 简洁时钟 1×1"
-    },
-    {
-      "type": "clock",
+      "type": "calendar",
       "variant": "standard",
       "columns": 2,
-      "rows": 2,
-      "comment": "第4列: 标准时钟 2×2"
+      "rows": 2
     },
     {
       "type": "clock",
       "variant": "compact",
       "columns": 2,
-      "rows": 1,
-      "comment": "第5列: 紧凑时钟 2×1 (无动画)"
+      "rows": 1
+    },
+    {
+      "comment": "=== 区域3: SLIDE 滑动动画展示 ===",
+      "type": "news",
+      "variant": "standard",
+      "columns": 4,
+      "rows": 4
+    },
+    {
+      "comment": "=== 区域4: NONE 无动画展示 ===",
+      "type": "todo",
+      "variant": "standard",
+      "columns": 2,
+      "rows": 4
+    },
+    {
+      "comment": "--- 小型组件展示 ---",
+      "type": "clock",
+      "variant": "simple",
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "type": "clock",
+      "variant": "simple",
+      "columns": 1,
+      "rows": 1
     },
     {
       "type": "clock",
       "variant": "compact",
       "columns": 2,
-      "rows": 1,
-      "comment": "第5列: 紧凑时钟 2×1"
+      "rows": 1
     },
     {
       "type": "clock",
       "variant": "simple",
       "columns": 1,
-      "rows": 1,
-      "comment": "第5列: 简洁时钟 1×1"
+      "rows": 1
     },
     {
       "type": "clock",
       "variant": "simple",
       "columns": 1,
-      "rows": 1,
-      "comment": "第5列: 简洁时钟 1×1"
+      "rows": 1
     }
   ]
 }

@@ -111,6 +111,32 @@ object MetroEasing {
      * - 页面切换
      */
     val SmoothOut: Easing = CubicBezierEasing(0.0f, 0.0f, 0.0f, 1.0f)
+
+    /**
+     * 缓出（Ease Out）
+     *
+     * 特点：
+     * - 快速启动
+     * - 平滑减速
+     *
+     * 用途：
+     * - 弹跳动画的上升阶段
+     * - 元素进入动画
+     */
+    val EaseOut: Easing = CubicBezierEasing(0.0f, 0.0f, 0.2f, 1.0f)
+
+    /**
+     * 缓入（Ease In）
+     *
+     * 特点：
+     * - 缓慢启动
+     * - 快速完成
+     *
+     * 用途：
+     * - 弹跳动画的下降阶段
+     * - 元素退出动画
+     */
+    val EaseIn: Easing = CubicBezierEasing(0.8f, 0.0f, 1.0f, 1.0f)
 }
 
 /**
@@ -120,6 +146,15 @@ object MetroEasing {
  * 确保用户体验的一致性和流畅性。
  */
 object MetroDuration {
+    /**
+     * 极快动画 - 80ms
+     *
+     * 用途：
+     * - 抖动动画单次抖动
+     * - 快速反馈效果
+     */
+    const val VERY_FAST = 80
+
     /**
      * 超快速动画 - 100ms
      *
@@ -135,6 +170,7 @@ object MetroDuration {
      * 用途：
      * - 瓷砖点击效果
      * - 工具提示显示
+     * - 弹跳动画单次弹跳
      */
     const val FAST = 200
 
@@ -210,6 +246,58 @@ object MetroDuration {
      * - 图片轮播
      */
     const val SLIDE_CYCLE = 4000
+
+    /**
+     * 旋转动画周期 - 1200ms
+     *
+     * 用途：
+     * - 刷新图标旋转一周时间
+     * - 加载指示器
+     */
+    const val ROTATE_CYCLE = 1200
+
+    /**
+     * 旋转间隔 - 3000ms
+     *
+     * 用途：
+     * - 单次旋转模式的触发间隔
+     */
+    const val ROTATE_INTERVAL = 3000
+
+    /**
+     * 弹跳间隔 - 5000ms
+     *
+     * 用途：
+     * - 弹跳动画触发间隔
+     * - 新内容提醒频率
+     */
+    const val BOUNCE_INTERVAL = 5000
+
+    /**
+     * 抖动间隔 - 10000ms
+     *
+     * 用途：
+     * - 抖动动画触发间隔
+     * - 重要提醒频率
+     */
+    const val SHAKE_INTERVAL = 10000
+
+    /**
+     * 微光动画周期 - 1500ms
+     *
+     * 用途：
+     * - 微光从左到右扫过的时间
+     * - 骨架屏效果
+     */
+    const val SHIMMER_CYCLE = 1500
+
+    /**
+     * 微光间隔 - 2000ms
+     *
+     * 用途：
+     * - 两次微光之间的间隔
+     */
+    const val SHIMMER_INTERVAL = 2000
 }
 
 /**

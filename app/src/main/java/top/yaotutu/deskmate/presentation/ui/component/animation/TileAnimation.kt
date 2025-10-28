@@ -1,9 +1,12 @@
 package top.yaotutu.deskmate.presentation.ui.component.animation
 
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import kotlinx.coroutines.delay
 import top.yaotutu.deskmate.presentation.ui.theme.MetroDuration
@@ -307,5 +310,226 @@ fun StaggerEnterAnimation(
         }
     ) {
         content()
+    }
+}
+
+/**
+ * 旋转动画 - Metro 风格
+ *
+ * 用于数据刷新指示、加载状态等场景
+ *
+ * @param enabled 是否启用动画
+ * @param continuous 是否持续旋转（true=持续，false=单次旋转）
+ * @param rotateDurationMillis 旋转一周的持续时间
+ * @param clockwise 是否顺时针旋转
+ * @param modifier 修饰符
+ * @param content 内容
+ */
+@Composable
+fun RotateTileAnimation(
+    enabled: Boolean = true,
+    continuous: Boolean = true,
+    rotateDurationMillis: Int = MetroDuration.ROTATE_CYCLE,
+    clockwise: Boolean = true,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "rotate_transition")
+
+    // 持续旋转动画
+    val rotationContinuous by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = if (clockwise) 360f else -360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(rotateDurationMillis, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "rotate_continuous"
+    )
+
+    // 单次旋转动画
+    var trigger by remember { mutableStateOf(0) }
+    val rotationSingle by animateFloatAsState(
+        targetValue = if (clockwise) trigger * 360f else -trigger * 360f,
+        animationSpec = tween(
+            durationMillis = rotateDurationMillis,
+            easing = MetroEasing.Standard
+        ),
+        label = "rotate_single"
+    )
+
+    // 触发单次旋转
+    LaunchedEffect(enabled, continuous) {
+        if (enabled && !continuous) {
+            while (true) {
+                delay(MetroDuration.ROTATE_INTERVAL.toLong())
+                trigger++
+            }
+        }
+    }
+
+    Box(
+        modifier = modifier.graphicsLayer {
+            rotationZ = if (enabled) {
+                if (continuous) rotationContinuous else rotationSingle
+            } else 0f
+        }
+    ) {
+        content()
+    }
+}
+
+/**
+ * 弹跳动画 - Metro 风格（持续循环版本）
+ *
+ * 用于强调新内容到达、重要数据更新提醒
+ * 持续上下弹跳，效果更加明显
+ *
+ * @param enabled 是否启用动画
+ * @param bounceDurationMillis 单次弹跳周期时间
+ * @param bounceHeight 弹跳高度（dp）
+ * @param modifier 修饰符
+ * @param content 内容
+ */
+@Composable
+fun BounceTileAnimation(
+    enabled: Boolean = true,
+    bounceDurationMillis: Int = 2000,  // 放慢到2秒一个周期
+    bounceHeight: Float = 40f,  // 适中高度40dp
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "bounce_transition")
+
+    // 持续上下弹跳动画
+    val offsetY by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = -bounceHeight,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = bounceDurationMillis / 2,
+                easing = MetroEasing.EaseOut
+            ),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "bounce_offsetY"
+    )
+
+    Box(
+        modifier = modifier.graphicsLayer {
+            translationY = if (enabled) offsetY else 0f
+        }
+    ) {
+        content()
+    }
+}
+
+/**
+ * 抖动动画 - Metro 风格（持续循环版本）
+ *
+ * 用于重要提醒、紧急通知、错误提示
+ * 持续左右抖动，效果更加明显
+ *
+ * @param enabled 是否启用动画
+ * @param shakeDurationMillis 单次抖动周期时间
+ * @param shakeDistance 抖动距离（dp）
+ * @param modifier 修饰符
+ * @param content 内容
+ */
+@Composable
+fun ShakeTileAnimation(
+    enabled: Boolean = true,
+    shakeDurationMillis: Int = 1500,  // 放慢到1.5秒一个周期
+    shakeDistance: Float = 30f,  // 适中距离30dp
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "shake_transition")
+
+    // 持续左右抖动动画
+    val offsetX by infiniteTransition.animateFloat(
+        initialValue = -shakeDistance,
+        targetValue = shakeDistance,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = shakeDurationMillis / 2,
+                easing = LinearEasing
+            ),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "shake_offsetX"
+    )
+
+    Box(
+        modifier = modifier.graphicsLayer {
+            translationX = if (enabled) offsetX else 0f
+        }
+    ) {
+        content()
+    }
+}
+
+/**
+ * 微光动画 - Metro 风格
+ *
+ * 用于加载状态指示、表示内容正在更新
+ *
+ * @param enabled 是否启用动画
+ * @param shimmerDurationMillis 微光扫过持续时间
+ * @param shimmerIntervalMillis 扫过间隔时间
+ * @param modifier 修饰符
+ * @param content 内容
+ */
+@Composable
+fun ShimmerTileAnimation(
+    enabled: Boolean = true,
+    shimmerDurationMillis: Int = MetroDuration.SHIMMER_CYCLE,
+    shimmerIntervalMillis: Long = MetroDuration.SHIMMER_INTERVAL.toLong(),
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "shimmer_transition")
+
+    // 微光位置动画（从左到右）
+    val shimmerPosition by infiniteTransition.animateFloat(
+        initialValue = -1f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(shimmerDurationMillis, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+            // 去掉初始延迟，立即开始播放
+        ),
+        label = "shimmer_position"
+    )
+
+    // 微光透明度（在边缘淡出）
+    val shimmerAlpha = remember(shimmerPosition) {
+        val distance = kotlin.math.abs(shimmerPosition)
+        (1f - distance).coerceIn(0f, 0.3f)
+    }
+
+    Box(modifier = modifier) {
+        content()
+
+        // 微光叠加层
+        if (enabled) {
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .graphicsLayer {
+                        translationX = size.width * shimmerPosition
+                        alpha = shimmerAlpha
+                    }
+                    .background(
+                        Brush.horizontalGradient(
+                            colors = listOf(
+                                Color.White.copy(alpha = 0f),
+                                Color.White.copy(alpha = 0.4f),
+                                Color.White.copy(alpha = 0f)
+                            )
+                        )
+                    )
+            )
+        }
     }
 }

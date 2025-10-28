@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
-import top.yaotutu.deskmate.presentation.ui.component.animation.FlipTileAnimation
-import top.yaotutu.deskmate.presentation.ui.component.animation.PulseTileAnimation
-import top.yaotutu.deskmate.presentation.ui.component.animation.SlideTileAnimation
+import top.yaotutu.deskmate.presentation.ui.component.animation.*
 import top.yaotutu.deskmate.presentation.ui.component.interaction.TileClickEffect
 import top.yaotutu.deskmate.presentation.ui.component.interaction.TileWithInteraction
 import top.yaotutu.deskmate.presentation.ui.component.legacy.LocalBaseCellSize
@@ -72,15 +70,38 @@ fun BaseTile(
     val baseCellSize = LocalBaseCellSize.current
     val dynamicGap = LocalDynamicGap.current
 
-    // 根据动画类型包装内容（仅自动处理简单动画）
+    // 根据动画类型包装内容
     val animatedContent: @Composable () -> Unit = when (spec.animation) {
         AnimationType.PULSE -> {
-            // 脉冲动画：自动包装
+            // 脉冲动画：周期性缩放
             { PulseTileAnimation { Box { content() } } }
         }
-        else -> {
-            // 其他类型（NONE、FLIP、SLIDE）：不自动处理
-            // FLIP 和 SLIDE 需要业务组件使用 FlipContent/SlideContent 辅助组件
+        AnimationType.ROTATE -> {
+            // 旋转动画：持续旋转（用于刷新指示）
+            { RotateTileAnimation { Box { content() } } }
+        }
+        AnimationType.BOUNCE -> {
+            // 弹跳动画：上下弹跳（用于新内容提醒）
+            { BounceTileAnimation { Box { content() } } }
+        }
+        AnimationType.SHAKE -> {
+            // 抖动动画：横向抖动（用于重要通知）
+            { ShakeTileAnimation { Box { content() } } }
+        }
+        AnimationType.SHIMMER -> {
+            // 微光动画：加载状态指示
+            { ShimmerTileAnimation { Box { content() } } }
+        }
+        AnimationType.FLIP, AnimationType.SLIDE, AnimationType.FADE, AnimationType.COUNTER -> {
+            // 复杂动画：需要业务组件使用辅助组件
+            // - FLIP: 使用 FlipContent
+            // - SLIDE: 使用 SlideContent
+            // - FADE: 使用 FadeContent
+            // - COUNTER: 使用 CounterContent
+            { Box { content() } }
+        }
+        AnimationType.NONE -> {
+            // 无动画：直接渲染
             { Box { content() } }
         }
     }
@@ -164,4 +185,82 @@ fun SlideContent(
     contents: List<@Composable () -> Unit>
 ) {
     SlideTileAnimation(contents = contents)
+}
+
+/**
+ * FadeContent - 淡入淡出动画内容辅助组件
+ *
+ * 用于在 BaseTile 中定义淡入淡出动画的多个内容项。
+ * 这个组件会自动调用 FadeTileAnimation 处理淡入淡出效果。
+ *
+ * 使用示例：
+ * ```
+ * BaseTile(spec = TileSpec.square(MetroColors.Green, AnimationType.FADE)) {
+ *     FadeContent(
+ *         listOf(
+ *             { Text("内容1", fontSize = 32.sp, color = Color.White) },
+ *             { Text("内容2", fontSize = 32.sp, color = Color.White) },
+ *             { Text("内容3", fontSize = 32.sp, color = Color.White) }
+ *         )
+ *     )
+ * }
+ * ```
+ *
+ * @param contents 内容列表
+ * @param fadeDurationMillis 淡入淡出持续时间（默认 500ms）
+ * @param fadeIntervalMillis 自动切换间隔时间（默认 6000ms）
+ */
+@Composable
+fun FadeContent(
+    contents: List<@Composable () -> Unit>,
+    fadeDurationMillis: Int = top.yaotutu.deskmate.presentation.ui.theme.MetroDuration.SLOW,
+    fadeIntervalMillis: Long = top.yaotutu.deskmate.presentation.ui.theme.MetroDuration.FLIP_CYCLE.toLong()
+) {
+    FadeTileAnimation(
+        contents = contents,
+        fadeDurationMillis = fadeDurationMillis,
+        fadeIntervalMillis = fadeIntervalMillis
+    )
+}
+
+/**
+ * CounterContent - 数字滚动动画内容辅助组件
+ *
+ * 用于在 BaseTile 中定义数字滚动动画。
+ * 这个组件会自动调用 CounterAnimation 处理数字变化的滚动效果。
+ *
+ * 使用示例：
+ * ```
+ * BaseTile(spec = TileSpec.square(MetroColors.Orange, AnimationType.COUNTER)) {
+ *     CounterContent(
+ *         targetValue = temperature,
+ *         content = { value ->
+ *             Column(
+ *                 Modifier.fillMaxSize(),
+ *                 Arrangement.Center,
+ *                 Alignment.CenterHorizontally
+ *             ) {
+ *                 Text("$value°", fontSize = 64.sp, fontWeight = FontWeight.Thin, color = Color.White)
+ *                 Text("温度", fontSize = 20.sp, fontWeight = FontWeight.Light, color = Color.White)
+ *             }
+ *         }
+ *     )
+ * }
+ * ```
+ *
+ * @param targetValue 目标数值
+ * @param durationMillis 动画持续时间（默认 500ms）
+ * @param content 渲染函数，接收当前动画值
+ */
+@Composable
+fun CounterContent(
+    targetValue: Int,
+    durationMillis: Int = top.yaotutu.deskmate.presentation.ui.theme.MetroDuration.SLOW,
+    content: @Composable (Int) -> Unit
+) {
+    CounterAnimation(
+        targetValue = targetValue,
+        durationMillis = durationMillis,
+        content = content
+    )
 }

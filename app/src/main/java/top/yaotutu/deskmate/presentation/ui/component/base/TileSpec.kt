@@ -83,5 +83,47 @@ enum class AnimationType {
      * 适用场景：新闻列表、图片轮播
      * 实现：使用 SlideTileAnimation
      */
-    SLIDE
+    SLIDE,
+
+    /**
+     * 淡入淡出动画 - 内容平滑切换
+     * 适用场景：多内容平滑切换
+     * 实现：使用 FadeTileAnimation
+     */
+    FADE,
+
+    /**
+     * 数字滚动动画 - 数值变化
+     * 适用场景：计数器、温度、股票价格等数值更新
+     * 实现：使用 CounterAnimation
+     */
+    COUNTER,
+
+    /**
+     * 旋转动画 - 持续或单次旋转
+     * 适用场景：数据刷新指示、加载状态
+     * 实现：使用 RotateTileAnimation
+     */
+    ROTATE,
+
+    /**
+     * 弹跳动画 - 强调新内容
+     * 适用场景：新消息到达、重要数据更新提醒
+     * 实现：使用 BounceTileAnimation
+     */
+    BOUNCE,
+
+    /**
+     * 抖动动画 - 重要提醒
+     * 适用场景：紧急通知、天气预警、错误提示
+     * 实现：使用 ShakeTileAnimation
+     */
+    SHAKE,
+
+    /**
+     * 微光动画 - 加载状态指示
+     * 适用场景：内容加载中、数据更新中
+     * 实现：使用 ShimmerTileAnimation
+     */
+    SHIMMER
 }

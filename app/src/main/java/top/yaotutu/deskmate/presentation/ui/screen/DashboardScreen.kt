@@ -31,7 +31,9 @@ fun DashboardScreen(
     // 加载布局配置
     val layoutConfig = remember {
         val repository = LayoutConfigRepository(context)
-        repository.loadLayoutConfig() ?: repository.getDefaultLayoutConfig()
+        // 🎬 动画演示模式：加载 animation_demo.json
+        repository.loadLayoutConfig("animation_demo.json") ?: repository.getDefaultLayoutConfig()
+        // 💡 正常模式：使用 repository.loadLayoutConfig() 加载 dashboard_layout.json
     }
 
     Box(
