@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.ui.component.base.TileGridContainer
-import top.yaotutu.deskmate.presentation.ui.component.legacy.ProvideTileGrid
+import top.yaotutu.deskmate.presentation.ui.component.base.ProvideTileGrid
 import top.yaotutu.deskmate.presentation.ui.component.interaction.TileClickEffect
 import top.yaotutu.deskmate.presentation.ui.component.interaction.TileTapFlipTrigger
 import top.yaotutu.deskmate.presentation.ui.component.base.Tile

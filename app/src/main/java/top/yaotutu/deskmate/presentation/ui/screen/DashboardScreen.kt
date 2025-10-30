@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import top.yaotutu.deskmate.data.repository.LayoutConfigRepository
 import top.yaotutu.deskmate.presentation.ui.component.base.TileGridContainer
-import top.yaotutu.deskmate.presentation.ui.component.legacy.ProvideTileGrid
+import top.yaotutu.deskmate.presentation.ui.component.base.ProvideTileGrid
 import top.yaotutu.deskmate.presentation.ui.component.layout.VerticalPriorityLayout
 import top.yaotutu.deskmate.presentation.ui.component.factory.TileFactory
 import top.yaotutu.deskmate.presentation.viewmodel.DashboardViewModel

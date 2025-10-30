@@ -12,8 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import top.yaotutu.deskmate.presentation.ui.component.legacy.LocalBaseCellSize
-import top.yaotutu.deskmate.presentation.ui.component.legacy.LocalDynamicGap
+import top.yaotutu.deskmate.presentation.ui.component.base.LocalBaseCellSize
+import top.yaotutu.deskmate.presentation.ui.component.base.LocalDynamicGap
 import top.yaotutu.deskmate.presentation.ui.component.base.Tile
 import top.yaotutu.deskmate.presentation.ui.component.base.TileGrid
 import top.yaotutu.deskmate.presentation.ui.theme.MetroColors
@@ -29,7 +29,10 @@ enum class TileErrorType {
     SIZE_MISMATCH,
 
     /** 缺少 variant 字段 */
-    MISSING_VARIANT
+    MISSING_VARIANT,
+
+    /** 已废弃的类型 */
+    DEPRECATED_TYPE
 }
 
 /**

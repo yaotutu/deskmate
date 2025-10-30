@@ -7,11 +7,7 @@ import top.yaotutu.deskmate.data.model.TileRegistry
 import top.yaotutu.deskmate.data.model.TileType
 import top.yaotutu.deskmate.presentation.ui.component.tiles.common.ErrorTile
 import top.yaotutu.deskmate.presentation.ui.component.tiles.common.TileErrorType
-import top.yaotutu.deskmate.presentation.ui.component.animation.StaggerEnterAnimation
-import top.yaotutu.deskmate.presentation.ui.component.legacy.WeatherTile
-import top.yaotutu.deskmate.presentation.ui.component.legacy.CalendarTile
-import top.yaotutu.deskmate.presentation.ui.component.legacy.TodoTile
-import top.yaotutu.deskmate.presentation.ui.component.legacy.NewsTile
+import top.yaotutu.deskmate.presentation.ui.component.animation.advanced.StaggerEnterAnimation
 import top.yaotutu.deskmate.presentation.viewmodel.DashboardUiState
 
 /**
@@ -101,7 +97,10 @@ object TileFactory {
     }
 
     /**
-     * 使用旧逻辑创建瓷砖（向后兼容）
+     * 处理已废弃的遗留瓷砖类型
+     *
+     * 这些类型（weather, calendar, todo, news）已被移除，
+     * 显示错误提示建议用户使用新的变体系统。
      */
     @Composable
     private fun CreateLegacyTile(
@@ -109,56 +108,20 @@ object TileFactory {
         uiState: DashboardUiState,
         modifier: Modifier
     ) {
-        when (TileType.fromString(config.type)) {
-            TileType.WEATHER -> {
-                WeatherTile(
-                    temperature = uiState.temperature,
-                    modifier = modifier
-                )
-            }
+        val deprecatedTypes = setOf("weather", "calendar", "todo", "news")
 
-            TileType.CALENDAR -> {
-                // 将月份数字转换为中文
-                val monthNames = arrayOf(
-                    "一月", "二月", "三月", "四月", "五月", "六月",
-                    "七月", "八月", "九月", "十月", "十一月", "十二月"
-                )
-                val month = monthNames.getOrNull(uiState.currentMonth) ?: "一月"
-
-                CalendarTile(
-                    month = month,
-                    day = uiState.currentDay,
-                    modifier = modifier
-                )
-            }
-
-            TileType.TODO -> {
-                // 提取待办事项标题（最多3个）
-                val todoTitles = uiState.todoItems
-                    .take(3)
-                    .map { it.title }
-
-                TodoTile(
-                    items = todoTitles,
-                    modifier = modifier
-                )
-            }
-
-            TileType.NEWS -> {
-                // 将 NewsItem 转换为 Pair<String, String>
-                val newsPairs = uiState.newsItems.map { newsItem ->
-                    newsItem.title to ""  // 第二个值为空，因为 NewsItem 只有 title
-                }
-
-                NewsTile(
-                    newsItems = newsPairs,
-                    modifier = modifier
-                )
-            }
-
-            else -> {
-                // 未知类型，不渲染任何内容
-            }
+        if (config.type in deprecatedTypes) {
+            ErrorTile(
+                columns = config.columns,
+                rows = config.rows,
+                errorType = TileErrorType.DEPRECATED_TYPE,
+                message = "瓷砖类型 '${config.type}' 已废弃",
+                details = mapOf(
+                    "原因" to "此类型已从项目中移除",
+                    "建议" to "使用新的变体系统重新实现或从配置中删除"
+                ),
+                modifier = modifier
+            )
         }
     }
 }

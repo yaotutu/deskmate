@@ -102,7 +102,7 @@ tree -I 'build|.gradle|.idea'
 │  业务组件层 (Business Component Layer)            │
 │  - tiles/clock/ (6个时钟变体)                     │
 │  - tiles/common/ErrorTile.kt (错误瓷砖)           │
-│  - legacy/TileComponents.kt (遗留组件)            │
+│  - tiles/special/ (特殊瓷砖：Photo, Music等)      │
 │  - 职责: 具体瓷砖实现、数据绑定                    │
 └───────────────┬───────────────────────────────────┘
                 │ uses
@@ -111,7 +111,9 @@ tree -I 'build|.gradle|.idea'
 │  - BaseTile.kt (基础瓷砖)                         │
 │  - TileCard.kt (瓷砖容器)                         │
 │  - TileSpec.kt (瓷砖规格)                         │
-│  - TileAnimation.kt (动画效果)                    │
+│  - animation/core/ (核心动画)                     │
+│  - animation/advanced/ (高级动画)                 │
+│  - animation/interaction/ (交互动画)              │
 │  - TileGrid.kt (网格系统)                         │
 │  - 职责: 底层布局计算、动画实现、尺寸规范           │
 └───────────────────────────────────────────────────┘
@@ -138,23 +140,37 @@ app/src/main/java/top/yaotutu/deskmate/
 │   ├── ui/
 │   │   ├── component/                # UI 组件 ⭐ 核心
 │   │   │   ├── animation/           # 动画组件
-│   │   │   │   └── TileAnimation.kt # Flip, Pulse, Slide 动画
+│   │   │   │   ├── core/           # 核心动画（常用）
+│   │   │   │   │   ├── FlipAnimation.kt    # 翻转动画
+│   │   │   │   │   ├── PulseAnimation.kt   # 脉冲动画
+│   │   │   │   │   ├── SlideAnimation.kt   # 滑动动画
+│   │   │   │   │   └── FadeAnimation.kt    # 淡入淡出动画
+│   │   │   │   ├── advanced/       # 高级动画
+│   │   │   │   │   ├── RotateAnimation.kt  # 旋转动画
+│   │   │   │   │   ├── StaggerEnterAnimation.kt # 错峰进入
+│   │   │   │   │   └── ShimmerAnimation.kt # 微光动画
+│   │   │   │   ├── interaction/    # 交互动画
+│   │   │   │   │   ├── BounceAnimation.kt  # 弹跳动画
+│   │   │   │   │   └── ShakeAnimation.kt   # 抖动动画
+│   │   │   │   └── special/        # 特殊动画
+│   │   │   │       └── CounterAnimation.kt # 数字滚动
 │   │   │   ├── base/                # 基础组件层
 │   │   │   │   ├── BaseTile.kt      # 基础瓷砖（统一容器）
 │   │   │   │   ├── TileCard.kt      # 瓷砖卡片（7种尺寸）
 │   │   │   │   ├── TileSpec.kt      # 瓷砖规格配置 + AnimationType
-│   │   │   │   └── TileGrid.kt      # 网格系统（6列自适应）
+│   │   │   │   └── TileGrid.kt      # 网格系统 + CompositionLocal
 │   │   │   ├── enhancement/         # 增强功能
-│   │   │   │   └── MetroEnhancements.kt # 状态栏/角标
+│   │   │   │   ├── MetroStatusBar.kt # Metro 状态栏
+│   │   │   │   └── MetroBadge.kt     # 角标系统
 │   │   │   ├── factory/             # 工厂层 ⭐ 核心
 │   │   │   │   ├── TileFactory.kt   # 瓷砖工厂（根据配置创建）
 │   │   │   │   └── TileRegistryInit.kt # 变体注册初始化
 │   │   │   ├── interaction/         # 交互动效
-│   │   │   │   └── TileInteraction.kt # 按压/弹跳/抖动
+│   │   │   │   ├── TileClickEffect.kt # 点击效果枚举
+│   │   │   │   ├── TileClickEffects.kt # 6种单一效果
+│   │   │   │   └── TileInteractionWrappers.kt # 包装器
 │   │   │   ├── layout/              # 布局引擎
 │   │   │   │   └── VerticalPriorityLayout.kt # 垂直优先布局
-│   │   │   ├── legacy/              # 遗留组件（向后兼容）
-│   │   │   │   └── TileComponents.kt # 旧的高级组件库
 │   │   │   └── tiles/               # 业务瓷砖实现
 │   │   │       ├── clock/           # 时钟瓷砖变体
 │   │   │       │   ├── ClockSimpleTile.kt    # 简约 (1×1)
@@ -163,12 +179,16 @@ app/src/main/java/top/yaotutu/deskmate/
 │   │   │       │   ├── ClockTallTile.kt      # 高版 (2×4)
 │   │   │       │   ├── ClockDetailedTile.kt  # 详细 (4×2)
 │   │   │       │   └── ClockLargeTile.kt     # 大型 (4×4)
-│   │   │       └── common/          # 公共组件
-│   │   │           └── ErrorTile.kt # 错误瓷砖（配置错误提示）
+│   │   │       ├── common/          # 公共组件
+│   │   │       │   └── ErrorTile.kt # 错误瓷砖（配置错误提示）
+│   │   │       └── special/         # 特殊瓷砖
+│   │   │           ├── PhotoTile.kt # 照片瓷砖
+│   │   │           ├── MusicTile.kt # 音乐瓷砖
+│   │   │           ├── ContactTile.kt # 联系人瓷砖
+│   │   │           └── MailTile.kt  # 邮件瓷砖
 │   │   ├── screen/                  # 页面级 Composable
 │   │   │   ├── DashboardScreen.kt   # 主页面（配置驱动）
-│   │   │   ├── InteractionDemoScreen.kt # 交互演示
-│   │   │   └── ClockComparisonScreen.kt # 时钟对比
+│   │   │   └── InteractionDemoScreen.kt # 交互演示
 │   │   └── theme/                   # Material3 主题配置
 │   │       ├── Color.kt             # 基础颜色定义
 │   │       ├── MetroColors.kt       # Metro 配色方案

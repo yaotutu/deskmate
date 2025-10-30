@@ -2,6 +2,8 @@ package top.yaotutu.deskmate.presentation.ui.component.base
 
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -174,5 +176,44 @@ fun TileGridContainer(
 
         // 传递参数给子组件（包含实际屏幕高度）
         content(baseCellSize, dynamicGap, columns, screenHeight)
+    }
+}
+
+// ==================== CompositionLocal 网格参数传递 ====================
+
+/**
+ * 网格参数 CompositionLocal
+ *
+ * 用于在组件树中传递网格参数，避免手动传递参数。
+ * 这些参数由 ProvideTileGrid 提供，子组件通过 .current 访问。
+ */
+val LocalBaseCellSize = compositionLocalOf<Dp> { error("BaseCellSize not provided") }
+val LocalDynamicGap = compositionLocalOf<Dp> { error("DynamicGap not provided") }
+val LocalColumns = compositionLocalOf<Int> { error("Columns not provided") }
+
+/**
+ * 提供网格参数的容器
+ *
+ * 使用 CompositionLocalProvider 向子组件提供网格布局参数。
+ * 子组件可以通过 LocalBaseCellSize.current 等方式访问这些参数。
+ *
+ * @param baseCellSize 基础格子尺寸（正方形边长）
+ * @param dynamicGap 动态间距
+ * @param columns 实际列数
+ * @param content 子组件
+ */
+@Composable
+fun ProvideTileGrid(
+    baseCellSize: Dp,
+    dynamicGap: Dp,
+    columns: Int,
+    content: @Composable () -> Unit
+) {
+    CompositionLocalProvider(
+        LocalBaseCellSize provides baseCellSize,
+        LocalDynamicGap provides dynamicGap,
+        LocalColumns provides columns
+    ) {
+        content()
     }
 }

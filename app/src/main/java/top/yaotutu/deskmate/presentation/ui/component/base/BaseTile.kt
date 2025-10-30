@@ -5,11 +5,17 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
-import top.yaotutu.deskmate.presentation.ui.component.animation.*
+import top.yaotutu.deskmate.presentation.ui.component.animation.core.FlipTileAnimation
+import top.yaotutu.deskmate.presentation.ui.component.animation.core.PulseTileAnimation
+import top.yaotutu.deskmate.presentation.ui.component.animation.core.SlideTileAnimation
+import top.yaotutu.deskmate.presentation.ui.component.animation.core.FadeTileAnimation
+import top.yaotutu.deskmate.presentation.ui.component.animation.advanced.RotateTileAnimation
+import top.yaotutu.deskmate.presentation.ui.component.animation.advanced.ShimmerTileAnimation
+import top.yaotutu.deskmate.presentation.ui.component.animation.interaction.BounceTileAnimation
+import top.yaotutu.deskmate.presentation.ui.component.animation.interaction.ShakeTileAnimation
+import top.yaotutu.deskmate.presentation.ui.component.animation.special.CounterAnimation
 import top.yaotutu.deskmate.presentation.ui.component.interaction.TileClickEffect
 import top.yaotutu.deskmate.presentation.ui.component.interaction.TileWithInteraction
-import top.yaotutu.deskmate.presentation.ui.component.legacy.LocalBaseCellSize
-import top.yaotutu.deskmate.presentation.ui.component.legacy.LocalDynamicGap
 
 /**
  * BaseTile - 瓷砖框架层核心组件
