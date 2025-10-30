@@ -125,5 +125,33 @@ enum class AnimationType {
      * 适用场景：内容加载中、数据更新中
      * 实现：使用 ShimmerTileAnimation
      */
-    SHIMMER
+    SHIMMER,
+
+    /**
+     * 探出动画 - 内容预览（Windows Phone Live Tile 标志性动画）⭐
+     * 适用场景：邮件预览、日历事件、通知消息
+     * 实现：使用 PeekTileAnimation
+     */
+    PEEK,
+
+    /**
+     * 跑马灯动画 - 连续滚动文本
+     * 适用场景：新闻标题、长文本展示、通知栏
+     * 实现：使用 MarqueeTileAnimation
+     */
+    MARQUEE,
+
+    /**
+     * 擦除动画 - 百叶窗式内容切换
+     * 适用场景：新闻切换、图片轮播、内容刷新
+     * 实现：使用 WipeTileAnimation
+     */
+    WIPE,
+
+    /**
+     * 深度动画 - 3D 透视效果
+     * 适用场景：照片瓷砖、专辑封面、视差效果
+     * 实现：使用 DepthTileAnimation
+     */
+    DEPTH
 }

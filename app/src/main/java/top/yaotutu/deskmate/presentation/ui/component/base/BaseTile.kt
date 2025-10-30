@@ -9,8 +9,12 @@ import top.yaotutu.deskmate.presentation.ui.component.animation.core.FlipTileAni
 import top.yaotutu.deskmate.presentation.ui.component.animation.core.PulseTileAnimation
 import top.yaotutu.deskmate.presentation.ui.component.animation.core.SlideTileAnimation
 import top.yaotutu.deskmate.presentation.ui.component.animation.core.FadeTileAnimation
+import top.yaotutu.deskmate.presentation.ui.component.animation.core.PeekTileAnimation
+import top.yaotutu.deskmate.presentation.ui.component.animation.core.MarqueeTileAnimation
 import top.yaotutu.deskmate.presentation.ui.component.animation.advanced.RotateTileAnimation
 import top.yaotutu.deskmate.presentation.ui.component.animation.advanced.ShimmerTileAnimation
+import top.yaotutu.deskmate.presentation.ui.component.animation.advanced.WipeTileAnimation
+import top.yaotutu.deskmate.presentation.ui.component.animation.advanced.DepthTileAnimation
 import top.yaotutu.deskmate.presentation.ui.component.animation.interaction.BounceTileAnimation
 import top.yaotutu.deskmate.presentation.ui.component.animation.interaction.ShakeTileAnimation
 import top.yaotutu.deskmate.presentation.ui.component.animation.special.CounterAnimation
@@ -98,12 +102,23 @@ fun BaseTile(
             // 微光动画：加载状态指示
             { ShimmerTileAnimation { Box { content() } } }
         }
-        AnimationType.FLIP, AnimationType.SLIDE, AnimationType.FADE, AnimationType.COUNTER -> {
+        AnimationType.MARQUEE -> {
+            // 跑马灯动画：连续滚动（简单动画，自动包装）
+            // 注意：内容需要是可滚动的文本或列表
+            { Box { content() } }
+        }
+        AnimationType.DEPTH -> {
+            // 深度动画：3D 透视效果
+            { DepthTileAnimation { Box { content() } } }
+        }
+        AnimationType.FLIP, AnimationType.SLIDE, AnimationType.FADE, AnimationType.COUNTER, AnimationType.PEEK, AnimationType.WIPE -> {
             // 复杂动画：需要业务组件使用辅助组件
             // - FLIP: 使用 FlipContent
             // - SLIDE: 使用 SlideContent
             // - FADE: 使用 FadeContent
             // - COUNTER: 使用 CounterContent
+            // - PEEK: 使用 PeekContent
+            // - WIPE: 使用 WipeContent
             { Box { content() } }
         }
         AnimationType.NONE -> {
@@ -267,6 +282,176 @@ fun CounterContent(
     CounterAnimation(
         targetValue = targetValue,
         durationMillis = durationMillis,
+        content = content
+    )
+}
+
+/**
+ * PeekContent - 探出动画内容辅助组件 ⭐ Windows Phone 标志性动画
+ *
+ * 用于在 BaseTile 中定义探出动画的主要内容和探出内容。
+ * 这个组件会自动调用 PeekTileAnimation 处理探出效果。
+ *
+ * 使用示例：
+ * ```
+ * BaseTile(spec = TileSpec.square(MetroColors.Blue, AnimationType.PEEK)) {
+ *     PeekContent(
+ *         mainContent = {
+ *             Column {
+ *                 Text("📧", fontSize = 64.sp)
+ *                 Text("3 封新邮件", fontSize = 20.sp, color = Color.White)
+ *             }
+ *         },
+ *         peekContent = {
+ *             Column {
+ *                 Text("来自：张三", fontSize = 16.sp, color = Color.White)
+ *                 Text("会议提醒", fontSize = 14.sp, color = Color.White.copy(0.8f))
+ *             }
+ *         },
+ *         peekHeight = 0.4f
+ *     )
+ * }
+ * ```
+ *
+ * @param mainContent 主要内容（一直显示）
+ * @param peekContent 探出内容（从指定方向探出）
+ * @param peekHeight 探出高度比例（0.0-1.0，默认 0.3）
+ * @param direction 探出方向（默认从底部探出）
+ */
+@Composable
+fun PeekContent(
+    mainContent: @Composable () -> Unit,
+    peekContent: @Composable () -> Unit,
+    peekHeight: Float = 0.3f,
+    direction: top.yaotutu.deskmate.presentation.ui.component.animation.core.PeekDirection =
+        top.yaotutu.deskmate.presentation.ui.component.animation.core.PeekDirection.BOTTOM
+) {
+    PeekTileAnimation(
+        mainContent = mainContent,
+        peekContent = peekContent,
+        peekHeight = peekHeight,
+        direction = direction
+    )
+}
+
+/**
+ * MarqueeContent - 跑马灯动画内容辅助组件
+ *
+ * 用于在 BaseTile 中定义跑马灯滚动内容。
+ * 这个组件会自动调用 MarqueeTileAnimation 处理连续滚动效果。
+ *
+ * 使用示例：
+ * ```
+ * BaseTile(spec = TileSpec.wideMedium(MetroColors.Red, AnimationType.MARQUEE)) {
+ *     MarqueeContent(
+ *         direction = MarqueeDirection.HORIZONTAL,
+ *         speed = 40f
+ *     ) {
+ *         Text(
+ *             text = "突发新闻：这是一条很长的新闻标题，需要滚动显示...",
+ *             fontSize = 20.sp,
+ *             fontWeight = FontWeight.Light,
+ *             color = Color.White
+ *         )
+ *     }
+ * }
+ * ```
+ *
+ * @param direction 滚动方向（默认水平滚动）
+ * @param speed 滚动速度（dp/秒，默认 30）
+ * @param spacing 循环间距（dp，默认 50）
+ * @param content 要滚动的内容
+ */
+@Composable
+fun MarqueeContent(
+    direction: top.yaotutu.deskmate.presentation.ui.component.animation.core.MarqueeDirection =
+        top.yaotutu.deskmate.presentation.ui.component.animation.core.MarqueeDirection.HORIZONTAL,
+    speed: Float = 30f,
+    spacing: Int = 50,
+    content: @Composable () -> Unit
+) {
+    MarqueeTileAnimation(
+        direction = direction,
+        speed = speed,
+        spacing = spacing,
+        content = content
+    )
+}
+
+/**
+ * WipeContent - 擦除动画内容辅助组件
+ *
+ * 用于在 BaseTile 中定义擦除动画的多个内容项。
+ * 这个组件会自动调用 WipeTileAnimation 处理擦除切换效果。
+ *
+ * 使用示例：
+ * ```
+ * BaseTile(spec = TileSpec.large(MetroColors.Red, AnimationType.WIPE)) {
+ *     WipeContent(
+ *         contents = listOf(
+ *             { NewsItem("新闻标题1") },
+ *             { NewsItem("新闻标题2") },
+ *             { NewsItem("新闻标题3") }
+ *         ),
+ *         direction = WipeDirection.LEFT_TO_RIGHT,
+ *         style = WipeStyle.SLIDE
+ *     )
+ * }
+ * ```
+ *
+ * @param contents 内容列表（至少2项）
+ * @param direction 擦除方向（默认从左到右）
+ * @param style 擦除样式（默认滑动）
+ */
+@Composable
+fun WipeContent(
+    contents: List<@Composable () -> Unit>,
+    direction: top.yaotutu.deskmate.presentation.ui.component.animation.advanced.WipeDirection =
+        top.yaotutu.deskmate.presentation.ui.component.animation.advanced.WipeDirection.LEFT_TO_RIGHT,
+    style: top.yaotutu.deskmate.presentation.ui.component.animation.advanced.WipeStyle =
+        top.yaotutu.deskmate.presentation.ui.component.animation.advanced.WipeStyle.SLIDE
+) {
+    WipeTileAnimation(
+        contents = contents,
+        direction = direction,
+        style = style
+    )
+}
+
+/**
+ * DepthContent - 深度动画内容辅助组件
+ *
+ * 用于在 BaseTile 中定义深度/透视动画。
+ * 这个组件会自动调用 DepthTileAnimation 处理 3D 深度效果。
+ *
+ * 使用示例：
+ * ```
+ * BaseTile(spec = TileSpec.square(MetroColors.Purple, AnimationType.DEPTH)) {
+ *     DepthContent(
+ *         scaleRange = 0.95f to 1.05f,
+ *         shadowRange = 2f to 8f
+ *     ) {
+ *         Column {
+ *             Text("📷", fontSize = 64.sp)
+ *             Text("照片", fontSize = 20.sp, fontWeight = FontWeight.Light, color = Color.White)
+ *         }
+ *     }
+ * }
+ * ```
+ *
+ * @param scaleRange 缩放范围（默认 0.95f to 1.05f）
+ * @param shadowRange 阴影范围（默认 2f to 8f）
+ * @param content 内容
+ */
+@Composable
+fun DepthContent(
+    scaleRange: Pair<Float, Float> = 0.95f to 1.05f,
+    shadowRange: Pair<Float, Float> = 2f to 8f,
+    content: @Composable () -> Unit
+) {
+    DepthTileAnimation(
+        scaleRange = scaleRange,
+        shadowRange = shadowRange,
         content = content
     )
 }
