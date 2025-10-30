@@ -22,7 +22,7 @@ data class TileVariantSpec(
     val variant: String,
     val supportedSizes: List<Pair<Int, Int>>,
     val defaultSize: Pair<Int, Int>,
-    val view: @Composable (TileConfig, DashboardUiState) -> Unit
+    val view: @Composable (TileConfig, DashboardUiState, () -> Unit) -> Unit
 )
 
 /**

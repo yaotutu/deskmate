@@ -36,10 +36,12 @@ fun ClockCompactTile(
     time: String,
     date: String,
     backgroundColor: Color = MetroTileColors.Time,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec(2, 1, backgroundColor),  // 自定义尺寸 2×1
+        onClick = onClick,
         modifier = modifier
     ) {
         // 横向排列

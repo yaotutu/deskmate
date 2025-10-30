@@ -27,10 +27,12 @@ import top.yaotutu.deskmate.presentation.ui.theme.MetroTileColors
 fun ClockSimpleTile(
     time: String,
     backgroundColor: Color = MetroTileColors.Time,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec.small(backgroundColor),
+        onClick = onClick,
         modifier = modifier
     ) {
         Text(

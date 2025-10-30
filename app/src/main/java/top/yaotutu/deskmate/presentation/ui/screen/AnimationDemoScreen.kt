@@ -54,6 +54,8 @@ fun AnimationDemoScreen() {
 
         // 1. Flip 翻转动画
         AnimationCard(title = "Flip - 翻转动画") {
+            // 使用场景说明
+            UsageInfo("适用场景：时钟、日历、双面卡片")
             BaseTile(spec = TileSpec.square(MetroColors.Blue, AnimationType.FLIP)) {
                 FlipContent(
                     front = {
@@ -68,6 +70,8 @@ fun AnimationDemoScreen() {
 
         // 2. Pulse 脉冲动画
         AnimationCard(title = "Pulse - 脉冲动画") {
+            // 使用场景说明
+            UsageInfo("适用场景：新消息提醒、待办事项")
             BaseTile(spec = TileSpec.square(MetroColors.Orange, AnimationType.PULSE)) {
                 CenteredContent(emoji = "☀", text = "22°")
             }
@@ -75,6 +79,8 @@ fun AnimationDemoScreen() {
 
         // 3. Slide 滑动动画
         AnimationCard(title = "Slide - 滑动动画") {
+            // 使用场景说明
+            UsageInfo("适用场景：新闻列表、图片轮播")
             BaseTile(spec = TileSpec.wideMedium(MetroColors.Red, AnimationType.SLIDE)) {
                 SlideContent(
                     listOf(
@@ -88,6 +94,8 @@ fun AnimationDemoScreen() {
 
         // 4. Fade 淡入淡出动画
         AnimationCard(title = "Fade - 淡入淡出动画") {
+            // 使用场景说明
+            UsageInfo("适用场景：天气预报、广告轮播")
             BaseTile(spec = TileSpec.square(MetroColors.Green, AnimationType.FADE)) {
                 FadeContent(
                     listOf(
@@ -101,6 +109,8 @@ fun AnimationDemoScreen() {
 
         // ⭐ 5. Peek 探出动画（新增）
         AnimationCard(title = "⭐ Peek - 探出动画 (WP 标志性)") {
+            // 使用场景说明
+            UsageInfo("适用场景：通知预览、消息提示")
             BaseTile(spec = TileSpec.square(MetroColors.Blue, AnimationType.PEEK)) {
                 PeekContent(
                     mainContent = {
@@ -123,6 +133,8 @@ fun AnimationDemoScreen() {
 
         // ⭐ 6. Marquee 跑马灯动画（新增）
         AnimationCard(title = "⭐ Marquee - 跑马灯动画") {
+            // 使用场景说明
+            UsageInfo("适用场景：长文本滚动、标题展示")
             BaseTile(spec = TileSpec.wideMedium(MetroColors.Red, AnimationType.MARQUEE)) {
                 MarqueeContent(
                     direction = MarqueeDirection.HORIZONTAL,
@@ -144,6 +156,8 @@ fun AnimationDemoScreen() {
 
         // 7. Rotate 旋转动画
         AnimationCard(title = "Rotate - 旋转动画") {
+            // 使用场景说明
+            UsageInfo("适用场景：加载指示、刷新动画")
             BaseTile(spec = TileSpec.square(MetroColors.Purple, AnimationType.ROTATE)) {
                 CenteredContent(emoji = "🔄", text = "刷新中")
             }
@@ -151,6 +165,8 @@ fun AnimationDemoScreen() {
 
         // 8. Shimmer 微光动画
         AnimationCard(title = "Shimmer - 微光动画") {
+            // 使用场景说明
+            UsageInfo("适用场景：内容加载、数据刷新")
             BaseTile(spec = TileSpec.square(MetroColors.Teal, AnimationType.SHIMMER)) {
                 CenteredContent(emoji = "⏳", text = "加载中")
             }
@@ -158,6 +174,8 @@ fun AnimationDemoScreen() {
 
         // ⭐ 9. Wipe 擦除动画（新增）
         AnimationCard(title = "⭐ Wipe - 擦除动画") {
+            // 使用场景说明
+            UsageInfo("适用场景：内容切换、页面过渡")
             BaseTile(spec = TileSpec.wideMedium(MetroColors.Red, AnimationType.WIPE)) {
                 WipeContent(
                     contents = listOf(
@@ -173,6 +191,8 @@ fun AnimationDemoScreen() {
 
         // ⭐ 10. Depth 深度动画（新增）
         AnimationCard(title = "⭐ Depth - 深度动画") {
+            // 使用场景说明
+            UsageInfo("适用场景：图片展示、卡片效果")
             BaseTile(spec = TileSpec.square(MetroColors.Purple, AnimationType.DEPTH)) {
                 CenteredContent(emoji = "📷", text = "照片")
             }
@@ -183,6 +203,8 @@ fun AnimationDemoScreen() {
 
         // 11. Bounce 弹跳动画
         AnimationCard(title = "Bounce - 弹跳动画") {
+            // 使用场景说明
+            UsageInfo("适用场景：新消息提醒、重要通知")
             BaseTile(spec = TileSpec.square(MetroColors.Green, AnimationType.BOUNCE)) {
                 CenteredContent(emoji = "🔔", text = "新通知")
             }
@@ -190,6 +212,8 @@ fun AnimationDemoScreen() {
 
         // 12. Shake 抖动动画
         AnimationCard(title = "Shake - 抖动动画") {
+            // 使用场景说明
+            UsageInfo("适用场景：错误提示、警告通知")
             BaseTile(spec = TileSpec.square(MetroColors.Red, AnimationType.SHAKE)) {
                 CenteredContent(emoji = "⚠️", text = "警告")
             }
@@ -200,6 +224,8 @@ fun AnimationDemoScreen() {
 
         // 13. Counter 数字滚动动画
         AnimationCard(title = "Counter - 数字滚动动画") {
+            // 使用场景说明
+            UsageInfo("适用场景：温度、股票、计数器")
             BaseTile(spec = TileSpec.square(MetroColors.Orange, AnimationType.COUNTER)) {
                 CounterContent(
                     targetValue = 22
@@ -212,6 +238,20 @@ fun AnimationDemoScreen() {
         // 底部间距
         Spacer(modifier = Modifier.height(32.dp))
     }
+}
+
+/**
+ * 使用场景信息
+ */
+@Composable
+private fun UsageInfo(info: String) {
+    Text(
+        text = info,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.ExtraLight,
+        color = Color.White.copy(0.6f),
+        modifier = Modifier.padding(bottom = 4.dp)
+    )
 }
 
 /**

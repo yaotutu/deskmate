@@ -31,9 +31,10 @@ private fun registerClockVariants() {
             variant = "simple",
             supportedSizes = listOf(1 to 1),
             defaultSize = 1 to 1,
-            view = { _, uiState ->
+            view = { _, uiState, onClick ->
                 ClockSimpleTile(
-                    time = uiState.currentTime
+                    time = uiState.currentTime,
+                    onClick = onClick
                 )
             }
         )
@@ -46,10 +47,11 @@ private fun registerClockVariants() {
             variant = "standard",
             supportedSizes = listOf(2 to 2),
             defaultSize = 2 to 2,
-            view = { _, uiState ->
+            view = { _, uiState, onClick ->
                 ClockStandardTile(
                     time = uiState.currentTime,
-                    date = uiState.currentDate
+                    date = uiState.currentDate,
+                    onClick = onClick
                 )
             }
         )
@@ -62,11 +64,12 @@ private fun registerClockVariants() {
             variant = "detailed",
             supportedSizes = listOf(4 to 2),
             defaultSize = 4 to 2,
-            view = { _, uiState ->
+            view = { _, uiState, onClick ->
                 ClockDetailedTile(
                     time = uiState.currentTime,
                     date = uiState.currentDate,
-                    lunarDate = uiState.lunarDate
+                    lunarDate = uiState.lunarDate,
+                    onClick = onClick
                 )
             }
         )
@@ -79,12 +82,13 @@ private fun registerClockVariants() {
             variant = "large",
             supportedSizes = listOf(4 to 4),
             defaultSize = 4 to 4,
-            view = { _, uiState ->
+            view = { _, uiState, onClick ->
                 ClockLargeTile(
                     time = uiState.currentTime,
                     date = uiState.currentDate,
                     weekday = "星期二",  // TODO: 从 uiState 获取
-                    lunarDate = uiState.lunarDate
+                    lunarDate = uiState.lunarDate,
+                    onClick = onClick
                 )
             }
         )
@@ -97,11 +101,12 @@ private fun registerClockVariants() {
             variant = "tall",
             supportedSizes = listOf(2 to 4),
             defaultSize = 2 to 4,
-            view = { _, uiState ->
+            view = { _, uiState, onClick ->
                 ClockTallTile(
                     time = uiState.currentTime,
                     date = uiState.currentDate,
-                    weekday = "星期二"  // TODO: 从 uiState 获取
+                    weekday = "星期二",  // TODO: 从 uiState 获取
+                    onClick = onClick
                 )
             }
         )
@@ -114,10 +119,11 @@ private fun registerClockVariants() {
             variant = "compact",
             supportedSizes = listOf(2 to 1),
             defaultSize = 2 to 1,
-            view = { _, uiState ->
+            view = { _, uiState, onClick ->
                 ClockCompactTile(
                     time = uiState.currentTime,
-                    date = "10/28"  // TODO: 格式化日期
+                    date = "10/28",  // TODO: 格式化日期
+                    onClick = onClick
                 )
             }
         )
@@ -137,8 +143,8 @@ private fun registerAnimationDemoVariants() {
             variant = "none_small",
             supportedSizes = listOf(1 to 1),
             defaultSize = 1 to 1,
-            view = { _, _ ->
-                AnimationDemoNoneSmall()
+            view = { _, _, onClick ->
+                AnimationDemoNoneSmall(onClick = onClick)
             }
         )
     )
@@ -150,8 +156,8 @@ private fun registerAnimationDemoVariants() {
             variant = "none",
             supportedSizes = listOf(2 to 2),
             defaultSize = 2 to 2,
-            view = { _, _ ->
-                AnimationDemoNone()
+            view = { _, _, onClick ->
+                AnimationDemoNone(onClick = onClick)
             }
         )
     )
@@ -163,8 +169,8 @@ private fun registerAnimationDemoVariants() {
             variant = "flip",
             supportedSizes = listOf(4 to 2),
             defaultSize = 4 to 2,
-            view = { _, _ ->
-                AnimationDemoFlip()
+            view = { _, _, onClick ->
+                AnimationDemoFlip(onClick = onClick)
             }
         )
     )
@@ -176,8 +182,8 @@ private fun registerAnimationDemoVariants() {
             variant = "pulse",
             supportedSizes = listOf(2 to 2),
             defaultSize = 2 to 2,
-            view = { _, _ ->
-                AnimationDemoPulse()
+            view = { _, _, onClick ->
+                AnimationDemoPulse(onClick = onClick)
             }
         )
     )
@@ -189,8 +195,8 @@ private fun registerAnimationDemoVariants() {
             variant = "slide",
             supportedSizes = listOf(4 to 4),
             defaultSize = 4 to 4,
-            view = { _, _ ->
-                AnimationDemoSlide()
+            view = { _, _, onClick ->
+                AnimationDemoSlide(onClick = onClick)
             }
         )
     )
@@ -202,8 +208,8 @@ private fun registerAnimationDemoVariants() {
             variant = "fade",
             supportedSizes = listOf(2 to 2),
             defaultSize = 2 to 2,
-            view = { _, _ ->
-                AnimationDemoFade()
+            view = { _, _, onClick ->
+                AnimationDemoFade(onClick = onClick)
             }
         )
     )
@@ -215,9 +221,9 @@ private fun registerAnimationDemoVariants() {
             variant = "counter",
             supportedSizes = listOf(2 to 2),
             defaultSize = 2 to 2,
-            view = { _, uiState ->
+            view = { _, uiState, onClick ->
                 // 使用温度作为计数器演示
-                AnimationDemoCounter(targetValue = uiState.temperature)
+                AnimationDemoCounter(targetValue = uiState.temperature, onClick = onClick)
             }
         )
     )
@@ -229,8 +235,8 @@ private fun registerAnimationDemoVariants() {
             variant = "rotate",
             supportedSizes = listOf(2 to 2),
             defaultSize = 2 to 2,
-            view = { _, _ ->
-                AnimationDemoRotate()
+            view = { _, _, onClick ->
+                AnimationDemoRotate(onClick = onClick)
             }
         )
     )
@@ -242,8 +248,8 @@ private fun registerAnimationDemoVariants() {
             variant = "bounce",
             supportedSizes = listOf(2 to 2),
             defaultSize = 2 to 2,
-            view = { _, _ ->
-                AnimationDemoBounce()
+            view = { _, _, onClick ->
+                AnimationDemoBounce(onClick = onClick)
             }
         )
     )
@@ -255,8 +261,8 @@ private fun registerAnimationDemoVariants() {
             variant = "shake",
             supportedSizes = listOf(2 to 2),
             defaultSize = 2 to 2,
-            view = { _, _ ->
-                AnimationDemoShake()
+            view = { _, _, onClick ->
+                AnimationDemoShake(onClick = onClick)
             }
         )
     )
@@ -268,8 +274,8 @@ private fun registerAnimationDemoVariants() {
             variant = "shimmer",
             supportedSizes = listOf(2 to 2),
             defaultSize = 2 to 2,
-            view = { _, _ ->
-                AnimationDemoShimmer()
+            view = { _, _, onClick ->
+                AnimationDemoShimmer(onClick = onClick)
             }
         )
     )

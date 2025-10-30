@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import top.yaotutu.deskmate.presentation.ui.screen.AnimationDemoScreen
+import top.yaotutu.deskmate.presentation.ui.screen.DashboardScreen
 
 /**
  * 导航图配置
@@ -11,14 +13,24 @@ import androidx.navigation.compose.composable
 @Composable
 fun NavGraph(
     navController: NavHostController,
-    startDestination: String = Screen.Home.route
+    startDestination: String = Screen.Dashboard.route
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(Screen.Home.route) {
-            // TODO: 添加首页 Screen
+        // 主页面 - Dashboard
+        composable(Screen.Dashboard.route) {
+            DashboardScreen(
+                onTileClick = {
+                    navController.navigate(Screen.AnimationDemo.route)
+                }
+            )
+        }
+
+        // 动画演示页面
+        composable(Screen.AnimationDemo.route) {
+            AnimationDemoScreen()
         }
     }
 }

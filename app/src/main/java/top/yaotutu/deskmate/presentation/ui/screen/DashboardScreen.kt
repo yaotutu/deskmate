@@ -23,7 +23,8 @@ import top.yaotutu.deskmate.presentation.viewmodel.DashboardViewModel
 @Composable
 fun DashboardScreen(
     viewModel: DashboardViewModel = viewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onTileClick: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -60,7 +61,8 @@ fun DashboardScreen(
                     TileFactory.CreateTile(
                         config = tileConfig,
                         uiState = uiState,
-                        index = index
+                        index = index,
+                        onClick = onTileClick
                     )
                 }
             }

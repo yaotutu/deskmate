@@ -32,10 +32,12 @@ fun ClockStandardTile(
     time: String,
     date: String,
     backgroundColor: Color = MetroTileColors.Time,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec.square(backgroundColor),
+        onClick = onClick,
         modifier = modifier
     ) {
         Column(

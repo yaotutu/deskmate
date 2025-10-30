@@ -29,6 +29,7 @@ object TileFactory {
      * @param config 瓷砖配置
      * @param uiState UI 状态（来自 ViewModel）
      * @param index 瓷砖索引（用于入场动画延迟）
+     * @param onClick 点击回调
      * @param modifier 修饰符
      */
     @Composable
@@ -36,13 +37,14 @@ object TileFactory {
         config: TileConfig,
         uiState: DashboardUiState,
         index: Int,
+        onClick: () -> Unit = {},
         modifier: Modifier = Modifier
     ) {
         // 使用 StaggerEnterAnimation 实现错峰入场动画
         StaggerEnterAnimation(index = index) {
             // 对于 clock 和 animation_demo 类型，使用变体系统
             if (config.type == "clock" || config.type == "animation_demo") {
-                CreateVariantTile(config, uiState, modifier)
+                CreateVariantTile(config, uiState, onClick, modifier)
             } else {
                 // 其他类型保持原有逻辑（向后兼容）
                 CreateLegacyTile(config, uiState, modifier)
@@ -57,6 +59,7 @@ object TileFactory {
     private fun CreateVariantTile(
         config: TileConfig,
         uiState: DashboardUiState,
+        onClick: () -> Unit,
         modifier: Modifier
     ) {
         val spec = TileRegistry.get(config.type, config.variant)
@@ -91,7 +94,7 @@ object TileFactory {
 
             else -> {
                 // 正常渲染
-                spec.view(config, uiState)
+                spec.view(config, uiState, onClick)
             }
         }
     }

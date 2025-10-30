@@ -38,10 +38,12 @@ fun ClockDetailedTile(
     date: String,
     lunarDate: String,
     backgroundColor: Color = MetroTileColors.Time,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec.wideMedium(backgroundColor, AnimationType.FLIP),
+        onClick = onClick,
         modifier = modifier
     ) {
         FlipContent(

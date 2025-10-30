@@ -46,10 +46,12 @@ import top.yaotutu.deskmate.presentation.ui.theme.MetroTileColors
 @Composable
 fun AnimationDemoNoneSmall(
     backgroundColor: Color = MetroTileColors.Time,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec.small(backgroundColor, AnimationType.NONE),
+        onClick = onClick,
         modifier = modifier
     ) {
         Box(
@@ -72,10 +74,12 @@ fun AnimationDemoNoneSmall(
 @Composable
 fun AnimationDemoNone(
     backgroundColor: Color = MetroTileColors.Time,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec.square(backgroundColor, AnimationType.NONE),
+        onClick = onClick,
         modifier = modifier
     ) {
         Column(
@@ -107,10 +111,12 @@ fun AnimationDemoNone(
 @Composable
 fun AnimationDemoFlip(
     backgroundColor: Color = MetroTileColors.Time,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec.wideMedium(backgroundColor, AnimationType.FLIP),
+        onClick = onClick,
         modifier = modifier
     ) {
         FlipContent(
@@ -168,10 +174,12 @@ fun AnimationDemoFlip(
 @Composable
 fun AnimationDemoPulse(
     backgroundColor: Color = MetroTileColors.Calendar,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec.square(backgroundColor, AnimationType.PULSE),
+        onClick = onClick,
         modifier = modifier
     ) {
         Column(
@@ -209,10 +217,12 @@ fun AnimationDemoPulse(
 @Composable
 fun AnimationDemoSlide(
     backgroundColor: Color = MetroTileColors.News,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec.large(backgroundColor, AnimationType.SLIDE),
+        onClick = onClick,
         modifier = modifier
     ) {
         SlideContent(
@@ -282,7 +292,7 @@ fun AnimationDemoSlide(
                                 fontSize = 80.sp
                             )
                             Text(
-                                text = "适用于新闻",
+                                text = "滑动轮播",
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Light,
                                 color = Color.White
@@ -309,10 +319,12 @@ fun AnimationDemoSlide(
 @Composable
 fun AnimationDemoFade(
     backgroundColor: Color = MetroTileColors.Todo,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec.square(backgroundColor, AnimationType.FADE),
+        onClick = onClick,
         modifier = modifier
     ) {
         FadeContent(
@@ -389,6 +401,7 @@ fun AnimationDemoFade(
 fun AnimationDemoCounter(
     targetValue: Int = 42,
     backgroundColor: Color = MetroTileColors.Weather,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     // 自动递增的数字，每2秒变化一次
@@ -403,6 +416,7 @@ fun AnimationDemoCounter(
 
     BaseTile(
         spec = TileSpec.square(backgroundColor, AnimationType.COUNTER),
+        onClick = onClick,
         modifier = modifier
     ) {
         CounterContent(
@@ -445,10 +459,12 @@ fun AnimationDemoCounter(
 @Composable
 fun AnimationDemoRotate(
     backgroundColor: Color = Color(0xFF00ABA9), // Teal
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec.square(backgroundColor, AnimationType.ROTATE),
+        onClick = onClick,
         modifier = modifier
     ) {
         Column(
@@ -484,10 +500,12 @@ fun AnimationDemoRotate(
 @Composable
 fun AnimationDemoBounce(
     backgroundColor: Color = Color(0xFFF472B6), // Pink
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec.square(backgroundColor, AnimationType.BOUNCE),
+        onClick = onClick,
         modifier = modifier
     ) {
         // 添加白色边框让移动更明显
@@ -534,10 +552,12 @@ fun AnimationDemoBounce(
 @Composable
 fun AnimationDemoShake(
     backgroundColor: Color = Color(0xFFDC2626), // Red
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec.square(backgroundColor, AnimationType.SHAKE),
+        onClick = onClick,
         modifier = modifier
     ) {
         // 添加白色边框让移动更明显
@@ -584,10 +604,12 @@ fun AnimationDemoShake(
 @Composable
 fun AnimationDemoShimmer(
     backgroundColor: Color = Color(0xFF9CA3AF), // Gray
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec.square(backgroundColor, AnimationType.SHIMMER),
+        onClick = onClick,
         modifier = modifier
     ) {
         Column(

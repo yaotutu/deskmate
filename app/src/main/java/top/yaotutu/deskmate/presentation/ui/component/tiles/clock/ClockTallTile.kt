@@ -39,10 +39,12 @@ fun ClockTallTile(
     date: String,
     weekday: String,
     backgroundColor: Color = MetroTileColors.Time,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
         spec = TileSpec.tall(backgroundColor, AnimationType.PULSE),
+        onClick = onClick,
         modifier = modifier
     ) {
         // 垂直布局，从上到下排列
