@@ -1,0 +1,73 @@
+{
+  "comment": "时钟组件展示页面 - 展示所有6种时钟变体尺寸",
+  "tiles": [
+    {
+      "type": "clock",
+      "variant": "2x2",
+      "columns": 2,
+      "rows": 2
+    },
+    {
+      "type": "clock",
+      "variant": "2x2",
+      "columns": 2,
+      "rows": 2
+    },
+    {
+      "comment": "=== 第二行：详细时钟 (4×2) + 高版时钟 (2×4) ===",
+      "type": "clock",
+      "variant": "4x2",
+      "columns": 4,
+      "rows": 2
+    },
+    {
+      "type": "clock",
+      "variant": "2x4",
+      "columns": 2,
+      "rows": 4
+    },
+    {
+      "comment": "=== 第三行：紧凑时钟 (2×1) + 简约时钟 (1×1) 组合 ===",
+      "type": "clock",
+      "variant": "2x1",
+      "columns": 2,
+      "rows": 1
+    },
+    {
+      "type": "clock",
+      "variant": "1x1",
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "type": "clock",
+      "variant": "1x1",
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "type": "clock",
+      "variant": "1x1",
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "type": "clock",
+      "variant": "1x1",
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "type": "clock",
+      "variant": "1x1",
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "type": "clock",
+      "variant": "1x1",
+      "columns": 1,
+      "rows": 1
+    }
+  ]
+}

@@ -16,8 +16,21 @@ Deskmate 是一个基于 Kotlin + Jetpack Compose 的现代化 Android 桌面小
 - 🧩 **自动布局引擎** - 垂直优先布局，自动计算瓷砖位置
 - 📊 **数据驱动开发** - 开发者只需关注数据，布局和动画自动处理
 - ⚡ **Repository 层** - 统一管理配置和数据加载
-- ✨ **零配置动画系统** - 使用预设自动获得最佳动画效果 (2025-11-01 更新)
+- ✨ **零配置动画系统** - 使用预设自动获得最佳动画效果
 - 🚀 **开发效率提升 80%** - 预设系统大幅减少重复代码
+- 📁 **扁平化目录结构** - 移除冗余嵌套，提升代码可读性 (2025-11-01 重构)
+- 🏷️ **直观的尺寸命名** - 使用 1x1、2x2 等直观命名，替代语义化命名 (2025-11-01 重构)
+
+### 🔄 重构历史
+
+**2025-11-01 重大重构**
+- ✅ 移除 `presentation/ui/` 中间层，减少目录嵌套（4层 → 3层）
+- ✅ 扁平化 `animation/` 目录，移除 4 个子目录（core/advanced/interaction/special）
+- ✅ 合并 `interaction/` 和 `enhancement/` 到 `common/`
+- ✅ 重命名所有时钟组件：`ClockSimpleTile` → `Clock1x1Tile` 等
+- ✅ 更新 variant ID 命名：`simple` → `1x1`，`standard` → `2x2` 等
+- ✅ 更新所有配置文件（clock_showcase.json, perfect_layout.json, dashboard_layout.json）
+- ✅ 更新 200+ 个 package 声明和 import 语句
 
 ## 核心技术栈
 
@@ -113,9 +126,7 @@ tree -I 'build|.gradle|.idea'
 │  - BaseTile.kt (基础瓷砖)                         │
 │  - TileCard.kt (瓷砖容器)                         │
 │  - TileSpec.kt (瓷砖规格)                         │
-│  - animation/core/ (核心动画)                     │
-│  - animation/advanced/ (高级动画)                 │
-│  - animation/interaction/ (交互动画)              │
+│  - animation/ (14种动画：Flip, Pulse, Slide等)   │
 │  - TileGrid.kt (网格系统)                         │
 │  - 职责: 底层布局计算、动画实现、尺寸规范           │
 └───────────────────────────────────────────────────┘
@@ -138,66 +149,75 @@ app/src/main/java/top/yaotutu/deskmate/
 ├── navigation/                        # 导航配置
 │   ├── NavGraph.kt                   # 导航图定义
 │   └── Screen.kt                     # 路由配置
-├── presentation/                      # 表现层
-│   ├── ui/
-│   │   ├── component/                # UI 组件 ⭐ 核心
-│   │   │   ├── animation/           # 动画组件
-│   │   │   │   ├── core/           # 核心动画（常用）
-│   │   │   │   │   ├── FlipAnimation.kt    # 翻转动画
-│   │   │   │   │   ├── PulseAnimation.kt   # 脉冲动画
-│   │   │   │   │   ├── SlideAnimation.kt   # 滑动动画
-│   │   │   │   │   └── FadeAnimation.kt    # 淡入淡出动画
-│   │   │   │   ├── advanced/       # 高级动画
-│   │   │   │   │   ├── RotateAnimation.kt  # 旋转动画
-│   │   │   │   │   ├── StaggerEnterAnimation.kt # 错峰进入
-│   │   │   │   │   └── ShimmerAnimation.kt # 微光动画
-│   │   │   │   ├── interaction/    # 交互动画
-│   │   │   │   │   ├── BounceAnimation.kt  # 弹跳动画
-│   │   │   │   │   └── ShakeAnimation.kt   # 抖动动画
-│   │   │   │   └── special/        # 特殊动画
-│   │   │   │       └── CounterAnimation.kt # 数字滚动
-│   │   │   ├── base/                # 基础组件层
-│   │   │   │   ├── BaseTile.kt      # 基础瓷砖（统一容器）
-│   │   │   │   ├── TileCard.kt      # 瓷砖卡片（7种尺寸）
-│   │   │   │   ├── TileSpec.kt      # 瓷砖规格配置 + AnimationType
-│   │   │   │   └── TileGrid.kt      # 网格系统 + CompositionLocal
-│   │   │   ├── enhancement/         # 增强功能
-│   │   │   │   ├── MetroStatusBar.kt # Metro 状态栏
-│   │   │   │   └── MetroBadge.kt     # 角标系统
-│   │   │   ├── factory/             # 工厂层 ⭐ 核心
-│   │   │   │   ├── TileFactory.kt   # 瓷砖工厂（根据配置创建）
-│   │   │   │   └── TileRegistryInit.kt # 变体注册初始化
-│   │   │   ├── interaction/         # 交互动效
-│   │   │   │   ├── TileClickEffect.kt # 点击效果枚举
-│   │   │   │   ├── TileClickEffects.kt # 6种单一效果
-│   │   │   │   └── TileInteractionWrappers.kt # 包装器
-│   │   │   ├── layout/              # 布局引擎
-│   │   │   │   └── VerticalPriorityLayout.kt # 垂直优先布局
-│   │   │   └── tiles/               # 业务瓷砖实现
-│   │   │       ├── clock/           # 时钟瓷砖变体
-│   │   │       │   ├── ClockSimpleTile.kt    # 简约 (1×1)
-│   │   │       │   ├── ClockCompactTile.kt   # 紧凑 (2×1)
-│   │   │       │   ├── ClockStandardTile.kt  # 标准 (2×2)
-│   │   │       │   ├── ClockTallTile.kt      # 高版 (2×4)
-│   │   │       │   ├── ClockDetailedTile.kt  # 详细 (4×2)
-│   │   │       │   └── ClockLargeTile.kt     # 大型 (4×4)
-│   │   │       ├── common/          # 公共组件
-│   │   │       │   └── ErrorTile.kt # 错误瓷砖（配置错误提示）
-│   │   │       └── special/         # 特殊瓷砖
-│   │   │           ├── PhotoTile.kt # 照片瓷砖
-│   │   │           ├── MusicTile.kt # 音乐瓷砖
-│   │   │           ├── ContactTile.kt # 联系人瓷砖
-│   │   │           └── MailTile.kt  # 邮件瓷砖
-│   │   ├── screen/                  # 页面级 Composable
-│   │   │   ├── DashboardScreen.kt   # 主页面（配置驱动）
-│   │   │   └── InteractionDemoScreen.kt # 交互演示
-│   │   └── theme/                   # Material3 主题配置
-│   │       ├── Color.kt             # 基础颜色定义
-│   │       ├── MetroColors.kt       # Metro 配色方案
-│   │       ├── Type.kt              # 字体配置
-│   │       ├── Theme.kt             # Material3 主题
-│   │       ├── MetroTheme.kt        # Metro 主题系统
-│   │       └── MetroEasing.kt       # Metro 缓动函数
+├── presentation/                      # 表现层 ⭐ 已扁平化（移除 ui/ 中间层）
+│   ├── component/                    # UI 组件 ⭐ 核心
+│   │   ├── animation/               # 动画组件（扁平化，14个文件，无子目录）
+│   │   │   ├── FlipAnimation.kt    # 核心 - 翻转动画
+│   │   │   ├── PulseAnimation.kt   # 核心 - 脉冲动画
+│   │   │   ├── SlideAnimation.kt   # 核心 - 滑动动画
+│   │   │   ├── FadeAnimation.kt    # 核心 - 淡入淡出动画
+│   │   │   ├── MarqueeAnimation.kt # 核心 - 跑马灯动画
+│   │   │   ├── PeekAnimation.kt    # 核心 - 探视动画
+│   │   │   ├── RotateAnimation.kt  # 高级 - 旋转动画
+│   │   │   ├── StaggerEnterAnimation.kt # 高级 - 错峰进入
+│   │   │   ├── ShimmerAnimation.kt # 高级 - 微光动画
+│   │   │   ├── WipeAnimation.kt    # 高级 - 擦除动画
+│   │   │   ├── DepthAnimation.kt   # 高级 - 深度动画
+│   │   │   ├── BounceAnimation.kt  # 交互 - 弹跳动画
+│   │   │   ├── ShakeAnimation.kt   # 交互 - 抖动动画
+│   │   │   └── CounterAnimation.kt # 特殊 - 数字滚动
+│   │   ├── base/                    # 基础组件层
+│   │   │   ├── BaseTile.kt          # 基础瓷砖（统一容器）
+│   │   │   ├── TileCard.kt          # 瓷砖卡片（7种尺寸）
+│   │   │   ├── TileSpec.kt          # 瓷砖规格配置 + AnimationType
+│   │   │   ├── TileGrid.kt          # 网格系统 + CompositionLocal
+│   │   │   └── presets/             # 预设系统（6个文件，38种预设）
+│   │   │       ├── SmallTilePresets.kt    # 1×1 预设
+│   │   │       ├── CompactTilePresets.kt  # 2×1 预设
+│   │   │       ├── MediumTilePresets.kt   # 2×2 预设
+│   │   │       ├── WideTilePresets.kt     # 4×2 预设
+│   │   │       ├── TallTilePresets.kt     # 2×4 预设
+│   │   │       └── LargeTilePresets.kt    # 4×4 预设
+│   │   ├── common/                  # 通用组件（合并 interaction + enhancement）
+│   │   │   ├── TileClickEffect.kt   # 点击效果枚举
+│   │   │   ├── TileClickEffects.kt  # 6种单一效果实现
+│   │   │   ├── TileInteractionWrappers.kt # 交互包装器
+│   │   │   ├── MetroStatusBar.kt    # Metro 风格状态栏
+│   │   │   └── MetroBadge.kt        # 角标系统（数字+点）
+│   │   ├── factory/                 # 工厂层 ⭐ 核心
+│   │   │   ├── TileFactory.kt       # 瓷砖工厂（根据配置创建）
+│   │   │   └── TileRegistryInit.kt  # 变体注册初始化
+│   │   ├── layout/                  # 布局引擎
+│   │   │   └── VerticalPriorityLayout.kt # 垂直优先自动布局
+│   │   └── tiles/                   # 业务瓷砖实现
+│   │       ├── clock/               # 时钟瓷砖变体（尺寸命名）
+│   │       │   ├── Clock1x1Tile.kt      # 1×1 简约版（仅时间）
+│   │       │   ├── Clock2x1Tile.kt      # 2×1 紧凑版（时间+日期）
+│   │       │   ├── Clock2x2Tile.kt      # 2×2 标准版（时间+日期+星期）
+│   │       │   ├── Clock2x4Tile.kt      # 2×4 高版（垂直布局+农历）
+│   │       │   ├── Clock4x2Tile.kt      # 4×2 详细版（翻转动画+农历）
+│   │       │   └── Clock4x4Tile.kt      # 4×4 大型版（完整信息）
+│   │       ├── common/              # 公共组件
+│   │       │   └── ErrorTile.kt     # 错误瓷砖（配置错误提示）
+│   │       ├── legacy/              # 遗留组件（向后兼容）
+│   │       │   └── TileComponents.kt # 旧组件库（待迁移）
+│   │       └── special/             # 特殊瓷砖（示例）
+│   │           ├── PhotoTile.kt     # 照片瓷砖
+│   │           ├── MusicTile.kt     # 音乐瓷砖
+│   │           ├── ContactTile.kt   # 联系人瓷砖
+│   │           └── MailTile.kt      # 邮件瓷砖
+│   ├── screen/                      # 页面级 Composable
+│   │   ├── DashboardScreen.kt       # 主页面（配置驱动）
+│   │   ├── InteractionDemoScreen.kt # 交互演示页面
+│   │   ├── AnimationDemoScreen.kt   # 动画演示页面
+│   │   └── PresetsDemoScreen.kt     # 预设演示页面
+│   ├── theme/                       # Material3 主题配置
+│   │   ├── Color.kt                 # 基础颜色定义
+│   │   ├── MetroColors.kt           # Metro 配色方案（高饱和度）
+│   │   ├── Type.kt                  # 字体配置（Thin/Light）
+│   │   ├── Theme.kt                 # Material3 主题
+│   │   ├── MetroTheme.kt            # Metro 主题系统
+│   │   └── MetroEasing.kt           # Metro 缓动函数
 │   └── viewmodel/                   # ViewModel 层
 │       └── DashboardViewModel.kt    # UI 状态管理
 └── MainActivity.kt                   # 应用入口
@@ -269,12 +289,51 @@ docs/                                  # 📚 完整文档
 
 ## 代码规范
 
+### 通用规范
+
 - **包命名**: 全小写,无下划线 (如 `top.yaotutu.deskmate.data.model`)
 - **类命名**: 大驼峰 PascalCase (如 `UserViewModel`)
 - **函数/变量**: 小驼峰 camelCase (如 `loadUserData`)
 - **Composable 函数**: 大驼峰 PascalCase (如 `UserScreen`)
 - **常量**: 全大写 + 下划线 (如 `MAX_RETRY_COUNT`)
 - 遵循 [Kotlin 官方编码规范](https://kotlinlang.org/docs/coding-conventions.html)
+
+### 瓷砖命名规范 ⭐ 重要
+
+**文件命名**：使用 `{Type}{Size}Tile.kt` 格式
+
+```
+✅ 推荐：
+- Clock1x1Tile.kt    # 1×1 时钟
+- Clock2x2Tile.kt    # 2×2 时钟
+- Clock4x2Tile.kt    # 4×2 时钟
+- Music2x2Tile.kt    # 2×2 音乐
+
+❌ 不推荐：
+- ClockSimpleTile.kt   # 语义化命名不直观
+- ClockStandardTile.kt # 无法直接看出尺寸
+- ClockLargeTile.kt    # "大型" 概念模糊
+```
+
+**Variant ID 命名**：配置文件中使用尺寸格式
+
+```json
+✅ 推荐：
+{ "type": "clock", "variant": "1x1", "columns": 1, "rows": 1 }
+{ "type": "clock", "variant": "2x2", "columns": 2, "rows": 2 }
+{ "type": "clock", "variant": "4x2", "columns": 4, "rows": 2 }
+
+❌ 不推荐：
+{ "type": "clock", "variant": "simple", "columns": 1, "rows": 1 }
+{ "type": "clock", "variant": "standard", "columns": 2, "rows": 2 }
+{ "type": "clock", "variant": "detailed", "columns": 4, "rows": 2 }
+```
+
+**优势**：
+- ✅ 一眼看出瓷砖尺寸
+- ✅ 配置文件更加直观
+- ✅ variant 与 columns/rows 一致，避免混淆
+- ✅ 新手友好，无需记忆语义对应关系
 
 ## 瓷砖组件使用指南 ⭐ 重点
 
@@ -293,7 +352,7 @@ docs/                                  # 📚 完整文档
 ```json
 {
   "tiles": [
-    { "type": "clock", "variant": "detailed", "columns": 4, "rows": 2 },
+    { "type": "clock", "variant": "4x2", "columns": 4, "rows": 2 },
     { "type": "weather", "variant": "standard", "columns": 2, "rows": 2 },
     { "type": "calendar", "variant": "standard", "columns": 2, "rows": 2 }
   ]
@@ -344,7 +403,7 @@ fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
 ```kotlin
 val layoutConfig = LayoutConfig(
     tiles = listOf(
-        TileConfig("clock", "detailed", 4, 2),
+        TileConfig("clock", "4x2", 4, 2),
         TileConfig("weather", "standard", 2, 2),
         TileConfig("calendar", "standard", 2, 2)
     )
@@ -357,12 +416,12 @@ val layoutConfig = LayoutConfig(
 
 | 变体 | 尺寸 | 特点 | 配置 |
 |-----|------|------|------|
-| **simple** | 1×1 | 仅时间 | `{"type":"clock","variant":"simple","columns":1,"rows":1}` |
-| **compact** | 2×1 | 时间+日期 | `{"type":"clock","variant":"compact","columns":2,"rows":1}` |
-| **standard** | 2×2 | 时间+日期+星期 | `{"type":"clock","variant":"standard","columns":2,"rows":2}` |
-| **tall** | 2×4 | 纵向布局+农历 | `{"type":"clock","variant":"tall","columns":2,"rows":4}` |
-| **detailed** | 4×2 | 翻转动画+农历 | `{"type":"clock","variant":"detailed","columns":4,"rows":2}` |
-| **large** | 4×4 | 大型展示+所有信息 | `{"type":"clock","variant":"large","columns":4,"rows":4}` |
+| **1x1** | 1×1 | 简约版，仅时间 | `{"type":"clock","variant":"1x1","columns":1,"rows":1}` |
+| **2x1** | 2×1 | 紧凑版，时间+日期 | `{"type":"clock","variant":"2x1","columns":2,"rows":1}` |
+| **2x2** | 2×2 | 标准版，时间+日期+星期 | `{"type":"clock","variant":"2x2","columns":2,"rows":2}` |
+| **2x4** | 2×4 | 高版，纵向布局+农历 | `{"type":"clock","variant":"2x4","columns":2,"rows":4}` |
+| **4x2** | 4×2 | 详细版，翻转动画+农历 | `{"type":"clock","variant":"4x2","columns":4,"rows":2}` |
+| **4x4** | 4×4 | 大型版，完整信息展示 | `{"type":"clock","variant":"4x4","columns":4,"rows":4}` |
 
 #### 其他瓷砖（遗留组件）
 
@@ -479,7 +538,7 @@ class DashboardViewModel : ViewModel() {
     }
 }
 
-// presentation/ui/screen/DashboardScreen.kt
+// presentation/screen/DashboardScreen.kt
 @Composable
 fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsState()
@@ -535,16 +594,27 @@ class App : Application() {
 
 ### 1. 架构使用原则
 
+**配置与工厂**
 - ✅ **使用配置驱动** - 通过 JSON 或代码配置定义布局，而不是硬编码
 - ✅ **使用工厂模式** - 通过 TileFactory 创建瓷砖，而不是直接实例化组件
 - ✅ **注册变体** - 在 TileRegistryInit 中注册所有变体
 - ✅ **使用 BaseTile** - 新组件应基于 BaseTile 和 TileSpec 构建
 - ✅ **使用预设样式** - 优先使用 `XxxTilePresets` 中的预设布局，减少重复代码
 - ✅ **使用 VerticalPriorityLayout** - 让布局引擎自动计算位置
+
+**文件组织**
+- ✅ **扁平化结构** - 避免过度嵌套，保持目录层级在 3-4 层以内
+- ✅ **尺寸命名** - 新瓷砖使用尺寸格式命名（如 `Clock1x1Tile.kt`）
+- ✅ **功能分组** - 按功能分组文件（animation/、tiles/、factory/ 等）
+- ✅ **路径一致性** - 确保 package 声明与文件路径一致
+
+**禁止事项**
 - ❌ 不要手动计算瓷砖位置和尺寸
 - ❌ 不要跳过工厂直接使用组件（除非在演示页面）
 - ❌ 不要忘记在 TileRegistry 中注册新变体
 - ❌ 不要重复编写已有的布局代码（检查预设系统是否有对应模板）
+- ❌ 不要使用语义化 variant ID（如 "simple"），使用尺寸格式（如 "1x1"）
+- ❌ 不要创建不必要的中间层目录（如 ui/）
 
 ### 2. 状态管理原则
 
@@ -612,12 +682,20 @@ val uiState = MutableStateFlow(MyUiState())
 
 为现有类型（如 clock）添加新变体：
 
-**Step 1**: 在 `tiles/clock/` 目录创建新变体文件
+**Step 1**: 在 `component/tiles/clock/` 目录创建新变体文件
 
 ```kotlin
-// presentation/ui/component/tiles/clock/ClockCustomTile.kt
+// presentation/component/tiles/clock/Clock3x3Tile.kt (示例：自定义3×3尺寸)
+/**
+ * 时钟瓷砖 3×3 - 自定义版（示例）
+ *
+ * 特性：
+ * - 自定义尺寸展示
+ * - 演示如何创建新的时钟变体
+ * - 使用 Flip 翻转动画
+ */
 @Composable
-fun ClockCustomTile(
+fun Clock3x3Tile(
     time: String,
     date: String,
     modifier: Modifier = Modifier
@@ -625,10 +703,7 @@ fun ClockCustomTile(
     val baseCellSize = LocalBaseCellSize.current
 
     BaseTile(
-        spec = TileSpec.square(
-            color = MetroColors.Blue,
-            animation = AnimationType.FLIP
-        ),
+        spec = TileSpec(3, 3, MetroColors.Blue, AnimationType.FLIP),
         modifier = modifier
     ) {
         // 自定义布局
@@ -647,19 +722,19 @@ fun ClockCustomTile(
 **Step 2**: 在 `TileRegistryInit.kt` 中注册变体
 
 ```kotlin
-// presentation/ui/component/factory/TileRegistryInit.kt
+// presentation/component/factory/TileRegistryInit.kt
 fun initializeTileRegistry() {
     // ... 现有注册代码 ...
 
-    // 注册新的 custom 变体
+    // 注册新的 3x3 变体（使用尺寸命名规范）
     TileRegistry.register(
         TileVariantSpec(
             type = "clock",
-            variant = "custom",
-            supportedSizes = listOf(2 to 2, 4 to 4),  // 支持的尺寸
-            defaultSize = 2 to 2  // 默认尺寸
+            variant = "3x3",  // ⭐ 使用尺寸格式命名
+            supportedSizes = listOf(3 to 3),  // 支持的尺寸
+            defaultSize = 3 to 3  // 默认尺寸
         ) { config, uiState ->
-            ClockCustomTile(
+            Clock3x3Tile(
                 time = uiState.currentTime,
                 date = uiState.currentDate
             )
@@ -673,7 +748,7 @@ fun initializeTileRegistry() {
 ```json
 {
   "tiles": [
-    { "type": "clock", "variant": "custom", "columns": 2, "rows": 2 }
+    { "type": "clock", "variant": "3x3", "columns": 3, "rows": 3 }
   ]
 }
 ```
@@ -685,18 +760,23 @@ fun initializeTileRegistry() {
 **Step 1**: 创建瓷砖目录和文件
 
 ```kotlin
-// presentation/ui/component/tiles/music/MusicStandardTile.kt
+// presentation/component/tiles/music/Music2x2Tile.kt
+/**
+ * 音乐瓷砖 2×2 - 标准版（示例）
+ *
+ * 特性：
+ * - 显示当前播放的歌曲和艺术家
+ * - 使用 Pulse 脉冲动画
+ * - 青色背景（Metro 风格）
+ */
 @Composable
-fun MusicStandardTile(
+fun Music2x2Tile(
     songName: String,
     artist: String,
     modifier: Modifier = Modifier
 ) {
     BaseTile(
-        spec = TileSpec.square(
-            color = Color(0xFF00ABA9),
-            animation = AnimationType.PULSE
-        ),
+        spec = TileSpec(2, 2, Color(0xFF00ABA9), AnimationType.PULSE),
         modifier = modifier
     ) {
         Column(
@@ -728,14 +808,15 @@ enum class TileType(val typeName: String) {
 **Step 3**: 在 `TileRegistryInit.kt` 中注册
 
 ```kotlin
+// presentation/component/factory/TileRegistryInit.kt
 TileRegistry.register(
     TileVariantSpec(
         type = "music",
-        variant = "standard",
+        variant = "2x2",  // ⭐ 使用尺寸格式命名（推荐）
         supportedSizes = listOf(2 to 2),
         defaultSize = 2 to 2
     ) { config, uiState ->
-        MusicStandardTile(
+        Music2x2Tile(
             songName = uiState.currentSong,
             artist = uiState.currentArtist
         )
@@ -758,7 +839,7 @@ data class DashboardUiState(
 ```json
 {
   "tiles": [
-    { "type": "music", "variant": "standard", "columns": 2, "rows": 2 }
+    { "type": "music", "variant": "2x2", "columns": 2, "rows": 2 }
   ]
 }
 ```
@@ -774,10 +855,23 @@ data class DashboardUiState(
 
 ### Q: 配置文件不生效？
 **A**:
-1. 确认 JSON 文件放在 `assets/` 目录
-2. 检查 JSON 格式是否正确（使用 JSON 验证器）
-3. 确认 Repository 的加载逻辑正确
-4. 如果 JSON 加载失败，会自动使用默认配置
+1. **检查加载的文件名** - 确认 DashboardScreen 中 `repository.loadLayoutConfig()` 加载的是哪个文件
+   ```kotlin
+   // 检查 DashboardScreen.kt 第 36 行左右
+   val layoutConfig = remember {
+       repository.loadLayoutConfig("clock_showcase.json")  // 实际加载的文件
+   }
+   ```
+2. 确认 JSON 文件放在 `assets/` 目录
+3. 检查 JSON 格式是否正确（使用 JSON 验证器）
+4. 确认所有配置文件都已更新（如果重构了 variant ID）
+5. 执行 clean build 并重新安装：
+   ```bash
+   ./gradlew clean && ./gradlew assembleDebug
+   adb uninstall top.yaotutu.deskmate
+   adb install app/build/outputs/apk/debug/app-debug.apk
+   ```
+6. 如果 JSON 加载失败，会自动使用默认配置
 
 ### Q: 瓷砖布局混乱？
 **A**:
@@ -807,6 +901,30 @@ data class DashboardUiState(
    ```
 2. 使用 `@Preview` 注解在 Android Studio 中预览组件
 3. 查看 ErrorTile 提供的错误信息
+4. 检查 logcat 输出：
+   ```bash
+   adb logcat -d | grep TileFactory  # 查看工厂创建日志
+   adb logcat -d | grep LayoutConfig # 查看配置加载日志
+   ```
+
+### Q: 重构后如何保证代码正确性？
+**A**:
+1. **编译检查** - 确保 `./gradlew clean && ./gradlew assembleDebug` 成功
+2. **路径验证** - 使用 IDE 的 "Find Usages" 检查所有引用是否正确
+3. **配置更新** - 确保所有 JSON 配置文件都已同步更新
+4. **运行测试** - 截图验证应用实际运行效果
+5. **文档同步** - 更新 CLAUDE.md 和相关文档
+
+### Q: 旧的语义化命名还能用吗？
+**A**: 不推荐，但如果需要向后兼容：
+1. 可以在 TileRegistry 中同时注册两种 variant ID：
+   ```kotlin
+   // 同时支持 "1x1" 和 "simple"
+   TileRegistry.register(/* variant = "1x1" */)
+   TileRegistry.register(/* variant = "simple" */)  // 向后兼容
+   ```
+2. 新功能统一使用尺寸命名（如 `1x1`）
+3. 逐步迁移旧配置文件
 
 ## 组件说明
 
@@ -838,12 +956,12 @@ data class DashboardUiState(
 ### 业务组件层
 
 #### 时钟瓷砖（6个变体）
-- **ClockSimpleTile.kt** - 简约版 (1×1)
-- **ClockCompactTile.kt** - 紧凑版 (2×1)
-- **ClockStandardTile.kt** - 标准版 (2×2)
-- **ClockTallTile.kt** - 高版 (2×4)
-- **ClockDetailedTile.kt** - 详细版 (4×2，翻转动画）
-- **ClockLargeTile.kt** - 大型版 (4×4)
+- **Clock1x1Tile.kt** - 1×1 简约版（仅时间）
+- **Clock2x1Tile.kt** - 2×1 紧凑版（时间+日期）
+- **Clock2x2Tile.kt** - 2×2 标准版（时间+日期+星期）
+- **Clock2x4Tile.kt** - 2×4 高版（垂直布局+农历）
+- **Clock4x2Tile.kt** - 4×2 详细版（翻转动画+农历）
+- **Clock4x4Tile.kt** - 4×4 大型版（完整信息展示）
 
 #### 公共组件
 - **ErrorTile.kt** - 错误瓷砖（配置错误提示）
