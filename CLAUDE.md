@@ -113,9 +113,7 @@ tree -I 'build|.gradle|.idea'
 │  - BaseTile.kt (基础瓷砖)                         │
 │  - TileCard.kt (瓷砖容器)                         │
 │  - TileSpec.kt (瓷砖规格)                         │
-│  - animation/core/ (核心动画)                     │
-│  - animation/advanced/ (高级动画)                 │
-│  - animation/interaction/ (交互动画)              │
+│  - animation/ (14种动画：Flip, Pulse, Slide等)   │
 │  - TileGrid.kt (网格系统)                         │
 │  - 职责: 底层布局计算、动画实现、尺寸规范           │
 └───────────────────────────────────────────────────┘
@@ -139,65 +137,72 @@ app/src/main/java/top/yaotutu/deskmate/
 │   ├── NavGraph.kt                   # 导航图定义
 │   └── Screen.kt                     # 路由配置
 ├── presentation/                      # 表现层
-│   ├── ui/
-│   │   ├── component/                # UI 组件 ⭐ 核心
-│   │   │   ├── animation/           # 动画组件
-│   │   │   │   ├── core/           # 核心动画（常用）
-│   │   │   │   │   ├── FlipAnimation.kt    # 翻转动画
-│   │   │   │   │   ├── PulseAnimation.kt   # 脉冲动画
-│   │   │   │   │   ├── SlideAnimation.kt   # 滑动动画
-│   │   │   │   │   └── FadeAnimation.kt    # 淡入淡出动画
-│   │   │   │   ├── advanced/       # 高级动画
-│   │   │   │   │   ├── RotateAnimation.kt  # 旋转动画
-│   │   │   │   │   ├── StaggerEnterAnimation.kt # 错峰进入
-│   │   │   │   │   └── ShimmerAnimation.kt # 微光动画
-│   │   │   │   ├── interaction/    # 交互动画
-│   │   │   │   │   ├── BounceAnimation.kt  # 弹跳动画
-│   │   │   │   │   └── ShakeAnimation.kt   # 抖动动画
-│   │   │   │   └── special/        # 特殊动画
-│   │   │   │       └── CounterAnimation.kt # 数字滚动
-│   │   │   ├── base/                # 基础组件层
-│   │   │   │   ├── BaseTile.kt      # 基础瓷砖（统一容器）
-│   │   │   │   ├── TileCard.kt      # 瓷砖卡片（7种尺寸）
-│   │   │   │   ├── TileSpec.kt      # 瓷砖规格配置 + AnimationType
-│   │   │   │   └── TileGrid.kt      # 网格系统 + CompositionLocal
-│   │   │   ├── enhancement/         # 增强功能
-│   │   │   │   ├── MetroStatusBar.kt # Metro 状态栏
-│   │   │   │   └── MetroBadge.kt     # 角标系统
-│   │   │   ├── factory/             # 工厂层 ⭐ 核心
-│   │   │   │   ├── TileFactory.kt   # 瓷砖工厂（根据配置创建）
-│   │   │   │   └── TileRegistryInit.kt # 变体注册初始化
-│   │   │   ├── interaction/         # 交互动效
-│   │   │   │   ├── TileClickEffect.kt # 点击效果枚举
-│   │   │   │   ├── TileClickEffects.kt # 6种单一效果
-│   │   │   │   └── TileInteractionWrappers.kt # 包装器
-│   │   │   ├── layout/              # 布局引擎
-│   │   │   │   └── VerticalPriorityLayout.kt # 垂直优先布局
-│   │   │   └── tiles/               # 业务瓷砖实现
-│   │   │       ├── clock/           # 时钟瓷砖变体
-│   │   │       │   ├── ClockSimpleTile.kt    # 简约 (1×1)
-│   │   │       │   ├── ClockCompactTile.kt   # 紧凑 (2×1)
-│   │   │       │   ├── ClockStandardTile.kt  # 标准 (2×2)
-│   │   │       │   ├── ClockTallTile.kt      # 高版 (2×4)
-│   │   │       │   ├── ClockDetailedTile.kt  # 详细 (4×2)
-│   │   │       │   └── ClockLargeTile.kt     # 大型 (4×4)
-│   │   │       ├── common/          # 公共组件
-│   │   │       │   └── ErrorTile.kt # 错误瓷砖（配置错误提示）
-│   │   │       └── special/         # 特殊瓷砖
-│   │   │           ├── PhotoTile.kt # 照片瓷砖
-│   │   │           ├── MusicTile.kt # 音乐瓷砖
-│   │   │           ├── ContactTile.kt # 联系人瓷砖
-│   │   │           └── MailTile.kt  # 邮件瓷砖
-│   │   ├── screen/                  # 页面级 Composable
-│   │   │   ├── DashboardScreen.kt   # 主页面（配置驱动）
-│   │   │   └── InteractionDemoScreen.kt # 交互演示
-│   │   └── theme/                   # Material3 主题配置
-│   │       ├── Color.kt             # 基础颜色定义
-│   │       ├── MetroColors.kt       # Metro 配色方案
-│   │       ├── Type.kt              # 字体配置
-│   │       ├── Theme.kt             # Material3 主题
-│   │       ├── MetroTheme.kt        # Metro 主题系统
-│   │       └── MetroEasing.kt       # Metro 缓动函数
+│   ├── component/                    # UI 组件 ⭐ 核心
+│   │   ├── animation/               # 动画组件（扁平化，14个文件）
+│   │   │   ├── FlipAnimation.kt    # 翻转动画
+│   │   │   ├── PulseAnimation.kt   # 脉冲动画
+│   │   │   ├── SlideAnimation.kt   # 滑动动画
+│   │   │   ├── FadeAnimation.kt    # 淡入淡出动画
+│   │   │   ├── MarqueeAnimation.kt # 跑马灯动画
+│   │   │   ├── PeekAnimation.kt    # 探视动画
+│   │   │   ├── RotateAnimation.kt  # 旋转动画
+│   │   │   ├── StaggerEnterAnimation.kt # 错峰进入
+│   │   │   ├── ShimmerAnimation.kt # 微光动画
+│   │   │   ├── WipeAnimation.kt    # 擦除动画
+│   │   │   ├── DepthAnimation.kt   # 深度动画
+│   │   │   ├── BounceAnimation.kt  # 弹跳动画
+│   │   │   ├── ShakeAnimation.kt   # 抖动动画
+│   │   │   └── CounterAnimation.kt # 数字滚动
+│   │   ├── base/                    # 基础组件层
+│   │   │   ├── BaseTile.kt          # 基础瓷砖（统一容器）
+│   │   │   ├── TileCard.kt          # 瓷砖卡片（7种尺寸）
+│   │   │   ├── TileSpec.kt          # 瓷砖规格配置 + AnimationType
+│   │   │   ├── TileGrid.kt          # 网格系统 + CompositionLocal
+│   │   │   └── presets/             # 预设系统（6个文件）
+│   │   │       ├── SmallTilePresets.kt
+│   │   │       ├── CompactTilePresets.kt
+│   │   │       ├── MediumTilePresets.kt
+│   │   │       ├── WideTilePresets.kt
+│   │   │       ├── TallTilePresets.kt
+│   │   │       └── LargeTilePresets.kt
+│   │   ├── common/                  # 通用组件（合并 interaction + enhancement）
+│   │   │   ├── TileClickEffect.kt   # 点击效果枚举
+│   │   │   ├── TileClickEffects.kt  # 6种单一效果
+│   │   │   ├── TileInteractionWrappers.kt # 包装器
+│   │   │   ├── MetroStatusBar.kt    # Metro 状态栏
+│   │   │   └── MetroBadge.kt        # 角标系统
+│   │   ├── factory/                 # 工厂层 ⭐ 核心
+│   │   │   ├── TileFactory.kt       # 瓷砖工厂（根据配置创建）
+│   │   │   └── TileRegistryInit.kt  # 变体注册初始化
+│   │   ├── layout/                  # 布局引擎
+│   │   │   └── VerticalPriorityLayout.kt # 垂直优先布局
+│   │   └── tiles/                   # 业务瓷砖实现
+│   │       ├── clock/               # 时钟瓷砖变体
+│   │       │   ├── ClockSimpleTile.kt    # 简约 (1×1)
+│   │       │   ├── ClockCompactTile.kt   # 紧凑 (2×1)
+│   │       │   ├── ClockStandardTile.kt  # 标准 (2×2)
+│   │       │   ├── ClockTallTile.kt      # 高版 (2×4)
+│   │       │   ├── ClockDetailedTile.kt  # 详细 (4×2)
+│   │       │   └── ClockLargeTile.kt     # 大型 (4×4)
+│   │       ├── common/              # 公共组件
+│   │       │   └── ErrorTile.kt     # 错误瓷砖（配置错误提示）
+│   │       └── special/             # 特殊瓷砖
+│   │           ├── PhotoTile.kt     # 照片瓷砖
+│   │           ├── MusicTile.kt     # 音乐瓷砖
+│   │           ├── ContactTile.kt   # 联系人瓷砖
+│   │           └── MailTile.kt      # 邮件瓷砖
+│   ├── screen/                      # 页面级 Composable
+│   │   ├── DashboardScreen.kt       # 主页面（配置驱动）
+│   │   ├── InteractionDemoScreen.kt # 交互演示
+│   │   ├── AnimationDemoScreen.kt   # 动画演示
+│   │   └── PresetsDemoScreen.kt     # 预设演示
+│   ├── theme/                       # Material3 主题配置
+│   │   ├── Color.kt                 # 基础颜色定义
+│   │   ├── MetroColors.kt           # Metro 配色方案
+│   │   ├── Type.kt                  # 字体配置
+│   │   ├── Theme.kt                 # Material3 主题
+│   │   ├── MetroTheme.kt            # Metro 主题系统
+│   │   └── MetroEasing.kt           # Metro 缓动函数
 │   └── viewmodel/                   # ViewModel 层
 │       └── DashboardViewModel.kt    # UI 状态管理
 └── MainActivity.kt                   # 应用入口
@@ -479,7 +484,7 @@ class DashboardViewModel : ViewModel() {
     }
 }
 
-// presentation/ui/screen/DashboardScreen.kt
+// presentation/screen/DashboardScreen.kt
 @Composable
 fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsState()
@@ -615,7 +620,7 @@ val uiState = MutableStateFlow(MyUiState())
 **Step 1**: 在 `tiles/clock/` 目录创建新变体文件
 
 ```kotlin
-// presentation/ui/component/tiles/clock/ClockCustomTile.kt
+// presentation/component/tiles/clock/ClockCustomTile.kt
 @Composable
 fun ClockCustomTile(
     time: String,
@@ -647,7 +652,7 @@ fun ClockCustomTile(
 **Step 2**: 在 `TileRegistryInit.kt` 中注册变体
 
 ```kotlin
-// presentation/ui/component/factory/TileRegistryInit.kt
+// presentation/component/factory/TileRegistryInit.kt
 fun initializeTileRegistry() {
     // ... 现有注册代码 ...
 
@@ -685,7 +690,7 @@ fun initializeTileRegistry() {
 **Step 1**: 创建瓷砖目录和文件
 
 ```kotlin
-// presentation/ui/component/tiles/music/MusicStandardTile.kt
+// presentation/component/tiles/music/MusicStandardTile.kt
 @Composable
 fun MusicStandardTile(
     songName: String,

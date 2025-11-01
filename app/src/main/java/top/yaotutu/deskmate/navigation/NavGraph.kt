@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import top.yaotutu.deskmate.presentation.ui.screen.AnimationDemoScreen
-import top.yaotutu.deskmate.presentation.ui.screen.DashboardScreen
-import top.yaotutu.deskmate.presentation.ui.screen.PresetsDemoScreen
+import top.yaotutu.deskmate.presentation.screen.AnimationDemoScreen
+import top.yaotutu.deskmate.presentation.screen.DashboardScreen
+import top.yaotutu.deskmate.presentation.screen.PresetsDemoScreen
 
 /**
  * 导航图配置

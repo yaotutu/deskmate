@@ -11,8 +11,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.rememberNavController
 import top.yaotutu.deskmate.navigation.NavGraph
-import top.yaotutu.deskmate.presentation.ui.component.factory.registerAllTileVariants
-import top.yaotutu.deskmate.presentation.ui.theme.DeskmateTheme
+import top.yaotutu.deskmate.presentation.component.factory.registerAllTileVariants
+import top.yaotutu.deskmate.presentation.theme.DeskmateTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
