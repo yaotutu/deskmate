@@ -32,8 +32,9 @@ fun DashboardScreen(
     // 加载布局配置
     val layoutConfig = remember {
         val repository = LayoutConfigRepository(context)
-        // 🎯 完美布局模式：使用 perfect_layout.json（6列×4行无滚动布局）
-        repository.loadLayoutConfig("perfect_layout.json") ?: repository.getDefaultLayoutConfig()
+        // 🕐 时钟展示模式：使用 clock_showcase.json（展示所有时钟变体）
+        repository.loadLayoutConfig("clock_showcase.json") ?: repository.getDefaultLayoutConfig()
+        // 🎯 完美布局模式：repository.loadLayoutConfig("perfect_layout.json")
         // 💡 正常模式：repository.loadLayoutConfig()
         // 🎬 动画演示模式：repository.loadLayoutConfig("animation_demo.json")
     }
