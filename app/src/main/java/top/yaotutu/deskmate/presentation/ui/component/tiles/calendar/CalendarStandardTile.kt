@@ -1,4 +1,4 @@
-package top.yaotutu.deskmate.presentation.ui.component.tiles.special
+package top.yaotutu.deskmate.presentation.ui.component.tiles.calendar
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -9,23 +9,24 @@ import top.yaotutu.deskmate.presentation.ui.component.base.presets.MediumTilePre
 import top.yaotutu.deskmate.presentation.ui.theme.MetroTileColors
 
 /**
- * 照片瓷砖 (2×2)
+ * 标准日历瓷砖 (2×2)
  *
  * 特性：
- * - 显示照片图标和标题
- * - 使用 MediumTilePresets.IconTitle 预设
+ * - 显示日期和星期信息
+ * - 使用 TitleSubtitle 预设获得翻转动画效果
+ * - 正面显示日期，背面显示星期
  *
- * @param imageUrl 图片URL（暂时用占位符代替）
- * @param caption 标题（默认 "照片"）
- * @param backgroundColor 背景颜色（默认 Metro 品红色）
+ * @param date 日期信息（如 "1月31日"）
+ * @param weekday 星期信息（如 "星期五"）
+ * @param backgroundColor 背景颜色（默认 Metro 绿色）
  * @param onClick 点击回调
  * @param modifier 修饰符
  */
 @Composable
-fun PhotoTile(
-    imageUrl: String = "",
-    caption: String = "照片",
-    backgroundColor: Color = MetroTileColors.Photo,
+fun CalendarStandardTile(
+    date: String,
+    weekday: String,
+    backgroundColor: Color = MetroTileColors.Calendar,
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -34,9 +35,9 @@ fun PhotoTile(
         onClick = onClick,
         modifier = modifier
     ) {
-        MediumTilePresets.IconTitle(
-            icon = "📷",
-            title = caption
+        MediumTilePresets.TitleSubtitle(
+            title = date,
+            subtitle = weekday
         )
     }
 }

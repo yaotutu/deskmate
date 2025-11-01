@@ -52,12 +52,12 @@
       "type": "news",
       "variant": "standard",
       "columns": 4,
-      "rows": 4
+      "rows": 2
     },
     {
-      "comment": "=== 区域4: NONE 无动画展示 ===",
+      "comment": "=== 区域4: FADE 淡入淡出动画展示 ===",
       "type": "todo",
-      "variant": "standard",
+      "variant": "list",
       "columns": 2,
       "rows": 4
     },

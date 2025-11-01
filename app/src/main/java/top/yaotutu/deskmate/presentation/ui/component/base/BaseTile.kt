@@ -15,6 +15,7 @@ import top.yaotutu.deskmate.presentation.ui.component.animation.advanced.RotateT
 import top.yaotutu.deskmate.presentation.ui.component.animation.advanced.ShimmerTileAnimation
 import top.yaotutu.deskmate.presentation.ui.component.animation.advanced.WipeTileAnimation
 import top.yaotutu.deskmate.presentation.ui.component.animation.advanced.DepthTileAnimation
+import top.yaotutu.deskmate.presentation.ui.component.animation.core.PulseTileAnimation
 import top.yaotutu.deskmate.presentation.ui.component.animation.interaction.BounceTileAnimation
 import top.yaotutu.deskmate.presentation.ui.component.animation.interaction.ShakeTileAnimation
 import top.yaotutu.deskmate.presentation.ui.component.animation.special.CounterAnimation
@@ -74,58 +75,11 @@ fun BaseTile(
     spec: TileSpec,
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier,
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable () -> Unit
 ) {
     // 框架自动获取布局参数（业务组件无需关心）
     val baseCellSize = LocalBaseCellSize.current
     val dynamicGap = LocalDynamicGap.current
-
-    // 根据动画类型包装内容
-    val animatedContent: @Composable () -> Unit = when (spec.animation) {
-        AnimationType.PULSE -> {
-            // 脉冲动画：周期性缩放
-            { PulseTileAnimation { Box { content() } } }
-        }
-        AnimationType.ROTATE -> {
-            // 旋转动画：持续旋转（用于刷新指示）
-            { RotateTileAnimation { Box { content() } } }
-        }
-        AnimationType.BOUNCE -> {
-            // 弹跳动画：上下弹跳（用于新内容提醒）
-            { BounceTileAnimation { Box { content() } } }
-        }
-        AnimationType.SHAKE -> {
-            // 抖动动画：横向抖动（用于重要通知）
-            { ShakeTileAnimation { Box { content() } } }
-        }
-        AnimationType.SHIMMER -> {
-            // 微光动画：加载状态指示
-            { ShimmerTileAnimation { Box { content() } } }
-        }
-        AnimationType.MARQUEE -> {
-            // 跑马灯动画：连续滚动（简单动画，自动包装）
-            // 注意：内容需要是可滚动的文本或列表
-            { Box { content() } }
-        }
-        AnimationType.DEPTH -> {
-            // 深度动画：3D 透视效果
-            { DepthTileAnimation { Box { content() } } }
-        }
-        AnimationType.FLIP, AnimationType.SLIDE, AnimationType.FADE, AnimationType.COUNTER, AnimationType.PEEK, AnimationType.WIPE -> {
-            // 复杂动画：需要业务组件使用辅助组件
-            // - FLIP: 使用 FlipContent
-            // - SLIDE: 使用 SlideContent
-            // - FADE: 使用 FadeContent
-            // - COUNTER: 使用 CounterContent
-            // - PEEK: 使用 PeekContent
-            // - WIPE: 使用 WipeContent
-            { Box { content() } }
-        }
-        AnimationType.NONE -> {
-            // 无动画：直接渲染
-            { Box { content() } }
-        }
-    }
 
     // 调用底层 Tile 函数（框架处理布局）
     Tile(
@@ -137,7 +91,7 @@ fun BaseTile(
         onClick = onClick,
         clickEffect = TileClickEffect.PRESS_SCALE,
         modifier = modifier,
-        content = animatedContent
+        content = content
     )
 }
 
@@ -454,4 +408,62 @@ fun DepthContent(
         shadowRange = shadowRange,
         content = content
     )
+}
+
+/**
+ * PulseContent - 脉冲动画内容辅助组件
+ *
+ * 用于在 BaseTile 中定义脉冲动画。
+ * 这个组件会自动调用 PulseTileAnimation 处理呼吸效果。
+ *
+ * 使用示例：
+ * ```
+ * BaseTile(spec = TileSpec.square(MetroColors.Blue)) {
+ *     PulseContent(
+ *         scaleRange = 1.0f to 1.02f
+ *     ) {
+ *         Text("📱", fontSize = 64.sp, color = Color.White)
+ *     }
+ * }
+ * ```
+ *
+ * @param scaleRange 缩放范围（默认 1.0f to 1.02f）
+ * @param pulseDurationMillis 脉冲持续时间（默认 MetroDuration.PULSE_CYCLE / 2）
+ * @param content 内容
+ */
+@Composable
+fun PulseContent(
+    scaleRange: Pair<Float, Float> = 1.0f to 1.02f,
+    pulseDurationMillis: Int = top.yaotutu.deskmate.presentation.ui.theme.MetroDuration.PULSE_CYCLE / 2,
+    content: @Composable () -> Unit
+) {
+    PulseTileAnimation(
+        scaleRange = scaleRange,
+        pulseDurationMillis = pulseDurationMillis,
+        content = content
+    )
+}
+
+/**
+ * RotateContent - 旋转动画内容辅助组件
+ *
+ * 用于在 BaseTile 中定义旋转动画。
+ * 这个组件会自动调用 RotateTileAnimation 处理旋转效果。
+ *
+ * 使用示例：
+ * ```
+ * BaseTile(spec = TileSpec.square(MetroColors.Orange)) {
+ *     RotateContent {
+ *         Text("⚙️", fontSize = 64.sp, color = Color.White)
+ *     }
+ * }
+ * ```
+ *
+ * @param content 内容
+ */
+@Composable
+fun RotateContent(
+    content: @Composable () -> Unit
+) {
+    RotateTileAnimation(content = content)
 }

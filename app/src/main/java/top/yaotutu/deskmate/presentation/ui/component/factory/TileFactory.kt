@@ -1,5 +1,6 @@
 package top.yaotutu.deskmate.presentation.ui.component.factory
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import top.yaotutu.deskmate.data.model.TileConfig
@@ -40,15 +41,12 @@ object TileFactory {
         onClick: () -> Unit = {},
         modifier: Modifier = Modifier
     ) {
+        Log.d("TileFactory", "创建瓷砖: ${config.type}:${config.variant} (${config.columns}×${config.rows})")
+
         // 使用 StaggerEnterAnimation 实现错峰入场动画
         StaggerEnterAnimation(index = index) {
-            // 对于 clock 和 animation_demo 类型，使用变体系统
-            if (config.type == "clock" || config.type == "animation_demo") {
-                CreateVariantTile(config, uiState, onClick, modifier)
-            } else {
-                // 其他类型保持原有逻辑（向后兼容）
-                CreateLegacyTile(config, uiState, modifier)
-            }
+            // 所有类型都使用变体系统
+            CreateVariantTile(config, uiState, onClick, modifier)
         }
     }
 
@@ -63,10 +61,12 @@ object TileFactory {
         modifier: Modifier
     ) {
         val spec = TileRegistry.get(config.type, config.variant)
+        Log.d("TileFactory", "查找变体: ${config.type}:${config.variant} -> ${if (spec == null) "未找到" else "找到"}")
 
         when {
             spec == null -> {
                 // 未知变体
+                Log.e("TileFactory", "未知变体: ${config.type}:${config.variant}")
                 ErrorTile(
                     columns = config.columns,
                     rows = config.rows,
@@ -79,6 +79,7 @@ object TileFactory {
 
             !spec.supportedSizes.contains(config.columns to config.rows) -> {
                 // 尺寸不匹配
+                Log.e("TileFactory", "尺寸不匹配: ${config.type}:${config.variant} 需要${spec.supportedSizes}, 配置${config.columns}×${config.rows}")
                 ErrorTile(
                     columns = config.columns,
                     rows = config.rows,
@@ -94,37 +95,9 @@ object TileFactory {
 
             else -> {
                 // 正常渲染
+                Log.d("TileFactory", "正常渲染: ${config.type}:${config.variant}")
                 spec.view(config, uiState, onClick)
             }
-        }
-    }
-
-    /**
-     * 处理已废弃的遗留瓷砖类型
-     *
-     * 这些类型（weather, calendar, todo, news）已被移除，
-     * 显示错误提示建议用户使用新的变体系统。
-     */
-    @Composable
-    private fun CreateLegacyTile(
-        config: TileConfig,
-        uiState: DashboardUiState,
-        modifier: Modifier
-    ) {
-        val deprecatedTypes = setOf("weather", "calendar", "todo", "news")
-
-        if (config.type in deprecatedTypes) {
-            ErrorTile(
-                columns = config.columns,
-                rows = config.rows,
-                errorType = TileErrorType.DEPRECATED_TYPE,
-                message = "瓷砖类型 '${config.type}' 已废弃",
-                details = mapOf(
-                    "原因" to "此类型已从项目中移除",
-                    "建议" to "使用新的变体系统重新实现或从配置中删除"
-                ),
-                modifier = modifier
-            )
         }
     }
 }

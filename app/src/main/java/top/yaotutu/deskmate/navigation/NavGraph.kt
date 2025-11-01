@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import top.yaotutu.deskmate.presentation.ui.screen.AnimationDemoScreen
 import top.yaotutu.deskmate.presentation.ui.screen.DashboardScreen
+import top.yaotutu.deskmate.presentation.ui.screen.PresetsDemoScreen
 
 /**
  * 导航图配置
@@ -31,6 +32,11 @@ fun NavGraph(
         // 动画演示页面
         composable(Screen.AnimationDemo.route) {
             AnimationDemoScreen()
+        }
+
+        // 预设系统演示页面
+        composable(Screen.PresetsDemo.route) {
+            PresetsDemoScreen()
         }
     }
 }

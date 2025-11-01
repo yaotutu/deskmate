@@ -1,0 +1,43 @@
+{
+  "comment": "完美无滚动布局 - 6列×4行，充分利用屏幕空间",
+  "tiles": [
+    {
+      "comment": "=== 第一行：左侧4×2新闻，右侧两个2×2 ===",
+      "type": "news",
+      "variant": "standard",
+      "columns": 4,
+      "rows": 2
+    },
+    {
+      "type": "weather",
+      "variant": "standard",
+      "columns": 2,
+      "rows": 2
+    },
+    {
+      "type": "calendar",
+      "variant": "standard",
+      "columns": 2,
+      "rows": 2
+    },
+    {
+      "comment": "=== 第二行：左侧2×4待办，右侧两个2×2 ===",
+      "type": "todo",
+      "variant": "list",
+      "columns": 2,
+      "rows": 4
+    },
+    {
+      "type": "clock",
+      "variant": "standard",
+      "columns": 2,
+      "rows": 2
+    },
+    {
+      "type": "clock",
+      "variant": "compact",
+      "columns": 2,
+      "rows": 1
+    }
+  ]
+}

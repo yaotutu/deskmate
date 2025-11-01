@@ -1,4 +1,4 @@
-package top.yaotutu.deskmate.presentation.ui.component.tiles.special
+package top.yaotutu.deskmate.presentation.ui.component.tiles.weather
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -9,23 +9,24 @@ import top.yaotutu.deskmate.presentation.ui.component.base.presets.MediumTilePre
 import top.yaotutu.deskmate.presentation.ui.theme.MetroTileColors
 
 /**
- * 照片瓷砖 (2×2)
+ * 标准天气瓷砖 (2×2)
  *
  * 特性：
- * - 显示照片图标和标题
- * - 使用 MediumTilePresets.IconTitle 预设
+ * - 显示当前温度和天气状况
+ * - 使用 Counter 预设获得数字滚动动画效果
+ * - 适合温度变化展示
  *
- * @param imageUrl 图片URL（暂时用占位符代替）
- * @param caption 标题（默认 "照片"）
- * @param backgroundColor 背景颜色（默认 Metro 品红色）
+ * @param temperature 当前温度（如 "25"）
+ * @param condition 天气状况（如 "晴朗"）
+ * @param backgroundColor 背景颜色（默认 Metro 橙色）
  * @param onClick 点击回调
  * @param modifier 修饰符
  */
 @Composable
-fun PhotoTile(
-    imageUrl: String = "",
-    caption: String = "照片",
-    backgroundColor: Color = MetroTileColors.Photo,
+fun WeatherStandardTile(
+    temperature: Int,
+    condition: String,
+    backgroundColor: Color = MetroTileColors.Weather,
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -34,9 +35,10 @@ fun PhotoTile(
         onClick = onClick,
         modifier = modifier
     ) {
-        MediumTilePresets.IconTitle(
-            icon = "📷",
-            title = caption
+        MediumTilePresets.Counter(
+            value = temperature.toString(),
+            unit = "°",
+            label = condition
         )
     }
 }

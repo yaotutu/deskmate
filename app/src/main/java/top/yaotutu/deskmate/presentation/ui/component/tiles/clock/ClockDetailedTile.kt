@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import top.yaotutu.deskmate.presentation.ui.component.base.AnimationType
 import top.yaotutu.deskmate.presentation.ui.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.ui.component.base.FlipContent
 import top.yaotutu.deskmate.presentation.ui.component.base.TileSpec
@@ -42,7 +41,7 @@ fun ClockDetailedTile(
     modifier: Modifier = Modifier
 ) {
     BaseTile(
-        spec = TileSpec.wideMedium(backgroundColor, AnimationType.FLIP),
+        spec = TileSpec.wideMedium(backgroundColor),
         onClick = onClick,
         modifier = modifier
     ) {

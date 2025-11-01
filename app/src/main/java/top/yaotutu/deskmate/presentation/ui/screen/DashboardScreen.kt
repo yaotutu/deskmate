@@ -32,9 +32,10 @@ fun DashboardScreen(
     // 加载布局配置
     val layoutConfig = remember {
         val repository = LayoutConfigRepository(context)
-        // 🎬 动画演示模式：加载 animation_demo.json
-        repository.loadLayoutConfig("animation_demo.json") ?: repository.getDefaultLayoutConfig()
-        // 💡 正常模式：使用 repository.loadLayoutConfig() 加载 dashboard_layout.json
+        // 🎯 完美布局模式：使用 perfect_layout.json（6列×4行无滚动布局）
+        repository.loadLayoutConfig("perfect_layout.json") ?: repository.getDefaultLayoutConfig()
+        // 💡 正常模式：repository.loadLayoutConfig()
+        // 🎬 动画演示模式：repository.loadLayoutConfig("animation_demo.json")
     }
 
     Box(
