@@ -4,27 +4,27 @@
     {
       "comment": "=== 区域1: FLIP 翻转动画展示 ===",
       "type": "clock",
-      "variant": "detailed",
+      "variant": "4x2",
       "columns": 4,
       "rows": 2
     },
     {
       "type": "clock",
-      "variant": "standard",
+      "variant": "2x2",
       "columns": 2,
       "rows": 2
     },
     {
       "comment": "--- 第二行：大型翻转动画 ---",
       "type": "clock",
-      "variant": "large",
+      "variant": "4x4",
       "columns": 4,
       "rows": 4
     },
     {
       "comment": "=== 区域2: PULSE 脉冲动画展示 ===",
       "type": "clock",
-      "variant": "tall",
+      "variant": "2x4",
       "columns": 2,
       "rows": 4
     },
@@ -43,7 +43,7 @@
     },
     {
       "type": "clock",
-      "variant": "compact",
+      "variant": "2x1",
       "columns": 2,
       "rows": 1
     },
@@ -64,31 +64,31 @@
     {
       "comment": "--- 小型组件展示 ---",
       "type": "clock",
-      "variant": "simple",
+      "variant": "1x1",
       "columns": 1,
       "rows": 1
     },
     {
       "type": "clock",
-      "variant": "simple",
+      "variant": "1x1",
       "columns": 1,
       "rows": 1
     },
     {
       "type": "clock",
-      "variant": "compact",
+      "variant": "2x1",
       "columns": 2,
       "rows": 1
     },
     {
       "type": "clock",
-      "variant": "simple",
+      "variant": "1x1",
       "columns": 1,
       "rows": 1
     },
     {
       "type": "clock",
-      "variant": "simple",
+      "variant": "1x1",
       "columns": 1,
       "rows": 1
     }

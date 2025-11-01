@@ -17,7 +17,7 @@ import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 
 /**
- * 详细时钟瓷砖 (4×2)
+ * 时钟瓷砖 4×2 - 详细版
  *
  * 特性：
  * - 翻转动画效果
@@ -32,7 +32,7 @@ import top.yaotutu.deskmate.presentation.theme.MetroTileColors
  * @param modifier 修饰符
  */
 @Composable
-fun ClockDetailedTile(
+fun Clock4x2Tile(
     time: String,
     date: String,
     lunarDate: String,

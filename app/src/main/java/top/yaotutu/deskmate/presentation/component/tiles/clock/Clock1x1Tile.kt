@@ -5,40 +5,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import top.yaotutu.deskmate.presentation.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
-import top.yaotutu.deskmate.presentation.component.base.presets.MediumTilePresets
+import top.yaotutu.deskmate.presentation.component.base.presets.SmallTilePresets
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 
 /**
- * 标准时钟瓷砖 (2×2)
+ * 时钟瓷砖 1×1 - 简约版
  *
  * 特性：
- * - 显示时间和日期
- * - 静态显示，无动画
- * - 平衡的信息展示
- * - 使用 MediumTilePresets.TitleSubtitle 预设
+ * - 极简设计，只显示时间
+ * - 超大字号，便于快速查看
+ * - 适用于空间紧张的布局
+ * - 使用 SmallTilePresets.SingleLabel 预设
  *
  * @param time 当前时间（如 "09:47"）
- * @param date 日期（如 "星期一, 10月 28日"）
  * @param backgroundColor 背景颜色（默认 Metro 蓝）
  * @param onClick 点击回调
  * @param modifier 修饰符
  */
 @Composable
-fun ClockStandardTile(
+fun Clock1x1Tile(
     time: String,
-    date: String,
     backgroundColor: Color = MetroTileColors.Time,
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
-        spec = TileSpec.square(backgroundColor),
+        spec = TileSpec.small(backgroundColor),
         onClick = onClick,
         modifier = modifier
     ) {
-        MediumTilePresets.TitleSubtitle(
-            title = time,
-            subtitle = date
-        )
+        SmallTilePresets.SingleLabel(text = time)
     }
 }

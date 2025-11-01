@@ -14,7 +14,7 @@ import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 
 /**
- * 垂直时钟瓷砖 (2×4)
+ * 时钟瓷砖 2×4 - 高版
  *
  * 特性：
  * - 垂直布局，适合侧边栏位置
@@ -33,7 +33,7 @@ import top.yaotutu.deskmate.presentation.theme.MetroTileColors
  * @param modifier 修饰符
  */
 @Composable
-fun ClockTallTile(
+fun Clock2x4Tile(
     time: String,
     date: String,
     weekday: String,

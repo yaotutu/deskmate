@@ -15,7 +15,7 @@ import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 
 /**
- * 超大时钟瓷砖 (4×4)
+ * 时钟瓷砖 4×4 - 大型版
  *
  * 特性：
  * - 最大尺寸，信息最丰富
@@ -35,7 +35,7 @@ import top.yaotutu.deskmate.presentation.theme.MetroTileColors
  * @param modifier 修饰符
  */
 @Composable
-fun ClockLargeTile(
+fun Clock4x4Tile(
     time: String,
     date: String,
     weekday: String,

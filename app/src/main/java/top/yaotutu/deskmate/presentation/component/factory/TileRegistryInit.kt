@@ -34,15 +34,15 @@ fun registerAllTileVariants() {
  * 注册时钟瓷砖的所有变体
  */
 private fun registerClockVariants() {
-    // simple 变体 (1×1)
+    // 1×1 变体
     TileRegistry.register(
         TileVariantSpec(
             type = "clock",
-            variant = "simple",
+            variant = "1x1",
             supportedSizes = listOf(1 to 1),
             defaultSize = 1 to 1,
             view = { _, uiState, onClick ->
-                ClockSimpleTile(
+                Clock1x1Tile(
                     time = uiState.currentTime,
                     onClick = onClick
                 )
@@ -50,89 +50,89 @@ private fun registerClockVariants() {
         )
     )
 
-    // standard 变体 (2×2)
+    // 2×1 变体
     TileRegistry.register(
         TileVariantSpec(
             type = "clock",
-            variant = "standard",
-            supportedSizes = listOf(2 to 2),
-            defaultSize = 2 to 2,
-            view = { _, uiState, onClick ->
-                ClockStandardTile(
-                    time = uiState.currentTime,
-                    date = uiState.currentDate,
-                    onClick = onClick
-                )
-            }
-        )
-    )
-
-    // detailed 变体 (4×2)
-    TileRegistry.register(
-        TileVariantSpec(
-            type = "clock",
-            variant = "detailed",
-            supportedSizes = listOf(4 to 2),
-            defaultSize = 4 to 2,
-            view = { _, uiState, onClick ->
-                ClockDetailedTile(
-                    time = uiState.currentTime,
-                    date = uiState.currentDate,
-                    lunarDate = uiState.lunarDate,
-                    onClick = onClick
-                )
-            }
-        )
-    )
-
-    // large 变体 (4×4) - 新增
-    TileRegistry.register(
-        TileVariantSpec(
-            type = "clock",
-            variant = "large",
-            supportedSizes = listOf(4 to 4),
-            defaultSize = 4 to 4,
-            view = { _, uiState, onClick ->
-                ClockLargeTile(
-                    time = uiState.currentTime,
-                    date = uiState.currentDate,
-                    weekday = "星期二",  // TODO: 从 uiState 获取
-                    lunarDate = uiState.lunarDate,
-                    onClick = onClick
-                )
-            }
-        )
-    )
-
-    // tall 变体 (2×4) - 新增
-    TileRegistry.register(
-        TileVariantSpec(
-            type = "clock",
-            variant = "tall",
-            supportedSizes = listOf(2 to 4),
-            defaultSize = 2 to 4,
-            view = { _, uiState, onClick ->
-                ClockTallTile(
-                    time = uiState.currentTime,
-                    date = uiState.currentDate,
-                    weekday = "星期二",  // TODO: 从 uiState 获取
-                    onClick = onClick
-                )
-            }
-        )
-    )
-
-    // compact 变体 (2×1) - 新增
-    TileRegistry.register(
-        TileVariantSpec(
-            type = "clock",
-            variant = "compact",
+            variant = "2x1",
             supportedSizes = listOf(2 to 1),
             defaultSize = 2 to 1,
             view = { _, uiState, onClick ->
-                ClockCompactTile(
+                Clock2x1Tile(
                     time = uiState.currentTime,
                     date = "10/28",  // TODO: 格式化日期
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 2×2 变体
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "clock",
+            variant = "2x2",
+            supportedSizes = listOf(2 to 2),
+            defaultSize = 2 to 2,
+            view = { _, uiState, onClick ->
+                Clock2x2Tile(
+                    time = uiState.currentTime,
+                    date = uiState.currentDate,
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 2×4 变体
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "clock",
+            variant = "2x4",
+            supportedSizes = listOf(2 to 4),
+            defaultSize = 2 to 4,
+            view = { _, uiState, onClick ->
+                Clock2x4Tile(
+                    time = uiState.currentTime,
+                    date = uiState.currentDate,
+                    weekday = "星期二",  // TODO: 从 uiState 获取
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 4×2 变体
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "clock",
+            variant = "4x2",
+            supportedSizes = listOf(4 to 2),
+            defaultSize = 4 to 2,
+            view = { _, uiState, onClick ->
+                Clock4x2Tile(
+                    time = uiState.currentTime,
+                    date = uiState.currentDate,
+                    lunarDate = uiState.lunarDate,
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 4×4 变体
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "clock",
+            variant = "4x4",
+            supportedSizes = listOf(4 to 4),
+            defaultSize = 4 to 4,
+            view = { _, uiState, onClick ->
+                Clock4x4Tile(
+                    time = uiState.currentTime,
+                    date = uiState.currentDate,
+                    weekday = "星期二",  // TODO: 从 uiState 获取
+                    lunarDate = uiState.lunarDate,
                     onClick = onClick
                 )
             }

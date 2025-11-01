@@ -29,13 +29,13 @@
     },
     {
       "type": "clock",
-      "variant": "standard",
+      "variant": "2x2",
       "columns": 2,
       "rows": 2
     },
     {
       "type": "clock",
-      "variant": "compact",
+      "variant": "2x1",
       "columns": 2,
       "rows": 1
     }
