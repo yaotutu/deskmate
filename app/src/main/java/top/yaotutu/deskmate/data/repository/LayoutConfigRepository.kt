@@ -8,6 +8,7 @@ import top.yaotutu.deskmate.data.model.ConfigErrorType
 import top.yaotutu.deskmate.data.model.ConfigLoadResult
 import top.yaotutu.deskmate.data.model.LayoutConfig
 import top.yaotutu.deskmate.data.model.TileConfig
+import top.yaotutu.deskmate.data.model.TileDefinition
 import java.io.FileNotFoundException
 import java.io.IOException
 
@@ -101,7 +102,7 @@ class LayoutConfigRepository(private val context: Context) {
 
     /**
      * 获取默认布局配置（用于配置文件加载失败时的兜底）
-     * ⚠️ 注意：返回空列表会导致黑屏
+     * ⚠️ 注意：返回空瓷砖映射会导致黑屏
      */
     @Deprecated(
         message = "使用 getSafeDefaultLayoutConfig() 获取有内容的默认配置",
@@ -109,9 +110,17 @@ class LayoutConfigRepository(private val context: Context) {
         level = DeprecationLevel.WARNING
     )
     fun getDefaultLayoutConfig(): LayoutConfig {
-        Log.w("LayoutConfig", "使用默认配置（空瓷砖列表）")
+        Log.w("LayoutConfig", "使用默认配置（空瓷砖映射）")
         return LayoutConfig(
-            tiles = emptyList()
+            columns = 6,
+            rows = 4,
+            areas = listOf(
+                ". . . . . .",
+                ". . . . . .",
+                ". . . . . .",
+                ". . . . . ."
+            ),
+            tiles = emptyMap()
         )
     }
 
@@ -121,13 +130,18 @@ class LayoutConfigRepository(private val context: Context) {
     fun getSafeDefaultLayoutConfig(): LayoutConfig {
         Log.w("LayoutConfig", "使用安全默认配置（包含示例时钟瓷砖）")
         return LayoutConfig(
-            tiles = listOf(
-                // 提供一个基础的 2x2 时钟作为降级方案
-                TileConfig(
+            columns = 6,
+            rows = 4,
+            areas = listOf(
+                "K K . . . .",
+                "K K . . . .",
+                ". . . . . .",
+                ". . . . . ."
+            ),
+            tiles = mapOf(
+                "K" to TileDefinition(
                     type = "clock",
-                    variant = "2x2",
-                    columns = 2,
-                    rows = 2
+                    variant = "2x2"
                 )
             )
         )

@@ -4,7 +4,7 @@
     {
       "comment": "=== 区域1: FLIP 翻转动画展示 ===",
       "type": "clock",
-      "variant": "4x2",
+      "variant": "2x4",
       "columns": 4,
       "rows": 2
     },
@@ -24,40 +24,40 @@
     {
       "comment": "=== 区域2: PULSE 脉冲动画展示 ===",
       "type": "clock",
-      "variant": "2x4",
+      "variant": "4x2",
       "columns": 2,
       "rows": 4
     },
     {
       "comment": "--- 第三行：天气脉冲动画 ---",
       "type": "weather",
-      "variant": "standard",
+      "variant": "2x2",
       "columns": 2,
       "rows": 2
     },
     {
       "type": "calendar",
-      "variant": "standard",
+      "variant": "2x2",
       "columns": 2,
       "rows": 2
     },
     {
       "type": "clock",
-      "variant": "2x1",
+      "variant": "1x2",
       "columns": 2,
       "rows": 1
     },
     {
       "comment": "=== 区域3: SLIDE 滑动动画展示 ===",
       "type": "news",
-      "variant": "standard",
+      "variant": "2x4",
       "columns": 4,
       "rows": 2
     },
     {
       "comment": "=== 区域4: FADE 淡入淡出动画展示 ===",
       "type": "todo",
-      "variant": "list",
+      "variant": "4x2",
       "columns": 2,
       "rows": 4
     },
@@ -76,7 +76,7 @@
     },
     {
       "type": "clock",
-      "variant": "2x1",
+      "variant": "1x2",
       "columns": 2,
       "rows": 1
     },

@@ -54,7 +54,7 @@ private fun registerClockVariants() {
     TileRegistry.register(
         TileVariantSpec(
             type = "clock",
-            variant = "2x1",
+            variant = "1x2",
             supportedSizes = listOf(2 to 1),
             defaultSize = 2 to 1,
             view = { _, uiState, onClick ->
@@ -88,7 +88,7 @@ private fun registerClockVariants() {
     TileRegistry.register(
         TileVariantSpec(
             type = "clock",
-            variant = "2x4",
+            variant = "4x2",
             supportedSizes = listOf(2 to 4),
             defaultSize = 2 to 4,
             view = { _, uiState, onClick ->
@@ -106,7 +106,7 @@ private fun registerClockVariants() {
     TileRegistry.register(
         TileVariantSpec(
             type = "clock",
-            variant = "4x2",
+            variant = "2x4",
             supportedSizes = listOf(4 to 2),
             defaultSize = 4 to 2,
             view = { _, uiState, onClick ->
@@ -172,7 +172,7 @@ private fun registerAnimationDemoVariants() {
         )
     )
 
-    // 2. FLIP - 翻转动画 (4×2)
+    // 2. FLIP - 翻转动画 (2×4)
     TileRegistry.register(
         TileVariantSpec(
             type = "animation_demo",
@@ -320,7 +320,7 @@ private fun registerPresetsDemoVariants() {
 
     // === CompactTilePresets 演示 ===
 
-    // 进度条 (2×1)
+    // 进度条 (1×2)
     TileRegistry.register(
         TileVariantSpec(
             type = "demo_progress",
@@ -537,7 +537,7 @@ private fun registerPresetsDemoVariants() {
         )
     )
 
-    // 照片网格 (4×2)
+    // 照片网格 (2×4)
     TileRegistry.register(
         TileVariantSpec(
             type = "demo_photos",
@@ -559,7 +559,7 @@ private fun registerPresetsDemoVariants() {
 
     // === WideTilePresets 演示 ===
 
-    // 媒体播放器 (4×2)
+    // 媒体播放器 (2×4)
     TileRegistry.register(
         TileVariantSpec(
             type = "demo_media",
@@ -582,7 +582,7 @@ private fun registerPresetsDemoVariants() {
         )
     )
 
-    // 时间线 (4×2)
+    // 时间线 (2×4)
     TileRegistry.register(
         TileVariantSpec(
             type = "demo_timeline",
@@ -606,7 +606,7 @@ private fun registerPresetsDemoVariants() {
         )
     )
 
-    // 三列数据 (4×2)
+    // 三列数据 (2×4)
     TileRegistry.register(
         TileVariantSpec(
             type = "demo_metrics",
@@ -632,7 +632,7 @@ private fun registerPresetsDemoVariants() {
 
     // === TallTilePresets 演示 ===
 
-    // 待办列表 (2×4)
+    // 待办列表 (4×2)
     TileRegistry.register(
         TileVariantSpec(
             type = "demo_todo",
@@ -658,7 +658,7 @@ private fun registerPresetsDemoVariants() {
         )
     )
 
-    // 天气预报 (2×4)
+    // 天气预报 (4×2)
     TileRegistry.register(
         TileVariantSpec(
             type = "demo_forecast",
@@ -748,7 +748,7 @@ fun registerWeatherVariants() {
     TileRegistry.register(
         TileVariantSpec(
             type = "weather",
-            variant = "standard",
+            variant = "2x2",
             supportedSizes = listOf(2 to 2),
             defaultSize = 2 to 2,
             view = { config, uiState, onClick ->
@@ -765,7 +765,7 @@ fun registerWeatherVariants() {
     TileRegistry.register(
         TileVariantSpec(
             type = "weather",
-            variant = "detailed",
+            variant = "2x4",
             supportedSizes = listOf(4 to 2),
             defaultSize = 4 to 2,
             view = { config, uiState, onClick ->
@@ -789,7 +789,7 @@ fun registerCalendarVariants() {
     TileRegistry.register(
         TileVariantSpec(
             type = "calendar",
-            variant = "standard",
+            variant = "2x2",
             supportedSizes = listOf(2 to 2),
             defaultSize = 2 to 2,
             view = { config, uiState, onClick ->
@@ -806,7 +806,7 @@ fun registerCalendarVariants() {
     TileRegistry.register(
         TileVariantSpec(
             type = "calendar",
-            variant = "large",
+            variant = "4x4",
             supportedSizes = listOf(4 to 4),
             defaultSize = 4 to 4,
             view = { config, uiState, onClick ->
@@ -835,7 +835,7 @@ fun registerTodoVariants() {
     TileRegistry.register(
         TileVariantSpec(
             type = "todo",
-            variant = "compact",
+            variant = "1x2",
             supportedSizes = listOf(2 to 1),
             defaultSize = 2 to 1,
             view = { config, uiState, onClick ->
@@ -852,7 +852,7 @@ fun registerTodoVariants() {
     TileRegistry.register(
         TileVariantSpec(
             type = "todo",
-            variant = "list",
+            variant = "4x2",
             supportedSizes = listOf(2 to 4),
             defaultSize = 2 to 4,
             view = { config, uiState, onClick ->
@@ -875,11 +875,11 @@ fun registerTodoVariants() {
  * 注册新闻瓷砖的所有变体
  */
 fun registerNewsVariants() {
-    // 新闻瓷砖 (4×2)
+    // 新闻瓷砖 (2×4)
     TileRegistry.register(
         TileVariantSpec(
             type = "news",
-            variant = "standard",
+            variant = "2x4",
             supportedSizes = listOf(4 to 2),
             defaultSize = 4 to 2,
             view = { config, uiState, onClick ->

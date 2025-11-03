@@ -38,5 +38,9 @@ enum class ConfigErrorType(val displayName: String) {
     PARSE_ERROR("JSON 解析失败"),
     INVALID_FORMAT("配置格式无效"),
     IO_ERROR("文件读取失败"),
+    GRID_INVALID_FORMAT("网格格式错误"),
+    GRID_NOT_RECTANGLE("网格区域不是矩形"),
+    GRID_TILE_UNDEFINED("网格瓷砖未定义"),
+    GRID_SIZE_MISMATCH("网格尺寸不匹配"),
     UNKNOWN("未知错误")
 }

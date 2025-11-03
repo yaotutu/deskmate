@@ -20,7 +20,7 @@ import top.yaotutu.deskmate.presentation.component.base.ProvideTileGrid
 import top.yaotutu.deskmate.presentation.component.base.TileGridContainer
 import top.yaotutu.deskmate.presentation.component.common.ConfigErrorBanner
 import top.yaotutu.deskmate.presentation.component.factory.TileFactory
-import top.yaotutu.deskmate.presentation.component.layout.VerticalPriorityLayout
+import top.yaotutu.deskmate.presentation.component.layout.GridAreaLayout
 import top.yaotutu.deskmate.presentation.viewmodel.DashboardViewModel
 
 @Composable
@@ -32,14 +32,13 @@ fun DashboardScreen(
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
-    // 加载布局配置（新版本 - 获取详细错误信息）
+    // 加载布局配置（网格区域版本 - 获取详细错误信息）
     val configResult = remember {
         val repository = LayoutConfigRepository(context)
-        // 🎯 完美布局模式：使用 perfect_layout.json（展示多种瓷砖类型）
+        // 🎯 完美布局模式：使用 perfect_layout.json（网格区域布局）
         repository.loadLayoutConfigWithResult("perfect_layout.json")
         // 🕐 时钟展示模式：repository.loadLayoutConfigWithResult("clock_showcase.json")
         // 💡 正常模式：repository.loadLayoutConfigWithResult()
-        // 🎬 动画演示模式：repository.loadLayoutConfigWithResult("animation_demo.json")
     }
 
     // 提取实际使用的配置
@@ -63,7 +62,7 @@ fun DashboardScreen(
                 )
             }
 
-            // Windows Phone 动态瓷砖布局 - 配置驱动的垂直优先布局
+            // Windows Phone 动态瓷砖布局 - 网格区域布局系统
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -76,14 +75,11 @@ fun DashboardScreen(
                         dynamicGap = dynamicGap,
                         columns = columns
                     ) {
-                        // 使用垂直优先布局引擎
-                        VerticalPriorityLayout(
-                            tiles = layoutConfig.tiles,
+                        // 使用网格区域布局引擎
+                        GridAreaLayout(
+                            config = layoutConfig,
                             baseCellSize = baseCellSize,
                             dynamicGap = dynamicGap,
-                            // maxHeight 需要包含瓷砖间的间距
-                            // 4行瓷砖 = baseCellSize*4 + 中间3个间距
-                            maxHeight = baseCellSize * 4 + dynamicGap * 3,
                             modifier = Modifier.fillMaxSize()
                         ) { tileConfig, index ->
                             // 使用瓷砖工厂创建瓷砖

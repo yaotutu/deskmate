@@ -192,10 +192,22 @@ private fun getSuggestion(errorType: ConfigErrorType): String {
             "使用 JSON 验证工具检查文件格式，确保符合 LayoutConfig 结构"
 
         ConfigErrorType.INVALID_FORMAT ->
-            "确保配置文件包含 'tiles' 数组，且每个瓷砖有 type、variant、columns、rows 字段"
+            "确保配置文件包含 'columns'、'rows'、'areas' 和 'tiles' 字段"
 
         ConfigErrorType.IO_ERROR ->
             "检查文件权限，或尝试重新构建应用"
+
+        ConfigErrorType.GRID_INVALID_FORMAT ->
+            "检查 areas 数组格式，确保每行列数与 columns 匹配"
+
+        ConfigErrorType.GRID_NOT_RECTANGLE ->
+            "确保网格中每个瓷砖区域是完整的矩形，没有缺失或重叠"
+
+        ConfigErrorType.GRID_TILE_UNDEFINED ->
+            "确保 areas 中使用的所有 ID 都在 tiles 映射表中定义"
+
+        ConfigErrorType.GRID_SIZE_MISMATCH ->
+            "检查瓷砖的实际尺寸是否与变体定义的支持尺寸匹配"
 
         ConfigErrorType.UNKNOWN ->
             "查看 Logcat 获取详细错误日志"

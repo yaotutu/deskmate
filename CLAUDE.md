@@ -321,7 +321,7 @@ docs/                                  # 📚 完整文档
 ✅ 推荐：
 { "type": "clock", "variant": "1x1", "columns": 1, "rows": 1 }
 { "type": "clock", "variant": "2x2", "columns": 2, "rows": 2 }
-{ "type": "clock", "variant": "4x2", "columns": 4, "rows": 2 }
+{ "type": "clock", "variant": "2x4", "columns": 4, "rows": 2 }
 
 ❌ 不推荐：
 { "type": "clock", "variant": "simple", "columns": 1, "rows": 1 }
@@ -351,11 +351,19 @@ docs/                                  # 📚 完整文档
 
 ```json
 {
-  "tiles": [
-    { "type": "clock", "variant": "4x2", "columns": 4, "rows": 2 },
-    { "type": "weather", "variant": "standard", "columns": 2, "rows": 2 },
-    { "type": "calendar", "variant": "standard", "columns": 2, "rows": 2 }
-  ]
+  "columns": 6,
+  "rows": 4,
+  "areas": [
+    "C C C C W W",
+    "C C C C W W",
+    "A A . . . .",
+    ". . . . . ."
+  ],
+  "tiles": {
+    "C": {"type": "clock", "variant": "2x4"},
+    "W": {"type": "weather", "variant": "2x2"},
+    "A": {"type": "calendar", "variant": "2x2"}
+  }
 }
 ```
 
@@ -403,10 +411,18 @@ fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
 
 ```kotlin
 val layoutConfig = LayoutConfig(
-    tiles = listOf(
-        TileConfig("clock", "4x2", 4, 2),
-        TileConfig("weather", "standard", 2, 2),
-        TileConfig("calendar", "standard", 2, 2)
+    columns = 6,
+    rows = 4,
+    areas = listOf(
+        "C C C C W W",
+        "C C C C W W",
+        "A A . . . .",
+        ". . . . . ."
+    ),
+    tiles = mapOf(
+        "C" to TileDefinition("clock", "4x2"),
+        "W" to TileDefinition("weather", "2x2"),
+        "A" to TileDefinition("calendar", "2x2")
     )
 )
 ```
@@ -418,20 +434,23 @@ val layoutConfig = LayoutConfig(
 | 变体 | 尺寸 | 特点 | 配置 |
 |-----|------|------|------|
 | **1x1** | 1×1 | 简约版，仅时间 | `{"type":"clock","variant":"1x1","columns":1,"rows":1}` |
-| **2x1** | 2×1 | 紧凑版，时间+日期 | `{"type":"clock","variant":"2x1","columns":2,"rows":1}` |
+| **1x2** | 1×2 | 紧凑版，时间+日期 | `{"type":"clock","variant":"1x2","columns":2,"rows":1}` |
 | **2x2** | 2×2 | 标准版，时间+日期+星期 | `{"type":"clock","variant":"2x2","columns":2,"rows":2}` |
-| **2x4** | 2×4 | 高版，纵向布局+农历 | `{"type":"clock","variant":"2x4","columns":2,"rows":4}` |
-| **4x2** | 4×2 | 详细版，翻转动画+农历 | `{"type":"clock","variant":"4x2","columns":4,"rows":2}` |
+| **4x2** | 4×2 | 高版，纵向布局+农历 | `{"type":"clock","variant":"4x2","columns":2,"rows":4}` |
+| **2x4** | 2×4 | 详细版，翻转动画+农历 | `{"type":"clock","variant":"2x4","columns":4,"rows":2}` |
 | **4x4** | 4×4 | 大型版，完整信息展示 | `{"type":"clock","variant":"4x4","columns":4,"rows":4}` |
 
-#### 其他瓷砖（遗留组件）
+#### 其他业务瓷砖
 
-| 类型 | 尺寸 | 配置 |
-|-----|------|------|
-| **weather** | 2×2 | `{"type":"weather","variant":"standard","columns":2,"rows":2}` |
-| **calendar** | 2×2 | `{"type":"calendar","variant":"standard","columns":2,"rows":2}` |
-| **todo** | 2×4 | `{"type":"todo","variant":"standard","columns":2,"rows":4}` |
-| **news** | 4×4 | `{"type":"news","variant":"standard","columns":4,"rows":4}` |
+| 类型 | Variant | 尺寸 | 特点 | 配置示例 |
+|-----|---------|------|------|---------|
+| **weather** | `2x2` | 2×2 | 标准天气 | `{"type":"weather","variant":"2x2"}` |
+| **weather** | `2x4` | 2×4 | 详细天气 | `{"type":"weather","variant":"2x4"}` |
+| **calendar** | `2x2` | 2×2 | 标准日历 | `{"type":"calendar","variant":"2x2"}` |
+| **calendar** | `4x4` | 4×4 | 大型日历 | `{"type":"calendar","variant":"4x4"}` |
+| **todo** | `1x2` | 1×2 | 紧凑待办 | `{"type":"todo","variant":"1x2"}` |
+| **todo** | `4x2` | 4×2 | 待办列表 | `{"type":"todo","variant":"4x2"}` |
+| **news** | `2x4` | 2×4 | 新闻瓷砖 | `{"type":"news","variant":"2x4"}` |
 
 ### 错误处理
 

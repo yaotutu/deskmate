@@ -31,7 +31,7 @@ fun TodoCompactTile(
     modifier: Modifier = Modifier
 ) {
     BaseTile(
-        spec = TileSpec.wideMedium(backgroundColor),
+        spec = TileSpec(2, 1, backgroundColor),
         onClick = onClick,
         modifier = modifier
     ) {
