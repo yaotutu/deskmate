@@ -15,7 +15,6 @@ import top.yaotutu.deskmate.presentation.component.animation.RotateTileAnimation
 import top.yaotutu.deskmate.presentation.component.animation.ShimmerTileAnimation
 import top.yaotutu.deskmate.presentation.component.animation.WipeTileAnimation
 import top.yaotutu.deskmate.presentation.component.animation.DepthTileAnimation
-import top.yaotutu.deskmate.presentation.component.animation.PulseTileAnimation
 import top.yaotutu.deskmate.presentation.component.animation.BounceTileAnimation
 import top.yaotutu.deskmate.presentation.component.animation.ShakeTileAnimation
 import top.yaotutu.deskmate.presentation.component.animation.CounterAnimation

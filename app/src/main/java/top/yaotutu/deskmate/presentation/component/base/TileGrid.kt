@@ -48,8 +48,12 @@ object TileGrid {
      *
      * @param screenHeight 屏幕高度（横屏）
      * @return 基础格子边长
+     * @throws IllegalArgumentException 如果 screenHeight <= 0
      */
     fun calculateBaseCellSize(screenHeight: Dp): Dp {
+        require(screenHeight > 0.dp) {
+            "screenHeight 必须大于 0，当前值: $screenHeight"
+        }
         val baseCellSize = screenHeight / BASE_GRID_ROWS
         // 确保最小尺寸
         return maxOf(baseCellSize, MIN_BASE_CELL_SIZE.dp)
@@ -65,12 +69,23 @@ object TileGrid {
      * @param baseCellSize 基础格子尺寸
      * @param referenceGap 参考间距（默认 8dp）
      * @return 实际列数（4-8）
+     * @throws IllegalArgumentException 如果任何参数 <= 0
      */
     fun calculateColumns(
         screenWidth: Dp,
         baseCellSize: Dp,
         referenceGap: Dp = REFERENCE_GAP.dp
     ): Int {
+        require(screenWidth > 0.dp) {
+            "screenWidth 必须大于 0，当前值: $screenWidth"
+        }
+        require(baseCellSize > 0.dp) {
+            "baseCellSize 必须大于 0，当前值: $baseCellSize"
+        }
+        require(referenceGap >= 0.dp) {
+            "referenceGap 必须 >= 0，当前值: $referenceGap"
+        }
+
         // 计算理论列数
         // 公式：(宽度 + 间距) / (格子尺寸 + 间距)
         val theoreticalColumns = ((screenWidth.value + referenceGap.value) /
@@ -90,12 +105,23 @@ object TileGrid {
      * @param columns 实际列数
      * @param baseCellSize 基础格子尺寸
      * @return 动态计算的间距
+     * @throws IllegalArgumentException 如果参数不合法
      */
     fun calculateDynamicGap(
         screenWidth: Dp,
         columns: Int,
         baseCellSize: Dp
     ): Dp {
+        require(screenWidth > 0.dp) {
+            "screenWidth 必须大于 0，当前值: $screenWidth"
+        }
+        require(columns in MIN_COLUMNS..MAX_COLUMNS) {
+            "columns 必须在 $MIN_COLUMNS-$MAX_COLUMNS 之间，当前值: $columns"
+        }
+        require(baseCellSize > 0.dp) {
+            "baseCellSize 必须大于 0，当前值: $baseCellSize"
+        }
+
         // 总间距空间 = 屏幕宽度 - 所有列占用的宽度
         val totalGapSpace = screenWidth.value - (columns * baseCellSize.value)
 

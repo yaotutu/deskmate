@@ -77,6 +77,22 @@ object TileFactory {
                 )
             }
 
+            spec.supportedSizes.isEmpty() -> {
+                // 配置错误：变体未定义支持的尺寸
+                Log.e("TileFactory", "配置错误: ${config.type}:${config.variant} 的 supportedSizes 为空")
+                ErrorTile(
+                    columns = config.columns,
+                    rows = config.rows,
+                    errorType = TileErrorType.CONFIG_ERROR,
+                    message = "配置错误：变体未定义支持的尺寸",
+                    details = mapOf(
+                        "变体" to "${config.type}:${config.variant}",
+                        "建议" to "在 TileRegistryInit 中为该变体添加 supportedSizes"
+                    ),
+                    modifier = modifier
+                )
+            }
+
             !spec.supportedSizes.contains(config.columns to config.rows) -> {
                 // 尺寸不匹配
                 Log.e("TileFactory", "尺寸不匹配: ${config.type}:${config.variant} 需要${spec.supportedSizes}, 配置${config.columns}×${config.rows}")

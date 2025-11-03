@@ -380,8 +380,9 @@ fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
                     tiles = layoutConfig.tiles,
                     baseCellSize = baseCellSize,
                     dynamicGap = dynamicGap,
-                    columns = columns,
-                    screenHeight = screenHeight
+                    // maxHeight 需要包含瓷砖间的间距
+                    // 4行瓷砖 = baseCellSize*4 + 中间3个间距
+                    maxHeight = baseCellSize * 4 + dynamicGap * 3
                 ) { config, index ->
                     // 工厂自动创建瓷砖
                     TileFactory.CreateTile(config, uiState, index)
@@ -553,15 +554,16 @@ fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
     // 渲染瓷砖
     Box(modifier = Modifier.fillMaxSize()) {
         TileGridContainer(Modifier.fillMaxSize()) { baseCellSize, dynamicGap, columns, screenHeight ->
-            VerticalPriorityLayout(
-                tiles = layoutConfig.tiles,
-                baseCellSize = baseCellSize,
-                dynamicGap = dynamicGap,
-                columns = columns,
-                screenHeight = screenHeight
-            ) { config, index ->
-                // 工厂根据配置创建瓷砖，自动绑定 uiState 数据
-                TileFactory.CreateTile(config, uiState, index)
+            ProvideTileGrid(baseCellSize, dynamicGap, columns) {
+                VerticalPriorityLayout(
+                    tiles = layoutConfig.tiles,
+                    baseCellSize = baseCellSize,
+                    dynamicGap = dynamicGap,
+                    maxHeight = baseCellSize * 4 + dynamicGap * 3
+                ) { config, index ->
+                    // 工厂根据配置创建瓷砖，自动绑定 uiState 数据
+                    TileFactory.CreateTile(config, uiState, index)
+                }
             }
         }
     }

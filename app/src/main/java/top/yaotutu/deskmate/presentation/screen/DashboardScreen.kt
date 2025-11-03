@@ -35,9 +35,9 @@ fun DashboardScreen(
     // 加载布局配置（新版本 - 获取详细错误信息）
     val configResult = remember {
         val repository = LayoutConfigRepository(context)
-        // 🕐 时钟展示模式：使用 clock_showcase.json（展示所有时钟变体）
-        repository.loadLayoutConfigWithResult("clock_showcase.json")
-        // 🎯 完美布局模式：repository.loadLayoutConfigWithResult("perfect_layout.json")
+        // 🎯 完美布局模式：使用 perfect_layout.json（展示多种瓷砖类型）
+        repository.loadLayoutConfigWithResult("perfect_layout.json")
+        // 🕐 时钟展示模式：repository.loadLayoutConfigWithResult("clock_showcase.json")
         // 💡 正常模式：repository.loadLayoutConfigWithResult()
         // 🎬 动画演示模式：repository.loadLayoutConfigWithResult("animation_demo.json")
     }

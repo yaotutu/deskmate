@@ -431,27 +431,6 @@ private fun registerPresetsDemoVariants() {
         )
     )
 
-    // 步数计数器 (2×2)
-    TileRegistry.register(
-        TileVariantSpec(
-            type = "demo_steps",
-            variant = "counter",
-            supportedSizes = listOf(2 to 2),
-            defaultSize = 2 to 2,
-            view = { _, _, onClick ->
-                BaseTile(
-                    spec = TileSpec.square(MetroColors.Lime),
-                    onClick = onClick
-                ) {
-                    MediumTilePresets.Counter(
-                        value = "8,456",
-                        label = "步数"
-                    )
-                }
-            }
-        )
-    )
-
     // 联系人 (2×2)
     TileRegistry.register(
         TileVariantSpec(

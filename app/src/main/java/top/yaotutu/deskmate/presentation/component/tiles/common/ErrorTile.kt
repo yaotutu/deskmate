@@ -32,7 +32,10 @@ enum class TileErrorType {
     MISSING_VARIANT,
 
     /** 已废弃的类型 */
-    DEPRECATED_TYPE
+    DEPRECATED_TYPE,
+
+    /** 配置错误 */
+    CONFIG_ERROR
 }
 
 /**
@@ -62,8 +65,8 @@ fun ErrorTile(
     val tileWidth = TileGrid.calculateTileWidth(baseCellSize, columns, dynamicGap)
     val tileHeight = TileGrid.calculateTileHeight(baseCellSize, rows, dynamicGap)
 
-    // 使用深红色背景表示错误
-    val errorBackgroundColor = Color(0xFFB71C1C)
+    // 使用 Metro 风格的红色背景表示错误
+    val errorBackgroundColor = MetroColors.Red
 
     Box(
         modifier = modifier

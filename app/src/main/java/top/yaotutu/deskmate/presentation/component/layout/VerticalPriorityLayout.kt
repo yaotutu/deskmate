@@ -119,6 +119,11 @@ fun VerticalPriorityLayout(
     modifier: Modifier = Modifier,
     tileContent: @Composable (TileConfig, Int) -> Unit  // (config, index) -> Unit
 ) {
+    // 空列表处理：直接返回，避免不必要的布局计算
+    if (tiles.isEmpty()) {
+        return
+    }
+
     // 计算分列布局
     val columns = calculateVerticalPriorityLayout(
         tiles = tiles,

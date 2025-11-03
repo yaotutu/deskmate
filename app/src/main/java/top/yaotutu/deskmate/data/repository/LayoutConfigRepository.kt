@@ -89,7 +89,8 @@ class LayoutConfigRepository(private val context: Context) {
      */
     @Deprecated(
         message = "使用 loadLayoutConfigWithResult() 获取详细错误信息",
-        replaceWith = ReplaceWith("loadLayoutConfigWithResult(fileName)")
+        replaceWith = ReplaceWith("loadLayoutConfigWithResult(fileName)"),
+        level = DeprecationLevel.WARNING
     )
     fun loadLayoutConfig(fileName: String = "dashboard_layout.json"): LayoutConfig? {
         return when (val result = loadLayoutConfigWithResult(fileName)) {
@@ -104,7 +105,8 @@ class LayoutConfigRepository(private val context: Context) {
      */
     @Deprecated(
         message = "使用 getSafeDefaultLayoutConfig() 获取有内容的默认配置",
-        replaceWith = ReplaceWith("getSafeDefaultLayoutConfig()")
+        replaceWith = ReplaceWith("getSafeDefaultLayoutConfig()"),
+        level = DeprecationLevel.WARNING
     )
     fun getDefaultLayoutConfig(): LayoutConfig {
         Log.w("LayoutConfig", "使用默认配置（空瓷砖列表）")
