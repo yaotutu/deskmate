@@ -12,20 +12,22 @@ import top.yaotutu.deskmate.presentation.theme.MetroTileColors
  * 标准日历瓷砖 (2×2)
  *
  * 特性：
- * - 显示日期和星期信息
- * - 使用 TitleSubtitle 预设获得翻转动画效果
- * - 正面显示日期，背面显示星期
+ * - 显示日期数字、月份和星期
+ * - 使用 LargeNumber 预设突出日期
+ * - 翻转动画切换月份和星期
  *
- * @param date 日期信息（如 "1月31日"）
- * @param weekday 星期信息（如 "星期五"）
+ * @param dayNumber 日期数字（如 "31"）
+ * @param monthName 月份（如 "1月"）
+ * @param weekday 星期（如 "星期五"）
  * @param backgroundColor 背景颜色（默认 Metro 绿色）
  * @param onClick 点击回调
  * @param modifier 修饰符
  */
 @Composable
 fun CalendarStandardTile(
-    date: String,
-    weekday: String,
+    dayNumber: String,
+    monthName: String,
+    weekday: String = monthName,
     backgroundColor: Color = MetroTileColors.Calendar,
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier
@@ -35,9 +37,10 @@ fun CalendarStandardTile(
         onClick = onClick,
         modifier = modifier
     ) {
-        MediumTilePresets.TitleSubtitle(
-            title = date,
-            subtitle = weekday
+        MediumTilePresets.LargeNumber(
+            number = dayNumber,
+            label = monthName,
+            backLabel = weekday
         )
     }
 }

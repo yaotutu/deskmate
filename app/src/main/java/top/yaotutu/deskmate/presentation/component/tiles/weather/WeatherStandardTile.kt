@@ -3,6 +3,7 @@ package top.yaotutu.deskmate.presentation.component.tiles.weather
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.component.base.presets.MediumTilePresets
@@ -38,7 +39,10 @@ fun WeatherStandardTile(
         MediumTilePresets.Counter(
             value = temperature.toString(),
             unit = "°",
-            label = condition
+            label = condition,
+            valueSize = 80.sp,
+            unitSize = 40.sp,
+            labelSize = 18.sp
         )
     }
 }

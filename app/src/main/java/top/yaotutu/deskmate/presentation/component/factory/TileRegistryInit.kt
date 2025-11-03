@@ -78,6 +78,7 @@ private fun registerClockVariants() {
                 Clock2x2Tile(
                     time = uiState.currentTime,
                     date = uiState.currentDate,
+                    weekday = uiState.currentWeekday,
                     onClick = onClick
                 )
             }
@@ -902,8 +903,9 @@ fun registerCalendarVariants() {
             defaultSize = 2 to 2,
             view = { config, uiState, onClick ->
                 CalendarStandardTile(
-                    date = "1月31日",
-                    weekday = "星期五",
+                    dayNumber = uiState.currentDayNumber,
+                    monthName = uiState.currentMonthName,
+                    weekday = uiState.currentWeekday,
                     onClick = onClick
                 )
             }

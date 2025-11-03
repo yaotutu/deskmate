@@ -12,13 +12,13 @@ import top.yaotutu.deskmate.presentation.theme.MetroTileColors
  * 时钟瓷砖 2×2 - 标准版
  *
  * 特性：
- * - 显示时间和日期
- * - 静态显示，无动画
- * - 平衡的信息展示
+ * - 显示时间、日期和星期
+ * - 翻转动画切换日期和星期
  * - 使用 MediumTilePresets.TitleSubtitle 预设
  *
  * @param time 当前时间（如 "09:47"）
- * @param date 日期（如 "星期一, 10月 28日"）
+ * @param date 日期（如 "10月 28日"）
+ * @param weekday 星期（如 "星期一"）
  * @param backgroundColor 背景颜色（默认 Metro 蓝）
  * @param onClick 点击回调
  * @param modifier 修饰符
@@ -27,6 +27,7 @@ import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 fun Clock2x2Tile(
     time: String,
     date: String,
+    weekday: String = date,
     backgroundColor: Color = MetroTileColors.Time,
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier
@@ -38,7 +39,8 @@ fun Clock2x2Tile(
     ) {
         MediumTilePresets.TitleSubtitle(
             title = time,
-            subtitle = date
+            subtitle = date,
+            backSubtitle = weekday
         )
     }
 }

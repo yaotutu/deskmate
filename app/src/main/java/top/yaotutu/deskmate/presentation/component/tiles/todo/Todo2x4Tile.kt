@@ -3,6 +3,7 @@ package top.yaotutu.deskmate.presentation.component.tiles.todo
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.component.base.presets.WideTilePresets
@@ -33,6 +34,10 @@ fun Todo2x4Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        WideTilePresets.ThreeColumns(items = metrics)
+        WideTilePresets.ThreeColumns(
+            items = metrics,
+            valueSize = 40.sp,
+            labelSize = 16.sp
+        )
     }
 }

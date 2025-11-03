@@ -38,26 +38,28 @@ object MediumTilePresets {
      * 预设1：标题+副标题（最常用）⭐ 固定动画：FLIP 翻转
      *
      * 适用场景：时钟、天气、日历
-     * 最佳动画：正面显示标题，背面显示副标题，6秒翻转周期
+     * 最佳动画：正反面都显示标题+副标题，通过翻转切换副标题内容
      *
-     * @param title 标题文本
-     * @param subtitle 副标题文本
-     * @param titleSize 标题字体大小（默认 56sp）
-     * @param subtitleSize 副标题字体大小（默认 16sp）
+     * @param title 标题文本（正反面相同）
+     * @param subtitle 副标题文本（正面显示）
+     * @param backSubtitle 背面副标题文本（可选，默认与 subtitle 相同）
+     * @param titleSize 标题字体大小（默认 72sp）
+     * @param subtitleSize 副标题字体大小（默认 18sp）
      * @param color 颜色（默认白色）
      */
     @Composable
     fun TitleSubtitle(
         title: String,
         subtitle: String,
-        titleSize: TextUnit = 56.sp,
-        subtitleSize: TextUnit = 16.sp,
+        backSubtitle: String = subtitle,
+        titleSize: TextUnit = 72.sp,
+        subtitleSize: TextUnit = 18.sp,
         color: Color = Color.White
     ) {
         // 固定使用 FLIP 动画
         FlipContent(
             front = {
-                // 正面：显示标题
+                // 正面：标题 + 副标题
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
@@ -70,20 +72,35 @@ object MediumTilePresets {
                         color = color,
                         lineHeight = titleSize
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = subtitle,
+                        fontSize = subtitleSize,
+                        fontWeight = FontWeight.Light,
+                        color = color.copy(alpha = 0.9f)
+                    )
                 }
             },
             back = {
-                // 背面：显示副标题
+                // 背面：标题 + 背面副标题
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = subtitle,
-                        fontSize = subtitleSize * 1.2f, // 背面字体稍大
+                        text = title,
+                        fontSize = titleSize,
+                        fontWeight = FontWeight.Thin,
+                        color = color,
+                        lineHeight = titleSize
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = backSubtitle,
+                        fontSize = subtitleSize,
                         fontWeight = FontWeight.Light,
-                        color = color
+                        color = color.copy(alpha = 0.9f)
                     )
                 }
             }
@@ -397,5 +414,78 @@ object MediumTilePresets {
                 overflow = TextOverflow.Ellipsis
             )
         }
+    }
+
+    /**
+     * 预设9：大数字+标签 ⭐ 固定动画：FLIP 翻转
+     *
+     * 适用场景：日历日期、倒计时、大数字展示
+     * 最佳动画：正反面都显示大数字+标签，通过翻转切换标签内容
+     *
+     * @param number 大数字（如"31"）
+     * @param label 标签文本（正面显示，如"1月"）
+     * @param backLabel 背面标签文本（可选，默认与 label 相同，如"星期五"）
+     * @param numberSize 数字字体大小（默认 96sp）
+     * @param labelSize 标签字体大小（默认 20sp）
+     * @param color 颜色（默认白色）
+     */
+    @Composable
+    fun LargeNumber(
+        number: String,
+        label: String,
+        backLabel: String = label,
+        numberSize: TextUnit = 96.sp,
+        labelSize: TextUnit = 20.sp,
+        color: Color = Color.White
+    ) {
+        // 固定使用 FLIP 动画
+        FlipContent(
+            front = {
+                // 正面：大数字 + 标签
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = number,
+                        fontSize = numberSize,
+                        fontWeight = FontWeight.Thin,
+                        color = color,
+                        lineHeight = numberSize
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = label,
+                        fontSize = labelSize,
+                        fontWeight = FontWeight.Light,
+                        color = color.copy(alpha = 0.9f)
+                    )
+                }
+            },
+            back = {
+                // 背面：大数字 + 背面标签
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = number,
+                        fontSize = numberSize,
+                        fontWeight = FontWeight.Thin,
+                        color = color,
+                        lineHeight = numberSize
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = backLabel,
+                        fontSize = labelSize,
+                        fontWeight = FontWeight.Light,
+                        color = color.copy(alpha = 0.9f)
+                    )
+                }
+            }
+        )
     }
 }

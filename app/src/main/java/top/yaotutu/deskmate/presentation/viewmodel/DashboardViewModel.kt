@@ -12,6 +12,9 @@ import java.util.Calendar
 data class DashboardUiState(
     val currentTime: String = "",
     val currentDate: String = "",
+    val currentWeekday: String = "",
+    val currentDayNumber: String = "",
+    val currentMonthName: String = "",
     val lunarDate: String = "",
     val temperature: Int = 22,
     val notifications: List<Notification> = emptyList(),
@@ -39,10 +42,14 @@ class DashboardViewModel : ViewModel() {
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
 
         val weekDays = arrayOf("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六")
+        val weekday = weekDays[dayOfWeek - 1]
 
         _uiState.value = _uiState.value.copy(
             currentTime = String.format("%02d:%02d", hour, minute),
-            currentDate = "${weekDays[dayOfWeek - 1]}, ${month}月 ${dayOfMonth}",
+            currentDate = "${weekday}, ${month}月 ${dayOfMonth}日",
+            currentWeekday = weekday,
+            currentDayNumber = dayOfMonth.toString(),
+            currentMonthName = "${month}月",
             lunarDate = "农历八月廿二",
             notifications = listOf(
                 Notification(
