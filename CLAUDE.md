@@ -190,17 +190,45 @@ app/src/main/java/top/yaotutu/deskmate/
 │   │   ├── layout/                  # 布局引擎
 │   │   │   └── VerticalPriorityLayout.kt # 垂直优先自动布局
 │   │   └── tiles/                   # 业务瓷砖实现
-│   │       ├── clock/               # 时钟瓷砖变体（尺寸命名）
+│   │       ├── clock/               # 时钟瓷砖变体（6个尺寸）
 │   │       │   ├── Clock1x1Tile.kt      # 1×1 简约版（仅时间）
-│   │       │   ├── Clock2x1Tile.kt      # 2×1 紧凑版（时间+日期）
+│   │       │   ├── Clock1x2Tile.kt      # 1×2 紧凑版（时间+日期）
 │   │       │   ├── Clock2x2Tile.kt      # 2×2 标准版（时间+日期+星期）
-│   │       │   ├── Clock2x4Tile.kt      # 2×4 高版（垂直布局+农历）
-│   │       │   ├── Clock4x2Tile.kt      # 4×2 详细版（翻转动画+农历）
+│   │       │   ├── Clock4x2Tile.kt      # 4×2 高版（垂直布局+农历）
+│   │       │   ├── Clock2x4Tile.kt      # 2×4 详细版（翻转动画+农历）
 │   │       │   └── Clock4x4Tile.kt      # 4×4 大型版（完整信息）
+│   │       ├── weather/             # 天气瓷砖变体（6个尺寸）
+│   │       │   ├── Weather1x1Tile.kt    # 1×1 简约版（图标）
+│   │       │   ├── Weather1x2Tile.kt    # 1×2 紧凑版（温度+状况）
+│   │       │   ├── Weather2x2Tile.kt    # 2×2 标准版（完整信息）
+│   │       │   ├── Weather4x2Tile.kt    # 4×2 高版（预报列表）
+│   │       │   ├── Weather2x4Tile.kt    # 2×4 详细版（周视图）
+│   │       │   └── Weather4x4Tile.kt    # 4×4 大型版（仪表盘）
+│   │       ├── calendar/            # 日历瓷砖变体（6个尺寸）
+│   │       │   ├── Calendar1x1Tile.kt   # 1×1 简约版（图标）
+│   │       │   ├── Calendar1x2Tile.kt   # 1×2 紧凑版（日期+星期）
+│   │       │   ├── Calendar2x2Tile.kt   # 2×2 标准版（日期+事件）
+│   │       │   ├── Calendar4x2Tile.kt   # 4×2 高版（事件列表）
+│   │       │   ├── Calendar2x4Tile.kt   # 2×4 详细版（时间轴）
+│   │       │   └── Calendar4x4Tile.kt   # 4×4 大型版（月视图）
+│   │       ├── todo/                # 待办瓷砖变体（6个尺寸）
+│   │       │   ├── Todo1x1Tile.kt       # 1×1 简约版（图标）
+│   │       │   ├── Todo1x2Tile.kt       # 1×2 紧凑版（任务标题）
+│   │       │   ├── Todo2x2Tile.kt       # 2×2 标准版（完成计数）
+│   │       │   ├── Todo4x2Tile.kt       # 4×2 高版（待办列表）
+│   │       │   ├── Todo2x4Tile.kt       # 2×4 详细版（任务统计）
+│   │       │   └── Todo4x4Tile.kt       # 4×4 大型版（仪表盘）
+│   │       ├── news/                # 新闻瓷砖变体（6个尺寸）
+│   │       │   ├── News1x1Tile.kt       # 1×1 简约版（图标）
+│   │       │   ├── News1x2Tile.kt       # 1×2 紧凑版（标题）
+│   │       │   ├── News2x2Tile.kt       # 2×2 标准版（摘要）
+│   │       │   ├── News4x2Tile.kt       # 4×2 高版（新闻列表）
+│   │       │   ├── News2x4Tile.kt       # 2×4 详细版（详情）
+│   │       │   └── News4x4Tile.kt       # 4×4 大型版（仪表盘）
 │   │       ├── common/              # 公共组件
 │   │       │   └── ErrorTile.kt     # 错误瓷砖（配置错误提示）
 │   │       ├── legacy/              # 遗留组件（向后兼容）
-│   │       │   └── TileComponents.kt # 旧组件库（待迁移）
+│   │       │   └── TileComponents.kt # 旧组件库（已废弃）
 │   │       └── special/             # 特殊瓷砖（示例）
 │   │           ├── PhotoTile.kt     # 照片瓷砖
 │   │           ├── MusicTile.kt     # 音乐瓷砖
@@ -429,6 +457,27 @@ val layoutConfig = LayoutConfig(
 
 ### 可用的瓷砖变体
 
+**变体覆盖总览**（截至 2025-11-03）：
+
+所有业务瓷砖类型现已支持完整的 6 个尺寸变体，提供从简约到全功能的渐进式展示：
+
+| 类型 | 1×1 | 1×2 | 2×2 | 4×2 | 2×4 | 4×4 | 总计 |
+|------|-----|-----|-----|-----|-----|-----|------|
+| Clock | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 6 |
+| Weather | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 6 |
+| Calendar | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 6 |
+| Todo | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 6 |
+| News | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 6 |
+| **总计** | **5** | **5** | **5** | **5** | **5** | **5** | **30** |
+
+**设计理念**：
+- **1×1（简约版）**：图标展示，快速识别
+- **1×2（紧凑版）**：核心信息，空间高效
+- **2×2（标准版）**：平衡显示，常用尺寸
+- **4×2（高版）**：垂直列表，多项展示
+- **2×4（详细版）**：横向扩展，丰富信息
+- **4×4（大型版）**：仪表盘视图，全面分析
+
 #### 时钟瓷砖（Clock）
 
 | 变体 | 尺寸 | 特点 | 配置 |
@@ -440,17 +489,49 @@ val layoutConfig = LayoutConfig(
 | **2x4** | 2×4 | 详细版，翻转动画+农历 | `{"type":"clock","variant":"2x4","columns":4,"rows":2}` |
 | **4x4** | 4×4 | 大型版，完整信息展示 | `{"type":"clock","variant":"4x4","columns":4,"rows":4}` |
 
-#### 其他业务瓷砖
+#### 天气瓷砖（Weather）
 
-| 类型 | Variant | 尺寸 | 特点 | 配置示例 |
-|-----|---------|------|------|---------|
-| **weather** | `2x2` | 2×2 | 标准天气 | `{"type":"weather","variant":"2x2"}` |
-| **weather** | `2x4` | 2×4 | 详细天气 | `{"type":"weather","variant":"2x4"}` |
-| **calendar** | `2x2` | 2×2 | 标准日历 | `{"type":"calendar","variant":"2x2"}` |
-| **calendar** | `4x4` | 4×4 | 大型日历 | `{"type":"calendar","variant":"4x4"}` |
-| **todo** | `1x2` | 1×2 | 紧凑待办 | `{"type":"todo","variant":"1x2"}` |
-| **todo** | `4x2` | 4×2 | 待办列表 | `{"type":"todo","variant":"4x2"}` |
-| **news** | `2x4` | 2×4 | 新闻瓷砖 | `{"type":"news","variant":"2x4"}` |
+| 变体 | 尺寸 | 特点 | 配置 |
+|-----|------|------|------|
+| **1x1** | 1×1 | 简约版，天气图标 | `{"type":"weather","variant":"1x1","columns":1,"rows":1}` |
+| **1x2** | 1×2 | 紧凑版，温度+天气状况 | `{"type":"weather","variant":"1x2","columns":2,"rows":1}` |
+| **2x2** | 2×2 | 标准版，完整天气信息 | `{"type":"weather","variant":"2x2","columns":2,"rows":2}` |
+| **4x2** | 4×2 | 高版，天气预报列表 | `{"type":"weather","variant":"4x2","columns":2,"rows":4}` |
+| **2x4** | 2×4 | 详细版，周视图预报 | `{"type":"weather","variant":"2x4","columns":4,"rows":2}` |
+| **4x4** | 4×4 | 大型版，天气仪表盘 | `{"type":"weather","variant":"4x4","columns":4,"rows":4}` |
+
+#### 日历瓷砖（Calendar）
+
+| 变体 | 尺寸 | 特点 | 配置 |
+|-----|------|------|------|
+| **1x1** | 1×1 | 简约版，日历图标 | `{"type":"calendar","variant":"1x1","columns":1,"rows":1}` |
+| **1x2** | 1×2 | 紧凑版，日期+星期 | `{"type":"calendar","variant":"1x2","columns":2,"rows":1}` |
+| **2x2** | 2×2 | 标准版，日期+事件 | `{"type":"calendar","variant":"2x2","columns":2,"rows":2}` |
+| **4x2** | 4×2 | 高版，事件列表 | `{"type":"calendar","variant":"4x2","columns":2,"rows":4}` |
+| **2x4** | 2×4 | 详细版，时间轴视图 | `{"type":"calendar","variant":"2x4","columns":4,"rows":2}` |
+| **4x4** | 4×4 | 大型版，月视图 | `{"type":"calendar","variant":"4x4","columns":4,"rows":4}` |
+
+#### 待办瓷砖（Todo）
+
+| 变体 | 尺寸 | 特点 | 配置 |
+|-----|------|------|------|
+| **1x1** | 1×1 | 简约版，待办图标 | `{"type":"todo","variant":"1x1","columns":1,"rows":1}` |
+| **1x2** | 1×2 | 紧凑版，任务标题 | `{"type":"todo","variant":"1x2","columns":2,"rows":1}` |
+| **2x2** | 2×2 | 标准版，完成计数 | `{"type":"todo","variant":"2x2","columns":2,"rows":2}` |
+| **4x2** | 4×2 | 高版，待办列表 | `{"type":"todo","variant":"4x2","columns":2,"rows":4}` |
+| **2x4** | 2×4 | 详细版，任务统计 | `{"type":"todo","variant":"2x4","columns":4,"rows":2}` |
+| **4x4** | 4×4 | 大型版，任务仪表盘 | `{"type":"todo","variant":"4x4","columns":4,"rows":4}` |
+
+#### 新闻瓷砖（News）
+
+| 变体 | 尺寸 | 特点 | 配置 |
+|-----|------|------|------|
+| **1x1** | 1×1 | 简约版，新闻图标 | `{"type":"news","variant":"1x1","columns":1,"rows":1}` |
+| **1x2** | 1×2 | 紧凑版，新闻标题 | `{"type":"news","variant":"1x2","columns":2,"rows":1}` |
+| **2x2** | 2×2 | 标准版，新闻摘要 | `{"type":"news","variant":"2x2","columns":2,"rows":2}` |
+| **4x2** | 4×2 | 高版，新闻列表 | `{"type":"news","variant":"4x2","columns":2,"rows":4}` |
+| **2x4** | 2×4 | 详细版，新闻详情 | `{"type":"news","variant":"2x4","columns":4,"rows":2}` |
+| **4x4** | 4×4 | 大型版，新闻仪表盘 | `{"type":"news","variant":"4x4","columns":4,"rows":4}` |
 
 ### 错误处理
 
@@ -978,18 +1059,50 @@ data class DashboardUiState(
 
 #### 时钟瓷砖（6个变体）
 - **Clock1x1Tile.kt** - 1×1 简约版（仅时间）
-- **Clock2x1Tile.kt** - 2×1 紧凑版（时间+日期）
+- **Clock1x2Tile.kt** - 1×2 紧凑版（时间+日期）
 - **Clock2x2Tile.kt** - 2×2 标准版（时间+日期+星期）
-- **Clock2x4Tile.kt** - 2×4 高版（垂直布局+农历）
-- **Clock4x2Tile.kt** - 4×2 详细版（翻转动画+农历）
+- **Clock4x2Tile.kt** - 4×2 高版（垂直布局+农历）
+- **Clock2x4Tile.kt** - 2×4 详细版（翻转动画+农历）
 - **Clock4x4Tile.kt** - 4×4 大型版（完整信息展示）
+
+#### 天气瓷砖（6个变体）⭐ 新增
+- **Weather1x1Tile.kt** - 1×1 简约版（天气图标）
+- **Weather1x2Tile.kt** - 1×2 紧凑版（温度+状况）
+- **Weather2x2Tile.kt** - 2×2 标准版（完整天气信息）
+- **Weather4x2Tile.kt** - 4×2 高版（天气预报列表）
+- **Weather2x4Tile.kt** - 2×4 详细版（周视图预报）
+- **Weather4x4Tile.kt** - 4×4 大型版（天气仪表盘）
+
+#### 日历瓷砖（6个变体）⭐ 新增
+- **Calendar1x1Tile.kt** - 1×1 简约版（日历图标）
+- **Calendar1x2Tile.kt** - 1×2 紧凑版（日期+星期）
+- **Calendar2x2Tile.kt** - 2×2 标准版（日期+事件）
+- **Calendar4x2Tile.kt** - 4×2 高版（事件列表）
+- **Calendar2x4Tile.kt** - 2×4 详细版（时间轴视图）
+- **Calendar4x4Tile.kt** - 4×4 大型版（月视图）
+
+#### 待办瓷砖（6个变体）⭐ 新增
+- **Todo1x1Tile.kt** - 1×1 简约版（待办图标）
+- **Todo1x2Tile.kt** - 1×2 紧凑版（任务标题）
+- **Todo2x2Tile.kt** - 2×2 标准版（完成计数）
+- **Todo4x2Tile.kt** - 4×2 高版（待办列表）
+- **Todo2x4Tile.kt** - 2×4 详细版（任务统计）
+- **Todo4x4Tile.kt** - 4×4 大型版（任务仪表盘）
+
+#### 新闻瓷砖（6个变体）⭐ 新增
+- **News1x1Tile.kt** - 1×1 简约版（新闻图标）
+- **News1x2Tile.kt** - 1×2 紧凑版（新闻标题）
+- **News2x2Tile.kt** - 2×2 标准版（新闻摘要）
+- **News4x2Tile.kt** - 4×2 高版（新闻列表）
+- **News2x4Tile.kt** - 2×4 详细版（新闻详情）
+- **News4x4Tile.kt** - 4×4 大型版（新闻仪表盘）
 
 #### 公共组件
 - **ErrorTile.kt** - 错误瓷砖（配置错误提示）
 
-### 遗留组件（向后兼容）
+### 遗留组件（向后兼容，已废弃）
 
-- **legacy/TileComponents.kt** - 旧的高级组件库（WeatherTile, CalendarTile, TodoTile, NewsTile）
+- **legacy/TileComponents.kt** - 旧的高级组件库（已被上述变体替代）
 
 ### 扩展组件（可选）
 

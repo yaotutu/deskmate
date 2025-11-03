@@ -1,33 +1,38 @@
 {
-  "comment": "完美无滚动布局 - 6列×4行网格区域配置",
+  "comment": "完美无滚动布局 - 展示所有5种组件类型和不同尺寸变体",
   "columns": 6,
   "rows": 4,
   "areas": [
-    "N N N N W W",
-    "N N N N W W",
-    "T T C C K K",
-    "T T C C K K"
+    "C C W W N N",
+    "C C W W N N",
+    "T T T T A A",
+    "T T T T A A"
   ],
   "tiles": {
-    "N": {
-      "type": "news",
-      "variant": "2x4"
+    "C": {
+      "type": "clock",
+      "variant": "2x2",
+      "comment": "时钟 - 2×2 标准版"
     },
     "W": {
       "type": "weather",
-      "variant": "2x2"
+      "variant": "2x2",
+      "comment": "天气 - 2×2 标准版"
+    },
+    "N": {
+      "type": "news",
+      "variant": "2x2",
+      "comment": "新闻 - 2×2 标准版"
     },
     "T": {
-      "type": "clock",
-      "variant": "2x2"
+      "type": "todo",
+      "variant": "2x4",
+      "comment": "待办 - 2×4 详细版"
     },
-    "C": {
+    "A": {
       "type": "calendar",
-      "variant": "2x2"
-    },
-    "K": {
-      "type": "clock",
-      "variant": "2x2"
+      "variant": "2x2",
+      "comment": "日历 - 2×2 标准版"
     }
   }
 }

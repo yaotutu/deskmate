@@ -744,6 +744,39 @@ private fun registerPresetsDemoVariants() {
  * 注册天气瓷砖的所有变体
  */
 fun registerWeatherVariants() {
+    // 小型天气瓷砖 (1×1)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "weather",
+            variant = "1x1",
+            supportedSizes = listOf(1 to 1),
+            defaultSize = 1 to 1,
+            view = { _, uiState, onClick ->
+                Weather1x1Tile(
+                    icon = "☀️",
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 紧凑天气瓷砖 (1×2)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "weather",
+            variant = "1x2",
+            supportedSizes = listOf(2 to 1),
+            defaultSize = 2 to 1,
+            view = { _, uiState, onClick ->
+                Weather1x2Tile(
+                    temperature = uiState.temperature,
+                    condition = "晴朗",
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
     // 标准天气瓷砖 (2×2)
     TileRegistry.register(
         TileVariantSpec(
@@ -761,7 +794,7 @@ fun registerWeatherVariants() {
         )
     )
 
-    // 详细天气瓷砖 (4×2)
+    // 详细天气瓷砖 (2×4)
     TileRegistry.register(
         TileVariantSpec(
             type = "weather",
@@ -779,12 +812,87 @@ fun registerWeatherVariants() {
             }
         )
     )
+
+    // 高版天气瓷砖 (4×2)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "weather",
+            variant = "4x2",
+            supportedSizes = listOf(2 to 4),
+            defaultSize = 2 to 4,
+            view = { _, uiState, onClick ->
+                Weather4x2Tile(
+                    forecasts = listOf(
+                        Triple("周一", "☀️", "25°"),
+                        Triple("周二", "🌤️", "23°"),
+                        Triple("周三", "🌧️", "18°"),
+                        Triple("周四", "⛅", "22°")
+                    ),
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 大型天气瓷砖 (4×4)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "weather",
+            variant = "4x4",
+            supportedSizes = listOf(4 to 4),
+            defaultSize = 4 to 4,
+            view = { _, uiState, onClick ->
+                Weather4x4Tile(
+                    metrics = listOf(
+                        Triple("温度", "${uiState.temperature}", "°"),
+                        Triple("湿度", "65", "%"),
+                        Triple("风速", "12", "km/h"),
+                        Triple("气压", "1013", "hPa")
+                    ),
+                    onClick = onClick
+                )
+            }
+        )
+    )
 }
 
 /**
  * 注册日历瓷砖的所有变体
  */
 fun registerCalendarVariants() {
+    // 小型日历瓷砖 (1×1)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "calendar",
+            variant = "1x1",
+            supportedSizes = listOf(1 to 1),
+            defaultSize = 1 to 1,
+            view = { _, _, onClick ->
+                Calendar1x1Tile(
+                    icon = "📅",
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 紧凑日历瓷砖 (1×2)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "calendar",
+            variant = "1x2",
+            supportedSizes = listOf(2 to 1),
+            defaultSize = 2 to 1,
+            view = { _, uiState, onClick ->
+                Calendar1x2Tile(
+                    day = uiState.currentDay.toString(),
+                    weekday = "周五",
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
     // 标准日历瓷砖 (2×2)
     TileRegistry.register(
         TileVariantSpec(
@@ -796,6 +904,47 @@ fun registerCalendarVariants() {
                 CalendarStandardTile(
                     date = "1月31日",
                     weekday = "星期五",
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 宽版日历瓷砖 (2×4)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "calendar",
+            variant = "2x4",
+            supportedSizes = listOf(4 to 2),
+            defaultSize = 4 to 2,
+            view = { _, _, onClick ->
+                Calendar2x4Tile(
+                    timeline = listOf(
+                        "09:00" to "晨会",
+                        "14:00" to "项目讨论",
+                        "16:30" to "代码评审"
+                    ),
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 高版日历瓷砖 (4×2)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "calendar",
+            variant = "4x2",
+            supportedSizes = listOf(2 to 4),
+            defaultSize = 2 to 4,
+            view = { _, _, onClick ->
+                Calendar4x2Tile(
+                    events = listOf(
+                        "会议 10:00",
+                        "午餐 12:00",
+                        "健身 17:00",
+                        "晚餐 19:00"
+                    ),
                     onClick = onClick
                 )
             }
@@ -831,7 +980,23 @@ fun registerCalendarVariants() {
  * 注册待办瓷砖的所有变体
  */
 fun registerTodoVariants() {
-    // 紧凑待办瓷砖 (2×1)
+    // 小型待办瓷砖 (1×1)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "todo",
+            variant = "1x1",
+            supportedSizes = listOf(1 to 1),
+            defaultSize = 1 to 1,
+            view = { _, _, onClick ->
+                Todo1x1Tile(
+                    icon = "✓",
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 紧凑待办瓷砖 (1×2)
     TileRegistry.register(
         TileVariantSpec(
             type = "todo",
@@ -848,7 +1013,44 @@ fun registerTodoVariants() {
         )
     )
 
-    // 待办列表瓷砖 (2×4)
+    // 标准待办瓷砖 (2×2)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "todo",
+            variant = "2x2",
+            supportedSizes = listOf(2 to 2),
+            defaultSize = 2 to 2,
+            view = { _, _, onClick ->
+                Todo2x2Tile(
+                    completedCount = 3,
+                    totalCount = 5,
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 宽版待办瓷砖 (2×4)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "todo",
+            variant = "2x4",
+            supportedSizes = listOf(4 to 2),
+            defaultSize = 4 to 2,
+            view = { _, _, onClick ->
+                Todo2x4Tile(
+                    metrics = listOf(
+                        Triple("待办", "5", "项"),
+                        Triple("进行中", "3", "项"),
+                        Triple("已完成", "12", "项")
+                    ),
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 高版待办列表瓷砖 (4×2)
     TileRegistry.register(
         TileVariantSpec(
             type = "todo",
@@ -869,13 +1071,85 @@ fun registerTodoVariants() {
             }
         )
     )
+
+    // 大型待办瓷砖 (4×4)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "todo",
+            variant = "4x4",
+            supportedSizes = listOf(4 to 4),
+            defaultSize = 4 to 4,
+            view = { _, _, onClick ->
+                Todo4x4Tile(
+                    metrics = listOf(
+                        Triple("今日", "5", "项"),
+                        Triple("本周", "12", "项"),
+                        Triple("完成", "87", "%"),
+                        Triple("逾期", "2", "项")
+                    ),
+                    onClick = onClick
+                )
+            }
+        )
+    )
 }
 
 /**
  * 注册新闻瓷砖的所有变体
  */
 fun registerNewsVariants() {
-    // 新闻瓷砖 (2×4)
+    // 小型新闻瓷砖 (1×1)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "news",
+            variant = "1x1",
+            supportedSizes = listOf(1 to 1),
+            defaultSize = 1 to 1,
+            view = { _, _, onClick ->
+                News1x1Tile(
+                    icon = "📰",
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 紧凑新闻瓷砖 (1×2)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "news",
+            variant = "1x2",
+            supportedSizes = listOf(2 to 1),
+            defaultSize = 2 to 1,
+            view = { _, _, onClick ->
+                News1x2Tile(
+                    title = "科技突破：AI技术新进展",
+                    time = "2小时前",
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 标准新闻瓷砖 (2×2)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "news",
+            variant = "2x2",
+            supportedSizes = listOf(2 to 2),
+            defaultSize = 2 to 2,
+            view = { _, _, onClick ->
+                News2x2Tile(
+                    icon = "📰",
+                    title = "科技新闻",
+                    summary = "AI技术取得突破性进展",
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 详细新闻瓷砖 (2×4)
     TileRegistry.register(
         TileVariantSpec(
             type = "news",
@@ -888,6 +1162,48 @@ fun registerNewsVariants() {
                     title = "科技新闻：AI 技术突破性进展",
                     summary = "自然语言处理达到新高度，应用前景广阔",
                     time = "2小时前",
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 高版新闻瓷砖 (4×2)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "news",
+            variant = "4x2",
+            supportedSizes = listOf(2 to 4),
+            defaultSize = 2 to 4,
+            view = { _, _, onClick ->
+                News4x2Tile(
+                    headlines = listOf(
+                        "科技：AI技术突破",
+                        "财经：股市创新高",
+                        "体育：中国队夺冠",
+                        "娱乐：新片上映"
+                    ),
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 大型新闻瓷砖 (4×4)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "news",
+            variant = "4x4",
+            supportedSizes = listOf(4 to 4),
+            defaultSize = 4 to 4,
+            view = { _, _, onClick ->
+                News4x4Tile(
+                    metrics = listOf(
+                        Triple("科技", "12", "条"),
+                        Triple("财经", "8", "条"),
+                        Triple("体育", "5", "条"),
+                        Triple("娱乐", "10", "条")
+                    ),
                     onClick = onClick
                 )
             }
