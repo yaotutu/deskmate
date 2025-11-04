@@ -1,12 +1,12 @@
 {
-  "comment": "完美无滚动布局 - 展示所有5种组件类型和不同尺寸变体",
+  "comment": "多组件展示布局 - 5种核心组件，紧凑实用",
   "columns": 6,
   "rows": 4,
   "areas": [
-    "C C W W N N",
-    "C C W W N N",
-    "T T T T A A",
-    "T T T T A A"
+    "C C W W A A",
+    "C C W W A A",
+    "T T T T N N",
+    "T T T T N N"
   ],
   "tiles": {
     "C": {
@@ -19,20 +19,20 @@
       "variant": "2x2",
       "comment": "天气 - 2×2 标准版"
     },
-    "N": {
-      "type": "news",
-      "variant": "2x2",
-      "comment": "新闻 - 2×2 标准版"
+    "A": {
+      "type": "calendar",
+      "variant": "almanac",
+      "comment": "黄历 - 2×2 紧凑版"
     },
     "T": {
       "type": "todo",
       "variant": "2x4",
       "comment": "待办 - 2×4 详细版"
     },
-    "A": {
-      "type": "calendar",
+    "N": {
+      "type": "news",
       "variant": "2x2",
-      "comment": "日历 - 2×2 标准版"
+      "comment": "新闻 - 2×2 标准版"
     }
   }
 }

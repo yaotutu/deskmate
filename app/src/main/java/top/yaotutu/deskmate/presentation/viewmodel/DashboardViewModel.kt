@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import top.yaotutu.deskmate.data.model.NewsItem
 import top.yaotutu.deskmate.data.model.Notification
 import top.yaotutu.deskmate.data.model.TodoItem
+import top.yaotutu.deskmate.util.LunarCalendar
 import java.util.Calendar
 
 data class DashboardUiState(
@@ -16,6 +17,18 @@ data class DashboardUiState(
     val currentDayNumber: String = "",
     val currentMonthName: String = "",
     val lunarDate: String = "",
+    val lunarDayName: String = "",
+    val lunarMonthName: String = "",
+    val lunarYearGanZhi: String = "",
+    val lunarMonthGanZhi: String = "",
+    val lunarDayGanZhi: String = "",
+    val lunarAnimal: String = "",
+    val lunarFullDate: String = "",
+    val lunarSolarTerm: String? = null,
+    val lunarFestival: String? = null,
+    val lunarConstellation: String = "",
+    val lunarDayLucky: String = "",
+    val lunarDayAvoid: String = "",
     val temperature: Int = 22,
     val notifications: List<Notification> = emptyList(),
     val newsItems: List<NewsItem> = emptyList(),
@@ -44,13 +57,28 @@ class DashboardViewModel : ViewModel() {
         val weekDays = arrayOf("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六")
         val weekday = weekDays[dayOfWeek - 1]
 
+        // 计算农历
+        val lunarInfo = LunarCalendar.solarToLunar(calendar)
+
         _uiState.value = _uiState.value.copy(
             currentTime = String.format("%02d:%02d", hour, minute),
             currentDate = "${weekday}, ${month}月 ${dayOfMonth}日",
             currentWeekday = weekday,
             currentDayNumber = dayOfMonth.toString(),
             currentMonthName = "${month}月",
-            lunarDate = "农历八月廿二",
+            lunarDate = lunarInfo.toShortString(),
+            lunarDayName = lunarInfo.dayName,
+            lunarMonthName = lunarInfo.monthName + "月",
+            lunarYearGanZhi = lunarInfo.yearGanZhi + "年",
+            lunarMonthGanZhi = lunarInfo.monthGanZhi,
+            lunarDayGanZhi = lunarInfo.dayGanZhi,
+            lunarAnimal = lunarInfo.animal,
+            lunarFullDate = lunarInfo.toFullString(),
+            lunarSolarTerm = lunarInfo.solarTerm,
+            lunarFestival = lunarInfo.festival,
+            lunarConstellation = lunarInfo.constellation,
+            lunarDayLucky = lunarInfo.dayLucky,
+            lunarDayAvoid = lunarInfo.dayAvoid,
             notifications = listOf(
                 Notification(
                     id = "1",

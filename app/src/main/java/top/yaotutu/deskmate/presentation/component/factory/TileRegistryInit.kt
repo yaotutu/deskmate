@@ -902,10 +902,52 @@ fun registerCalendarVariants() {
             supportedSizes = listOf(2 to 2),
             defaultSize = 2 to 2,
             view = { config, uiState, onClick ->
+                // 优先显示节日或节气，其次显示农历日期
+                val backLabel = when {
+                    !uiState.lunarFestival.isNullOrEmpty() -> uiState.lunarFestival
+                    !uiState.lunarSolarTerm.isNullOrEmpty() -> uiState.lunarSolarTerm
+                    else -> uiState.lunarDayName
+                }
+
                 CalendarStandardTile(
                     dayNumber = uiState.currentDayNumber,
                     monthName = uiState.currentMonthName,
-                    weekday = uiState.currentWeekday,
+                    lunarDayName = backLabel,
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 黄历瓷砖 (2×2) - 紧凑的传统黄历
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "calendar",
+            variant = "almanac",
+            supportedSizes = listOf(2 to 2),
+            defaultSize = 2 to 2,
+            view = { config, uiState, onClick ->
+                // 构建紧凑的信息
+                val lunarInfo = when {
+                    !uiState.lunarFestival.isNullOrEmpty() -> uiState.lunarFestival!!
+                    !uiState.lunarSolarTerm.isNullOrEmpty() -> uiState.lunarSolarTerm!!
+                    else -> uiState.lunarDayName
+                }
+
+                val ganZhi = "${uiState.lunarYearGanZhi}\n${uiState.lunarMonthGanZhi}月 ${uiState.lunarDayGanZhi}日"
+
+                // 简化宜忌，取前3项
+                val luckyItems = uiState.lunarDayLucky.split(" ").take(3).joinToString(" ")
+                val avoidItems = uiState.lunarDayAvoid.split(" ").take(3).joinToString(" ")
+                val luck = "宜: $luckyItems\n忌: $avoidItems"
+
+                CalendarAlmanacTile(
+                    dayNumber = uiState.currentDayNumber,
+                    monthName = uiState.currentMonthName,
+                    lunarInfo = lunarInfo,
+                    ganZhi = ganZhi,
+                    constellation = uiState.lunarConstellation,
+                    luck = luck,
                     onClick = onClick
                 )
             }
@@ -953,7 +995,7 @@ fun registerCalendarVariants() {
         )
     )
 
-    // 大型日历瓷砖 (4×4)
+    // 大型黄历瓷砖 (4×4) - 完整的传统黄历信息
     TileRegistry.register(
         TileVariantSpec(
             type = "calendar",
@@ -961,16 +1003,18 @@ fun registerCalendarVariants() {
             supportedSizes = listOf(4 to 4),
             defaultSize = 4 to 4,
             view = { config, uiState, onClick ->
-                CalendarLargeTile(
-                    title = "2025年1月",
-                    metrics = listOf(
-                        Triple("今日", "31", "日"),
-                        Triple("星期", "五", ""),
-                        Triple("农历", "廿二", ""),
-                        Triple("节气", "大寒", ""),
-                        Triple("本月", "31", "天"),
-                        Triple("剩余", "1", "天")
-                    ),
+                // 构建农历字符串（去掉"农历"前缀，因为瓷砖中已有标签）
+                val lunarDateWithoutPrefix = "${uiState.lunarYearGanZhi}${uiState.lunarMonthName}${uiState.lunarDayName}"
+
+                Calendar4x4Tile(
+                    solarDate = "${uiState.currentYear}年${uiState.currentMonth + 1}月${uiState.currentDay}日 ${uiState.currentWeekday}",
+                    lunarDate = lunarDateWithoutPrefix,
+                    ganZhi = "${uiState.lunarYearGanZhi} ${uiState.lunarMonthGanZhi}月 ${uiState.lunarDayGanZhi}日",
+                    solarTerm = uiState.lunarSolarTerm,
+                    festival = uiState.lunarFestival,
+                    constellation = uiState.lunarConstellation,
+                    dayLucky = uiState.lunarDayLucky,
+                    dayAvoid = uiState.lunarDayAvoid,
                     onClick = onClick
                 )
             }

@@ -1,0 +1,25 @@
+{
+  "comment": "黄历测试布局 - 展示完整的传统黄历功能",
+  "columns": 6,
+  "rows": 4,
+  "areas": [
+    "A A A A C C",
+    "A A A A C C",
+    "A A A A T T",
+    "A A A A T T"
+  ],
+  "tiles": {
+    "A": {
+      "type": "calendar",
+      "variant": "4x4"
+    },
+    "C": {
+      "type": "clock",
+      "variant": "2x2"
+    },
+    "T": {
+      "type": "todo",
+      "variant": "2x2"
+    }
+  }
+}
