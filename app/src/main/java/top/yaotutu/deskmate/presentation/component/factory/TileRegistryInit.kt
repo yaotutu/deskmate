@@ -743,6 +743,8 @@ private fun registerPresetsDemoVariants() {
 
 /**
  * 注册天气瓷砖的所有变体
+ *
+ * ⭐ 使用真实天气数据（WeatherData模型）
  */
 fun registerWeatherVariants() {
     // 小型天气瓷砖 (1×1)
@@ -754,7 +756,7 @@ fun registerWeatherVariants() {
             defaultSize = 1 to 1,
             view = { _, uiState, onClick ->
                 Weather1x1Tile(
-                    icon = "☀️",
+                    icon = top.yaotutu.deskmate.data.model.WeatherIconMapper.getEmoji(uiState.weatherData.iconCode),
                     onClick = onClick
                 )
             }
@@ -770,51 +772,52 @@ fun registerWeatherVariants() {
             defaultSize = 2 to 1,
             view = { _, uiState, onClick ->
                 Weather1x2Tile(
-                    temperature = uiState.temperature,
-                    condition = "晴朗",
+                    temperature = uiState.weatherData.temperature,
+                    condition = uiState.weatherData.condition,
                     onClick = onClick
                 )
             }
         )
     )
 
-    // 标准天气瓷砖 (2×2)
+    // 标准天气瓷砖 (2×2) ⭐ 使用新创建的Weather2x2Tile
     TileRegistry.register(
         TileVariantSpec(
             type = "weather",
             variant = "2x2",
             supportedSizes = listOf(2 to 2),
             defaultSize = 2 to 2,
-            view = { config, uiState, onClick ->
-                WeatherStandardTile(
-                    temperature = uiState.temperature,
-                    condition = "晴朗",
+            view = { _, uiState, onClick ->
+                Weather2x2Tile(
+                    temperature = uiState.weatherData.temperature,
+                    condition = uiState.weatherData.condition,
+                    iconCode = uiState.weatherData.iconCode,
+                    location = uiState.weatherData.location,
                     onClick = onClick
                 )
             }
         )
     )
 
-    // 详细天气瓷砖 (2×4)
+    // 详细天气瓷砖 (2×4 - 宽版) ⭐ 使用新创建的Weather2x4Tile（周预报）
     TileRegistry.register(
         TileVariantSpec(
             type = "weather",
             variant = "2x4",
             supportedSizes = listOf(4 to 2),
             defaultSize = 4 to 2,
-            view = { config, uiState, onClick ->
-                WeatherDetailedTile(
-                    icon = "☀️",
-                    title = "晴朗 ${uiState.temperature}°",
-                    details = "湿度 65% | 风速 12km/h",
-                    forecast = "明日最高 28°",
+            view = { _, uiState, onClick ->
+                Weather2x4Tile(
+                    forecasts = uiState.weatherForecast,
+                    currentTemp = uiState.weatherData.temperature,
+                    currentCondition = uiState.weatherData.condition,
                     onClick = onClick
                 )
             }
         )
     )
 
-    // 高版天气瓷砖 (4×2)
+    // 高版天气瓷砖 (4×2 - 垂直列表)
     TileRegistry.register(
         TileVariantSpec(
             type = "weather",
@@ -822,20 +825,26 @@ fun registerWeatherVariants() {
             supportedSizes = listOf(2 to 4),
             defaultSize = 2 to 4,
             view = { _, uiState, onClick ->
+                // 转换预报数据为Weather4x2Tile所需的格式
+                val forecasts = uiState.weatherForecast.take(4).map { forecast ->
+                    val icon = top.yaotutu.deskmate.data.model.WeatherIconMapper.getEmoji(forecast.dayIconCode)
+                    val date = forecast.date.substring(5)  // 提取 MM-dd
+                    Triple(date, icon, "${forecast.maxTemp}°")
+                }
+
                 Weather4x2Tile(
-                    forecasts = listOf(
-                        Triple("周一", "☀️", "25°"),
-                        Triple("周二", "🌤️", "23°"),
-                        Triple("周三", "🌧️", "18°"),
-                        Triple("周四", "⛅", "22°")
-                    ),
+                    forecasts = forecasts.ifEmpty {
+                        listOf(
+                            Triple("今天", "☀️", "${uiState.weatherData.temperature}°")
+                        )
+                    },
                     onClick = onClick
                 )
             }
         )
     )
 
-    // 大型天气瓷砖 (4×4)
+    // 大型天气瓷砖 (4×4 - 仪表盘)
     TileRegistry.register(
         TileVariantSpec(
             type = "weather",
@@ -843,13 +852,32 @@ fun registerWeatherVariants() {
             supportedSizes = listOf(4 to 4),
             defaultSize = 4 to 4,
             view = { _, uiState, onClick ->
+                val weather = uiState.weatherData
                 Weather4x4Tile(
                     metrics = listOf(
-                        Triple("温度", "${uiState.temperature}", "°"),
-                        Triple("湿度", "65", "%"),
-                        Triple("风速", "12", "km/h"),
-                        Triple("气压", "1013", "hPa")
+                        Triple("温度", "${weather.temperature}", "°C"),
+                        Triple("湿度", "${weather.humidity}", "%"),
+                        Triple("风速", "${weather.windSpeed}", "km/h"),
+                        Triple("气压", "${weather.pressure}", "hPa"),
+                        Triple("能见度", "${weather.visibility}", "km"),
+                        Triple("体感", "${weather.feelsLike}", "°C")
                     ),
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 翻转天气瓷砖 (2×2) - 西安专属 ⭐ 新增
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "weather",
+            variant = "flip",
+            supportedSizes = listOf(2 to 2),
+            defaultSize = 2 to 2,
+            view = { _, uiState, onClick ->
+                Weather2x2FlipTile(
+                    weatherData = uiState.weatherData,
                     onClick = onClick
                 )
             }

@@ -58,15 +58,16 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.extended)  // Material Icons Extended
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
 
     // Network (可选，按需使用)
-    // implementation(libs.retrofit)
-    // implementation(libs.retrofit.converter.kotlinx.serialization)
-    // implementation(libs.okhttp)
-    // implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
     implementation(libs.kotlinx.serialization.json)
 
     // Database (可选，按需使用)
@@ -78,8 +79,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-    // Image Loading (可选，按需使用)
-    // implementation(libs.coil.compose)
+    // Image Loading - 用于加载和风天气SVG图标
+    implementation(libs.coil.compose)
+    implementation(libs.coil.svg)  // SVG 支持
 
     // Logging
     implementation(libs.timber)

@@ -16,8 +16,8 @@
     },
     "W": {
       "type": "weather",
-      "variant": "2x2",
-      "comment": "天气 - 2×2 标准版"
+      "variant": "flip",
+      "comment": "天气 - 2×2 翻转版（西安）"
     },
     "A": {
       "type": "calendar",
