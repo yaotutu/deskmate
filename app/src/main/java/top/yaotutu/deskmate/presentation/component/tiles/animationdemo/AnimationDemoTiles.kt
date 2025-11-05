@@ -28,6 +28,7 @@ import top.yaotutu.deskmate.presentation.component.base.SlideContent
 import top.yaotutu.deskmate.presentation.component.base.FadeContent
 import top.yaotutu.deskmate.presentation.component.base.CounterContent
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 动画演示瓷砖集合
@@ -60,7 +61,7 @@ fun AnimationDemoNoneSmall(
         ) {
             Text(
                 text = "1×1",
-                fontSize = 24.sp,
+                fontSize = MetroTypography.bodyLarge(),
                 fontWeight = FontWeight.Thin,
                 color = Color.White
             )
@@ -89,13 +90,13 @@ fun AnimationDemoNone(
         ) {
             Text(
                 text = "NONE",
-                fontSize = 40.sp,
+                fontSize = MetroTypography.displayMedium(),
                 fontWeight = FontWeight.Thin,
                 color = Color.White
             )
             Text(
                 text = "无动画",
-                fontSize = 18.sp,
+                fontSize = MetroTypography.bodyMedium(),
                 fontWeight = FontWeight.Light,
                 color = Color.White.copy(alpha = 0.9f)
             )
@@ -128,13 +129,13 @@ fun AnimationDemoFlip(
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
                             text = "FLIP",
-                            fontSize = 56.sp,
+                            fontSize = MetroTypography.displayMedium(),
                             fontWeight = FontWeight.Thin,
                             color = Color.White
                         )
                         Text(
                             text = "正面",
-                            fontSize = 20.sp,
+                            fontSize = MetroTypography.bodyLarge(),
                             fontWeight = FontWeight.Light,
                             color = Color.White.copy(alpha = 0.9f)
                         )
@@ -149,13 +150,13 @@ fun AnimationDemoFlip(
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
                             text = "翻转动画",
-                            fontSize = 32.sp,
+                            fontSize = MetroTypography.titleLarge(),
                             fontWeight = FontWeight.Light,
                             color = Color.White
                         )
                         Text(
                             text = "正反面切换",
-                            fontSize = 18.sp,
+                            fontSize = MetroTypography.bodyMedium(),
                             fontWeight = FontWeight.ExtraLight,
                             color = Color.White.copy(alpha = 0.9f)
                         )
@@ -189,19 +190,19 @@ fun AnimationDemoPulse(
         ) {
             Text(
                 text = "PULSE",
-                fontSize = 40.sp,
+                fontSize = MetroTypography.displayMedium(),
                 fontWeight = FontWeight.Thin,
                 color = Color.White
             )
             Text(
                 text = "脉冲动画",
-                fontSize = 18.sp,
+                fontSize = MetroTypography.bodyMedium(),
                 fontWeight = FontWeight.Light,
                 color = Color.White.copy(alpha = 0.9f)
             )
             Text(
                 text = "周期缩放",
-                fontSize = 16.sp,
+                fontSize = MetroTypography.bodyMedium(),
                 fontWeight = FontWeight.ExtraLight,
                 color = Color.White.copy(alpha = 0.8f)
             )
@@ -235,19 +236,19 @@ fun AnimationDemoSlide(
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(
                                 text = "SLIDE",
-                                fontSize = 64.sp,
+                                fontSize = MetroTypography.displayLarge(),
                                 fontWeight = FontWeight.Thin,
                                 color = Color.White
                             )
                             Text(
                                 text = "滑动动画",
-                                fontSize = 24.sp,
+                                fontSize = MetroTypography.bodyLarge(),
                                 fontWeight = FontWeight.Light,
                                 color = Color.White
                             )
                             Text(
                                 text = "内容 1/3",
-                                fontSize = 18.sp,
+                                fontSize = MetroTypography.bodyMedium(),
                                 fontWeight = FontWeight.ExtraLight,
                                 color = Color.White.copy(alpha = 0.9f)
                             )
@@ -262,19 +263,19 @@ fun AnimationDemoSlide(
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(
                                 text = "内容轮播",
-                                fontSize = 32.sp,
+                                fontSize = MetroTypography.titleLarge(),
                                 fontWeight = FontWeight.Light,
                                 color = Color.White
                             )
                             Text(
                                 text = "自动滑动切换",
-                                fontSize = 20.sp,
+                                fontSize = MetroTypography.bodyLarge(),
                                 fontWeight = FontWeight.ExtraLight,
                                 color = Color.White.copy(alpha = 0.9f)
                             )
                             Text(
                                 text = "内容 2/3",
-                                fontSize = 18.sp,
+                                fontSize = MetroTypography.bodyMedium(),
                                 fontWeight = FontWeight.ExtraLight,
                                 color = Color.White.copy(alpha = 0.8f)
                             )
@@ -293,13 +294,13 @@ fun AnimationDemoSlide(
                             )
                             Text(
                                 text = "滑动轮播",
-                                fontSize = 24.sp,
+                                fontSize = MetroTypography.bodyLarge(),
                                 fontWeight = FontWeight.Light,
                                 color = Color.White
                             )
                             Text(
                                 text = "内容 3/3",
-                                fontSize = 18.sp,
+                                fontSize = MetroTypography.bodyMedium(),
                                 fontWeight = FontWeight.ExtraLight,
                                 color = Color.White.copy(alpha = 0.9f)
                             )
@@ -337,13 +338,13 @@ fun AnimationDemoFade(
                     ) {
                         Text(
                             text = "FADE",
-                            fontSize = 40.sp,
+                            fontSize = MetroTypography.displayMedium(),
                             fontWeight = FontWeight.Thin,
                             color = Color.White
                         )
                         Text(
                             text = "淡入淡出",
-                            fontSize = 18.sp,
+                            fontSize = MetroTypography.bodyMedium(),
                             fontWeight = FontWeight.Light,
                             color = Color.White
                         )
@@ -357,13 +358,13 @@ fun AnimationDemoFade(
                     ) {
                         Text(
                             text = "平滑切换",
-                            fontSize = 28.sp,
+                            fontSize = MetroTypography.bodyLarge(),
                             fontWeight = FontWeight.Light,
                             color = Color.White
                         )
                         Text(
                             text = "内容过渡",
-                            fontSize = 18.sp,
+                            fontSize = MetroTypography.bodyMedium(),
                             fontWeight = FontWeight.ExtraLight,
                             color = Color.White.copy(alpha = 0.9f)
                         )
@@ -381,7 +382,7 @@ fun AnimationDemoFade(
                         )
                         Text(
                             text = "优雅过渡",
-                            fontSize = 20.sp,
+                            fontSize = MetroTypography.bodyLarge(),
                             fontWeight = FontWeight.Light,
                             color = Color.White
                         )
@@ -429,19 +430,19 @@ fun AnimationDemoCounter(
                 ) {
                     Text(
                         text = "$value",
-                        fontSize = 72.sp,
+                        fontSize = MetroTypography.displayLarge(),
                         fontWeight = FontWeight.Thin,
                         color = Color.White
                     )
                     Text(
                         text = "COUNTER",
-                        fontSize = 20.sp,
+                        fontSize = MetroTypography.bodyLarge(),
                         fontWeight = FontWeight.Light,
                         color = Color.White
                     )
                     Text(
                         text = "数字滚动",
-                        fontSize = 16.sp,
+                        fontSize = MetroTypography.bodyMedium(),
                         fontWeight = FontWeight.ExtraLight,
                         color = Color.White.copy(alpha = 0.9f)
                     )
@@ -478,13 +479,13 @@ fun AnimationDemoRotate(
             )
             Text(
                 text = "ROTATE",
-                fontSize = 24.sp,
+                fontSize = MetroTypography.bodyLarge(),
                 fontWeight = FontWeight.Light,
                 color = Color.White
             )
             Text(
                 text = "旋转动画",
-                fontSize = 16.sp,
+                fontSize = MetroTypography.bodyMedium(),
                 fontWeight = FontWeight.ExtraLight,
                 color = Color.White.copy(alpha = 0.9f)
             )
@@ -529,13 +530,13 @@ fun AnimationDemoBounce(
                 )
                 Text(
                     text = "BOUNCE",
-                    fontSize = 24.sp,
+                    fontSize = MetroTypography.bodyLarge(),
                     fontWeight = FontWeight.Light,
                     color = Color.White
                 )
                 Text(
                     text = "弹跳动画",
-                    fontSize = 16.sp,
+                    fontSize = MetroTypography.bodyMedium(),
                     fontWeight = FontWeight.ExtraLight,
                     color = Color.White.copy(alpha = 0.9f)
                 )
@@ -581,13 +582,13 @@ fun AnimationDemoShake(
                 )
                 Text(
                     text = "SHAKE",
-                    fontSize = 24.sp,
+                    fontSize = MetroTypography.bodyLarge(),
                     fontWeight = FontWeight.Light,
                     color = Color.White
                 )
                 Text(
                     text = "抖动动画",
-                    fontSize = 16.sp,
+                    fontSize = MetroTypography.bodyMedium(),
                     fontWeight = FontWeight.ExtraLight,
                     color = Color.White.copy(alpha = 0.9f)
                 )
@@ -623,13 +624,13 @@ fun AnimationDemoShimmer(
             )
             Text(
                 text = "SHIMMER",
-                fontSize = 24.sp,
+                fontSize = MetroTypography.bodyLarge(),
                 fontWeight = FontWeight.Light,
                 color = Color.White
             )
             Text(
                 text = "微光动画",
-                fontSize = 16.sp,
+                fontSize = MetroTypography.bodyMedium(),
                 fontWeight = FontWeight.ExtraLight,
                 color = Color.White.copy(alpha = 0.9f)
             )

@@ -20,6 +20,7 @@ Deskmate 是一个基于 Kotlin + Jetpack Compose 的现代化 Android 桌面小
 - 🚀 **开发效率提升 80%** - 预设系统大幅减少重复代码
 - 📁 **扁平化目录结构** - 移除冗余嵌套，提升代码可读性 (2025-11-01 重构)
 - 🏷️ **直观的尺寸命名** - 使用 1x1、2x2 等直观命名，替代语义化命名 (2025-11-01 重构)
+- 🎯 **MetroTypography 设计令牌** - 响应式字号系统，自动适配不同密度屏幕 (2025-01-05 重构)
 
 ### 🔄 重构历史
 
@@ -31,6 +32,14 @@ Deskmate 是一个基于 Kotlin + Jetpack Compose 的现代化 Android 桌面小
 - ✅ 更新 variant ID 命名：`simple` → `1x1`，`standard` → `2x2` 等
 - ✅ 更新所有配置文件（clock_showcase.json, perfect_layout.json, dashboard_layout.json）
 - ✅ 更新 200+ 个 package 声明和 import 语句
+
+**2025-01-05 字号系统重构**
+- ✅ 创建 `MetroTypography.kt` 设计令牌系统
+- ✅ 实现响应式字号（根据屏幕密度自动调整：213dpi、520dpi等）
+- ✅ 更新 6 个预设文件（65处参数默认值）
+- ✅ 更新 10 个硬编码瓷砖文件（70+处硬编码字号）
+- ✅ 实现 Single Source of Truth，修改一处全局生效
+- ✅ 解决高密度屏幕显示问题（小米设备 520dpi）
 
 ## 核心技术栈
 
@@ -568,6 +577,58 @@ Text(
 // ❌ 禁止：使用粗字体
 Text(fontWeight = FontWeight.Bold)  // Metro 风格不使用粗体
 ```
+
+### 字号使用规范 ⭐ 重要
+
+**核心原则**：Single Source of Truth（单一数据源）
+
+**必须使用 MetroTypography 设计令牌系统**，禁止硬编码字号！
+
+```kotlin
+// ✅ 正确：使用 MetroTypography
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
+
+Text(
+    text = "10:12",
+    fontSize = MetroTypography.displayHuge(),  // 超大号，自动适配屏幕密度
+    fontWeight = FontWeight.Thin
+)
+
+Text(
+    text = "星期一",
+    fontSize = MetroTypography.bodyLarge(),  // 正文大号
+    fontWeight = FontWeight.Light
+)
+
+// ❌ 禁止：硬编码字号
+Text(text = "10:12", fontSize = 96.sp)  // 硬编码，不适配高密度屏幕
+Text(text = "星期一", fontSize = 20.sp)  // 硬编码，维护困难
+```
+
+**可用的字号级别**（根据屏幕密度自动调整）：
+
+| 方法 | 标准密度 | 中密度 | 高密度 | 典型用途 |
+|------|---------|--------|--------|---------|
+| `displayHuge()` | 96sp | 120sp | 160sp | 主要时间、温度显示 |
+| `displayLarge()` | 72sp | 96sp | 120sp | 主标题、日期显示 |
+| `displayMedium()` | 48sp | 64sp | 80sp | 副标题、图标 |
+| `titleLarge()` | 36sp | 40sp | 48sp | 小瓷砖主内容 |
+| `bodyLarge()` | 20sp | 24sp | 28sp | 日期、天气状况 |
+| `bodyMedium()` | 16sp | 18sp | 22sp | 次要文字、描述 |
+| `bodySmall()` | 14sp | 16sp | 18sp | 辅助文字、农历 |
+| `labelSmall()` | 12sp | 14sp | 16sp | 标签、角标 |
+
+**优势**：
+- ✅ 自动适配不同密度屏幕（213dpi、520dpi等）
+- ✅ 统一管理，修改一处全局生效
+- ✅ 类型安全，避免魔法数字
+- ✅ 未来可轻松扩展（主题切换、暗色模式等）
+
+**重构说明**（2025-01-05）：
+- ✅ 新增 `MetroTypography.kt` 设计令牌系统
+- ✅ 更新 6 个预设文件（SmallTilePresets, CompactTilePresets等）
+- ✅ 更新 10 个硬编码瓷砖文件（Clock4x2, Calendar4x4等）
+- ✅ 所有字号统一引用 MetroTypography，禁止硬编码
 
 ### 配色规范
 

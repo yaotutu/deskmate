@@ -18,6 +18,7 @@ import top.yaotutu.deskmate.presentation.component.base.Tile
 import top.yaotutu.deskmate.presentation.component.base.TileSize
 import top.yaotutu.deskmate.presentation.component.common.TileWithBadge
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 邮件瓷砖 (2×2)
@@ -63,14 +64,14 @@ fun MailTile(
                     if (unreadCount > 0) {
                         Text(
                             text = "$unreadCount 封未读",
-                            fontSize = 16.sp,
+                            fontSize = MetroTypography.bodyMedium(),
                             fontWeight = FontWeight.Light,
                             color = Color.White
                         )
                     } else {
                         Text(
                             text = "无新邮件",
-                            fontSize = 16.sp,
+                            fontSize = MetroTypography.bodyMedium(),
                             fontWeight = FontWeight.Light,
                             color = Color.White
                         )

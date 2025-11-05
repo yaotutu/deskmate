@@ -13,6 +13,7 @@ import top.yaotutu.deskmate.presentation.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.component.base.FlipContent
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 时钟瓷砖 4×4 - 大型版
@@ -60,10 +61,10 @@ fun Clock4x4Tile(
                     // 超大时间
                     Text(
                         text = time,
-                        fontSize = 120.sp,
+                        fontSize = MetroTypography.displayHuge(),
                         fontWeight = FontWeight.Thin,
                         color = Color.White,
-                        lineHeight = 120.sp
+                        lineHeight = MetroTypography.displayHuge()
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -71,7 +72,7 @@ fun Clock4x4Tile(
                     // 星期
                     Text(
                         text = weekday,
-                        fontSize = 24.sp,
+                        fontSize = MetroTypography.bodyLarge(),
                         fontWeight = FontWeight.Light,
                         color = Color.White.copy(alpha = 0.9f)
                     )
@@ -87,7 +88,7 @@ fun Clock4x4Tile(
                     // 阳历日期
                     Text(
                         text = date,
-                        fontSize = 36.sp,
+                        fontSize = MetroTypography.titleLarge(),
                         fontWeight = FontWeight.Light,
                         color = Color.White
                     )
@@ -95,7 +96,7 @@ fun Clock4x4Tile(
                     // 农历日期
                     Text(
                         text = lunarDate,
-                        fontSize = 28.sp,
+                        fontSize = MetroTypography.bodyLarge(),
                         fontWeight = FontWeight.ExtraLight,
                         color = Color.White.copy(alpha = 0.9f)
                     )
@@ -103,7 +104,7 @@ fun Clock4x4Tile(
                     // 星期
                     Text(
                         text = weekday,
-                        fontSize = 24.sp,
+                        fontSize = MetroTypography.bodyLarge(),
                         fontWeight = FontWeight.ExtraLight,
                         color = Color.White.copy(alpha = 0.8f)
                     )

@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.SlideContent
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 4×2 宽矩形瓷砖预设
@@ -44,8 +45,8 @@ object WideTilePresets {
     fun HorizontalTitleSubtitle(
         title: String,
         subtitle: String,
-        titleSize: TextUnit = 72.sp,
-        subtitleSize: TextUnit = 20.sp,
+        titleSize: TextUnit = MetroTypography.displayLarge(),
+        subtitleSize: TextUnit = MetroTypography.bodyLarge(),
         color: Color = Color.White
     ) {
         Row(
@@ -92,9 +93,9 @@ object WideTilePresets {
         icon: String,
         title: String,
         subtitle: String,
-        iconSize: TextUnit = 80.sp,
-        titleSize: TextUnit = 28.sp,
-        subtitleSize: TextUnit = 16.sp,
+        iconSize: TextUnit = MetroTypography.displayLarge(),
+        titleSize: TextUnit = MetroTypography.bodyLarge(),
+        subtitleSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         Row(
@@ -143,8 +144,8 @@ object WideTilePresets {
     @Composable
     fun ThreeColumns(
         items: List<Triple<String, String, String>>,
-        valueSize: TextUnit = 32.sp,
-        labelSize: TextUnit = 14.sp,
+        valueSize: TextUnit = MetroTypography.titleLarge(),
+        labelSize: TextUnit = MetroTypography.bodySmall(),
         color: Color = Color.White
     ) {
         Row(
@@ -197,8 +198,8 @@ object WideTilePresets {
     @Composable
     fun Timeline(
         items: List<Pair<String, String>>,
-        timeSize: TextUnit = 16.sp,
-        eventSize: TextUnit = 14.sp,
+        timeSize: TextUnit = MetroTypography.bodyMedium(),
+        eventSize: TextUnit = MetroTypography.bodySmall(),
         color: Color = Color.White
     ) {
         Row(
@@ -247,8 +248,8 @@ object WideTilePresets {
     fun MetricsDashboard(
         title: String,
         metrics: List<Pair<String, String>>,
-        titleSize: TextUnit = 20.sp,
-        metricSize: TextUnit = 16.sp,
+        titleSize: TextUnit = MetroTypography.bodyLarge(),
+        metricSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         Column(
@@ -308,9 +309,9 @@ object WideTilePresets {
         title: String,
         artist: String,
         duration: String = "",
-        iconSize: TextUnit = 64.sp,
-        titleSize: TextUnit = 20.sp,
-        subtextSize: TextUnit = 14.sp,
+        iconSize: TextUnit = MetroTypography.displayLarge(),
+        titleSize: TextUnit = MetroTypography.bodyLarge(),
+        subtextSize: TextUnit = MetroTypography.bodySmall(),
         color: Color = Color.White
     ) {
         // 固定使用 SLIDE 动画

@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 4×4 黄历瓷砖 - 完整的中国传统黄历显示
@@ -62,7 +63,7 @@ fun Calendar4x4Tile(
             // 标题：公历日期
             Text(
                 text = solarDate,
-                fontSize = 18.sp,
+                fontSize = MetroTypography.bodyMedium(),
                 fontWeight = FontWeight.Light,
                 color = Color.White,
                 modifier = Modifier.fillMaxWidth()
@@ -94,17 +95,17 @@ fun Calendar4x4Tile(
             ) {
                 Text(
                     text = "宜",
-                    fontSize = 13.sp,
+                    fontSize = MetroTypography.labelSmall(),
                     fontWeight = FontWeight.Light,
                     color = Color.White.copy(alpha = 0.7f),
                     modifier = Modifier.width(32.dp)
                 )
                 Text(
                     text = dayLucky,
-                    fontSize = 13.sp,
+                    fontSize = MetroTypography.labelSmall(),
                     fontWeight = FontWeight.Light,
                     color = Color.White,
-                    lineHeight = 18.sp,
+                    lineHeight = MetroTypography.bodyMedium(),
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -115,17 +116,17 @@ fun Calendar4x4Tile(
             ) {
                 Text(
                     text = "忌",
-                    fontSize = 13.sp,
+                    fontSize = MetroTypography.labelSmall(),
                     fontWeight = FontWeight.Light,
                     color = Color.White.copy(alpha = 0.7f),
                     modifier = Modifier.width(32.dp)
                 )
                 Text(
                     text = dayAvoid,
-                    fontSize = 13.sp,
+                    fontSize = MetroTypography.labelSmall(),
                     fontWeight = FontWeight.Light,
                     color = Color.White,
-                    lineHeight = 18.sp,
+                    lineHeight = MetroTypography.bodyMedium(),
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -149,17 +150,17 @@ private fun InfoRow(
     ) {
         Text(
             text = label,
-            fontSize = 13.sp,
+            fontSize = MetroTypography.labelSmall(),
             fontWeight = FontWeight.Light,
             color = Color.White.copy(alpha = 0.7f),
             modifier = Modifier.width(48.dp)
         )
         Text(
             text = value,
-            fontSize = if (highlight) 15.sp else 14.sp,
+            fontSize = if (highlight) MetroTypography.bodyMedium() else MetroTypography.bodySmall(),
             fontWeight = if (highlight) FontWeight.Normal else FontWeight.Light,
             color = Color.White,
-            lineHeight = 18.sp,
+            lineHeight = MetroTypography.bodyMedium(),
             modifier = Modifier.weight(1f)
         )
     }

@@ -15,6 +15,7 @@ import top.yaotutu.deskmate.presentation.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.component.base.FlipContent
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 时钟瓷砖 4×2 - 详细版
@@ -54,10 +55,10 @@ fun Clock4x2Tile(
                 ) {
                     Text(
                         text = time,
-                        fontSize = 96.sp,
+                        fontSize = MetroTypography.displayHuge(),
                         fontWeight = FontWeight.Thin,
                         color = Color.White,
-                        lineHeight = 96.sp
+                        lineHeight = MetroTypography.displayHuge()
                     )
                 }
             },
@@ -70,13 +71,13 @@ fun Clock4x2Tile(
                 ) {
                     Text(
                         text = date,
-                        fontSize = 20.sp,
+                        fontSize = MetroTypography.bodyLarge(),
                         fontWeight = FontWeight.Light,
                         color = Color.White
                     )
                     Text(
                         text = lunarDate,
-                        fontSize = 18.sp,
+                        fontSize = MetroTypography.bodyMedium(),
                         fontWeight = FontWeight.ExtraLight,
                         color = Color.White.copy(alpha = 0.9f)
                     )

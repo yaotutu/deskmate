@@ -15,6 +15,7 @@ import top.yaotutu.deskmate.presentation.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.component.base.AnimationType
 import top.yaotutu.deskmate.presentation.component.base.CounterContent
 import top.yaotutu.deskmate.presentation.component.base.FlipContent
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 2×2 标准方形瓷砖预设
@@ -52,8 +53,8 @@ object MediumTilePresets {
         title: String,
         subtitle: String,
         backSubtitle: String = subtitle,
-        titleSize: TextUnit = 72.sp,
-        subtitleSize: TextUnit = 18.sp,
+        titleSize: TextUnit = MetroTypography.displayLarge(),
+        subtitleSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         // 固定使用 FLIP 动画
@@ -122,8 +123,8 @@ object MediumTilePresets {
     fun IconTitle(
         icon: String,
         title: String,
-        iconSize: TextUnit = 64.sp,
-        titleSize: TextUnit = 20.sp,
+        iconSize: TextUnit = MetroTypography.displayLarge(),
+        titleSize: TextUnit = MetroTypography.bodyLarge(),
         color: Color = Color.White
     ) {
         Column(
@@ -166,9 +167,9 @@ object MediumTilePresets {
         icon: String,
         title: String,
         subtitle: String,
-        iconSize: TextUnit = 48.sp,
-        titleSize: TextUnit = 18.sp,
-        subtitleSize: TextUnit = 14.sp,
+        iconSize: TextUnit = MetroTypography.displayMedium(),
+        titleSize: TextUnit = MetroTypography.bodyMedium(),
+        subtitleSize: TextUnit = MetroTypography.bodySmall(),
         color: Color = Color.White
     ) {
         Column(
@@ -219,9 +220,9 @@ object MediumTilePresets {
         value: String,
         unit: String = "",
         label: String = "",
-        valueSize: TextUnit = 64.sp,
-        unitSize: TextUnit = 32.sp,
-        labelSize: TextUnit = 16.sp,
+        valueSize: TextUnit = MetroTypography.displayLarge(),
+        unitSize: TextUnit = MetroTypography.titleLarge(),
+        labelSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         // 固定使用 COUNTER 动画
@@ -281,7 +282,7 @@ object MediumTilePresets {
     @Composable
     fun TwoRowList(
         items: List<String>,
-        itemSize: TextUnit = 16.sp,
+        itemSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         Column(
@@ -315,7 +316,7 @@ object MediumTilePresets {
     @Composable
     fun IconGrid2x2(
         icons: List<String>,
-        iconSize: TextUnit = 32.sp,
+        iconSize: TextUnit = MetroTypography.titleLarge(),
         color: Color = Color.White
     ) {
         Column(
@@ -356,8 +357,8 @@ object MediumTilePresets {
     fun HeaderBody(
         header: String,
         body: String,
-        headerSize: TextUnit = 20.sp,
-        bodySize: TextUnit = 32.sp,
+        headerSize: TextUnit = MetroTypography.bodyLarge(),
+        bodySize: TextUnit = MetroTypography.titleLarge(),
         color: Color = Color.White
     ) {
         Column(
@@ -395,7 +396,7 @@ object MediumTilePresets {
     @Composable
     fun ImageOverlay(
         overlayText: String,
-        textSize: TextUnit = 24.sp,
+        textSize: TextUnit = MetroTypography.bodyLarge(),
         color: Color = Color.White
     ) {
         Box(
@@ -434,8 +435,8 @@ object MediumTilePresets {
         number: String,
         label: String,
         backLabel: String = label,
-        numberSize: TextUnit = 96.sp,
-        labelSize: TextUnit = 20.sp,
+        numberSize: TextUnit = MetroTypography.displayHuge(),
+        labelSize: TextUnit = MetroTypography.bodyLarge(),
         color: Color = Color.White
     ) {
         // 固定使用 FLIP 动画

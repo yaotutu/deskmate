@@ -18,6 +18,7 @@ import top.yaotutu.deskmate.presentation.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.component.base.FlipContent
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 翻转天气瓷砖 (2×2) - 西安专属
@@ -84,7 +85,7 @@ private fun WeatherFrontContent(weatherData: WeatherData) {
         // 温度（主要信息 - 使用72sp与preset一致）
         Text(
             text = "${weatherData.temperature}°",
-            fontSize = 72.sp,
+            fontSize = MetroTypography.displayLarge(),
             fontWeight = FontWeight.Thin,  // 使用Thin保持一致
             color = Color.White,
             modifier = Modifier.padding(bottom = 4.dp)
@@ -93,7 +94,7 @@ private fun WeatherFrontContent(weatherData: WeatherData) {
         // 天气状况（副标题 - 使用18sp与preset一致）
         Text(
             text = weatherData.condition,
-            fontSize = 18.sp,
+            fontSize = MetroTypography.bodyMedium(),
             fontWeight = FontWeight.Light,  // 使用Light保持一致
             color = Color.White
         )
@@ -116,7 +117,7 @@ private fun WeatherBackContent(weatherData: WeatherData) {
         // 标题（使用18sp与preset一致）
         Text(
             text = "详细信息",
-            fontSize = 20.sp,
+            fontSize = MetroTypography.bodyLarge(),
             fontWeight = FontWeight.Light,
             color = Color.White,
             modifier = Modifier.padding(bottom = 12.dp)
@@ -205,7 +206,7 @@ private fun DetailItem(
         // 数值（主要）
         Text(
             text = value,
-            fontSize = 16.sp,
+            fontSize = MetroTypography.bodyMedium(),
             fontWeight = FontWeight.Thin,
             color = Color.White,
             modifier = Modifier.padding(bottom = 2.dp)
@@ -214,7 +215,7 @@ private fun DetailItem(
         // 标签（次要）
         Text(
             text = label,
-            fontSize = 11.sp,
+            fontSize = MetroTypography.labelSmall(),
             fontWeight = FontWeight.Light,
             color = Color.White.copy(alpha = 0.85f)
         )

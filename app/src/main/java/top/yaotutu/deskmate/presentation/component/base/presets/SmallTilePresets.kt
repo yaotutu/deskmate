@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.PulseContent
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 1×1 小方形瓷砖预设
@@ -33,14 +34,14 @@ object SmallTilePresets {
      * 适用场景：时间、温度、单个数字
      *
      * @param text 要显示的文本
-     * @param fontSize 字体大小（默认 36sp）
+     * @param fontSize 字体大小（默认根据屏幕密度自适应）
      * @param color 文字颜色（默认白色）
      * @param fontWeight 字体粗细（默认 Thin）
      */
     @Composable
     fun SingleLabel(
         text: String,
-        fontSize: TextUnit = 36.sp,
+        fontSize: TextUnit = MetroTypography.titleLarge(),
         color: Color = Color.White,
         fontWeight: FontWeight = FontWeight.Thin
     ) {
@@ -65,13 +66,13 @@ object SmallTilePresets {
      * 最佳动画：轻微脉冲，突出图标的重要性
      *
      * @param icon 图标字符（Emoji 或图标字体）
-     * @param iconSize 图标大小（默认 48sp）
+     * @param iconSize 图标大小（默认根据屏幕密度自适应）
      * @param color 图标颜色（默认白色）
      */
     @Composable
     fun IconOnly(
         icon: String,
-        iconSize: TextUnit = 48.sp,
+        iconSize: TextUnit = MetroTypography.displayMedium(),
         color: Color = Color.White
     ) {
         // 固定使用 PULSE 动画
@@ -91,14 +92,14 @@ object SmallTilePresets {
      *
      * @param icon 主图标
      * @param badgeText 角标文本（为空则不显示）
-     * @param iconSize 图标大小（默认 40sp）
+     * @param iconSize 图标大小（默认根据屏幕密度自适应）
      * @param color 颜色（默认白色）
      */
     @Composable
     fun IconWithBadge(
         icon: String,
         badgeText: String = "",
-        iconSize: TextUnit = 40.sp,
+        iconSize: TextUnit = MetroTypography.titleLarge(),
         color: Color = Color.White
     ) {
         Box(
@@ -117,7 +118,7 @@ object SmallTilePresets {
                 if (badgeText.isNotEmpty()) {
                     Text(
                         text = badgeText,
-                        fontSize = 14.sp,
+                        fontSize = MetroTypography.bodySmall(),
                         fontWeight = FontWeight.Light,
                         color = color.copy(alpha = 0.9f)
                     )
@@ -133,14 +134,14 @@ object SmallTilePresets {
      *
      * @param value 数值
      * @param label 标签文本（可选）
-     * @param valueSize 数值字体大小（默认 32sp）
+     * @param valueSize 数值字体大小（默认根据屏幕密度自适应）
      * @param color 颜色（默认白色）
      */
     @Composable
     fun MiniCounter(
         value: String,
         label: String? = null,
-        valueSize: TextUnit = 32.sp,
+        valueSize: TextUnit = MetroTypography.titleLarge(),
         color: Color = Color.White
     ) {
         Box(
@@ -160,7 +161,7 @@ object SmallTilePresets {
                 label?.let {
                     Text(
                         text = it,
-                        fontSize = 12.sp,
+                        fontSize = MetroTypography.labelSmall(),
                         fontWeight = FontWeight.Light,
                         color = color.copy(alpha = 0.8f)
                     )
@@ -176,14 +177,14 @@ object SmallTilePresets {
      *
      * @param status 状态文本
      * @param icon 状态图标（可选）
-     * @param statusSize 状态文本大小（默认 28sp）
+     * @param statusSize 状态文本大小（默认根据屏幕密度自适应）
      * @param color 颜色（默认白色）
      */
     @Composable
     fun StatusIndicator(
         status: String,
         icon: String? = null,
-        statusSize: TextUnit = 28.sp,
+        statusSize: TextUnit = MetroTypography.titleLarge(),
         color: Color = Color.White
     ) {
         Box(
@@ -197,7 +198,7 @@ object SmallTilePresets {
                 icon?.let {
                     Text(
                         text = it,
-                        fontSize = 32.sp,
+                        fontSize = MetroTypography.titleLarge(),
                         color = color
                     )
                 }

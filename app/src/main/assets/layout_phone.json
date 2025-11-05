@@ -1,0 +1,51 @@
+{
+  "comment": "手机布局 - rows=2，主要使用 1×1 瓷砖",
+  "columns": 4,
+  "rows": 2,
+  "areas": [
+    "C W T N",
+    "A B D E"
+  ],
+  "tiles": {
+    "C": {
+      "type": "clock",
+      "variant": "1x1",
+      "comment": "时钟 - 1×1 简约版"
+    },
+    "W": {
+      "type": "weather",
+      "variant": "1x1",
+      "comment": "天气 - 1×1 简约版"
+    },
+    "T": {
+      "type": "todo",
+      "variant": "1x1",
+      "comment": "待办 - 1×1 简约版"
+    },
+    "N": {
+      "type": "news",
+      "variant": "1x1",
+      "comment": "新闻 - 1×1 简约版"
+    },
+    "A": {
+      "type": "calendar",
+      "variant": "1x1",
+      "comment": "日历 - 1×1 简约版"
+    },
+    "B": {
+      "type": "clock",
+      "variant": "1x1",
+      "comment": "时钟 - 1×1 简约版"
+    },
+    "D": {
+      "type": "weather",
+      "variant": "1x1",
+      "comment": "天气 - 1×1 简约版"
+    },
+    "E": {
+      "type": "todo",
+      "variant": "1x1",
+      "comment": "待办 - 1×1 简约版"
+    }
+  }
+}

@@ -17,6 +17,7 @@ import top.yaotutu.deskmate.presentation.component.base.LocalDynamicGap
 import top.yaotutu.deskmate.presentation.component.base.Tile
 import top.yaotutu.deskmate.presentation.component.base.TileSize
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 联系人瓷砖 (1×1 或 2×2)
@@ -62,7 +63,7 @@ fun ContactTile(
                 ) {
                     Text(
                         text = avatar,
-                        fontSize = if (size == TileSize.SMALL) 18.sp else 24.sp,
+                        fontSize = if (size == TileSize.SMALL) MetroTypography.bodyMedium() else MetroTypography.bodyLarge(),
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
@@ -72,7 +73,7 @@ fun ContactTile(
                 if (size != TileSize.SMALL) {
                     Text(
                         text = name,
-                        fontSize = 14.sp,
+                        fontSize = MetroTypography.bodySmall(),
                         fontWeight = FontWeight.Light,
                         color = Color.White
                     )

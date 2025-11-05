@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.SlideContent
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 2×4 高矩形瓷砖预设
@@ -42,7 +43,7 @@ object TallTilePresets {
     @Composable
     fun VerticalList(
         items: List<String>,
-        itemSize: TextUnit = 16.sp,
+        itemSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         // 固定使用 SLIDE 动画
@@ -84,8 +85,8 @@ object TallTilePresets {
     @Composable
     fun Timeline(
         items: List<Pair<String, String>>,
-        timeSize: TextUnit = 14.sp,
-        eventSize: TextUnit = 16.sp,
+        timeSize: TextUnit = MetroTypography.bodySmall(),
+        eventSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         Column(
@@ -127,7 +128,7 @@ object TallTilePresets {
     @Composable
     fun StepProgress(
         steps: List<Pair<String, Boolean>>,
-        stepSize: TextUnit = 16.sp,
+        stepSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         Column(
@@ -178,9 +179,9 @@ object TallTilePresets {
         icon: String,
         title: String,
         details: List<String>,
-        iconSize: TextUnit = 64.sp,
-        titleSize: TextUnit = 24.sp,
-        detailSize: TextUnit = 14.sp,
+        iconSize: TextUnit = MetroTypography.displayLarge(),
+        titleSize: TextUnit = MetroTypography.bodyLarge(),
+        detailSize: TextUnit = MetroTypography.bodySmall(),
         color: Color = Color.White
     ) {
         Column(
@@ -234,8 +235,8 @@ object TallTilePresets {
     @Composable
     fun ChatPreview(
         messages: List<Pair<String, String>>,
-        senderSize: TextUnit = 14.sp,
-        messageSize: TextUnit = 16.sp,
+        senderSize: TextUnit = MetroTypography.bodySmall(),
+        messageSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         Column(
@@ -279,9 +280,9 @@ object TallTilePresets {
     @Composable
     fun WeatherForecast(
         forecasts: List<Triple<String, String, String>>,
-        dateSize: TextUnit = 14.sp,
-        iconSize: TextUnit = 32.sp,
-        tempSize: TextUnit = 20.sp,
+        dateSize: TextUnit = MetroTypography.bodySmall(),
+        iconSize: TextUnit = MetroTypography.titleLarge(),
+        tempSize: TextUnit = MetroTypography.bodyLarge(),
         color: Color = Color.White
     ) {
         Column(

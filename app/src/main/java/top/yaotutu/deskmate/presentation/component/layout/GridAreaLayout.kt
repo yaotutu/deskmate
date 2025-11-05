@@ -55,8 +55,14 @@ fun GridAreaLayout(
         is GridAreaParser.ParseResult.Success -> {
             Log.d(TAG, "布局解析成功: ${parseResult.positions.size} 个瓷砖")
 
+            // 计算内容尺寸（不包含外部 gap，由外层容器的 padding 负责）
+            // 宽度 = baseCellSize * columns + gap * (columns - 1)
+            val contentWidth = baseCellSize * config.columns + dynamicGap * (config.columns - 1)
+            // 高度 = baseCellSize * rows + gap * (rows - 1)
+            val contentHeight = baseCellSize * config.rows + dynamicGap * (config.rows - 1)
+
             // 渲染瓷砖
-            Box(modifier = modifier.fillMaxSize()) {
+            Box(modifier = modifier.width(contentWidth).height(contentHeight)) {
                 parseResult.positions.forEachIndexed { index, areaPosition ->
                     RenderTile(
                         areaPosition = areaPosition,
@@ -110,10 +116,11 @@ private fun RenderTile(
     tileContent: @Composable (TileConfig, Int) -> Unit
 ) {
     // 计算瓷砖的偏移量
-    // 公式: offset = baseCellSize * position + gap * (position + 1)
-    // 例如: 第 2 列（x=2）的偏移 = baseCellSize*2 + gap*3
-    val offsetX = baseCellSize * areaPosition.x + dynamicGap * (areaPosition.x + 1)
-    val offsetY = baseCellSize * areaPosition.y + dynamicGap * (areaPosition.y + 1)
+    // 公式: offset = baseCellSize * position + gap * position
+    // 例如: 第 2 列（x=2）的偏移 = baseCellSize*2 + gap*2
+    // 注：外层容器管理上下左右边距，瓷砖只关心内部间距
+    val offsetX = baseCellSize * areaPosition.x + dynamicGap * areaPosition.x
+    val offsetY = baseCellSize * areaPosition.y + dynamicGap * areaPosition.y
 
     // 计算瓷砖的尺寸
     val tileWidth = TileGrid.calculateTileWidth(

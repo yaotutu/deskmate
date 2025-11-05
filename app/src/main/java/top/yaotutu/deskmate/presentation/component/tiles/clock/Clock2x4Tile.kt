@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 时钟瓷砖 2×4 - 高版
@@ -55,23 +56,23 @@ fun Clock2x4Tile(
             // 时间
             Text(
                 text = time,
-                fontSize = 64.sp,
+                fontSize = MetroTypography.displayLarge(),
                 fontWeight = FontWeight.Thin,
                 color = Color.White,
-                lineHeight = 64.sp
+                lineHeight = MetroTypography.displayLarge()
             )
 
             // 分隔线（可选，使用字符）
             Text(
                 text = "━",
-                fontSize = 20.sp,
+                fontSize = MetroTypography.bodyLarge(),
                 color = Color.White.copy(alpha = 0.3f)
             )
 
             // 日期
             Text(
                 text = date,
-                fontSize = 20.sp,
+                fontSize = MetroTypography.bodyLarge(),
                 fontWeight = FontWeight.Light,
                 color = Color.White
             )
@@ -79,7 +80,7 @@ fun Clock2x4Tile(
             // 星期
             Text(
                 text = weekday,
-                fontSize = 18.sp,
+                fontSize = MetroTypography.bodyMedium(),
                 fontWeight = FontWeight.ExtraLight,
                 color = Color.White.copy(alpha = 0.9f)
             )

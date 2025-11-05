@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.FadeContent
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 2×1 紧凑横向瓷砖预设
@@ -42,8 +43,8 @@ object CompactTilePresets {
     fun TimeDateCompact(
         time: String,
         date: String,
-        timeSize: TextUnit = 40.sp,
-        dateSize: TextUnit = 14.sp,
+        timeSize: TextUnit = MetroTypography.titleLarge(),
+        dateSize: TextUnit = MetroTypography.bodySmall(),
         color: Color = Color.White
     ) {
         Row(
@@ -81,8 +82,8 @@ object CompactTilePresets {
     fun IconLabel(
         icon: String,
         label: String,
-        iconSize: TextUnit = 48.sp,
-        labelSize: TextUnit = 16.sp,
+        iconSize: TextUnit = MetroTypography.displayMedium(),
+        labelSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         Row(
@@ -122,8 +123,8 @@ object CompactTilePresets {
     fun ProgressBar(
         label: String,
         progress: String,
-        labelSize: TextUnit = 14.sp,
-        progressSize: TextUnit = 32.sp,
+        labelSize: TextUnit = MetroTypography.bodySmall(),
+        progressSize: TextUnit = MetroTypography.titleLarge(),
         color: Color = Color.White
     ) {
         // 固定使用 FADE 动画
@@ -175,8 +176,8 @@ object CompactTilePresets {
         rightValue: String,
         leftLabel: String? = null,
         rightLabel: String? = null,
-        valueSize: TextUnit = 32.sp,
-        labelSize: TextUnit = 12.sp,
+        valueSize: TextUnit = MetroTypography.titleLarge(),
+        labelSize: TextUnit = MetroTypography.labelSmall(),
         color: Color = Color.White
     ) {
         Row(
@@ -241,8 +242,8 @@ object CompactTilePresets {
     fun StatusText(
         statusText: String,
         icon: String? = null,
-        iconSize: TextUnit = 32.sp,
-        textSize: TextUnit = 18.sp,
+        iconSize: TextUnit = MetroTypography.titleLarge(),
+        textSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         Row(

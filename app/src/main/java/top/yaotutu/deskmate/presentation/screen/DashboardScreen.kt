@@ -32,13 +32,13 @@ fun DashboardScreen(
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
-    // 加载布局配置（网格区域版本 - 获取详细错误信息）
+    // 加载布局配置（根据设备类型自动选择）
     val configResult = remember {
         val repository = LayoutConfigRepository(context)
-        // 🎯 完美布局模式：使用 perfect_layout.json（网格区域布局）
-        repository.loadLayoutConfigWithResult("perfect_layout.json")
-        // 🕐 时钟展示模式：repository.loadLayoutConfigWithResult("clock_showcase.json")
-        // 💡 正常模式：repository.loadLayoutConfigWithResult()
+        // 🎯 自动加载配置：
+        // - 平板（sw >= 600dp）: layout_tablet.json (rows=4)
+        // - 手机（sw < 600dp）: layout_phone.json (rows=2)
+        repository.loadLayoutConfigForDevice()
     }
 
     // 提取实际使用的配置
@@ -63,26 +63,29 @@ fun DashboardScreen(
             }
 
             // Windows Phone 动态瓷砖布局 - 网格区域布局系统
+            // 最佳实践：固定间距（8dp）+ 动态瓷砖尺寸
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(Color(0xFF000000))  // 黑色背景
                     .padding(8.dp)
             ) {
-                TileGridContainer(modifier = Modifier.fillMaxSize()) { baseCellSize, dynamicGap, columns, screenHeight ->
-                    // 使用 CompositionLocal 提供网格参数，简化组件使用
+                TileGridContainer(
+                    modifier = Modifier.fillMaxSize(),
+                    gridRows = layoutConfig.rows
+                ) { baseCellSize, fixedGap, columns, screenHeight ->
                     ProvideTileGrid(
                         baseCellSize = baseCellSize,
-                        dynamicGap = dynamicGap,
+                        dynamicGap = fixedGap,  // 使用固定间距
                         columns = columns
                     ) {
-                        // 使用网格区域布局引擎
                         GridAreaLayout(
                             config = layoutConfig,
                             baseCellSize = baseCellSize,
-                            dynamicGap = dynamicGap,
-                            modifier = Modifier.fillMaxSize()
+                            dynamicGap = fixedGap,  // 使用固定间距
+                            modifier = Modifier  // 不添加背景，渲染真实瓷砖
                         ) { tileConfig, index ->
-                            // 使用瓷砖工厂创建瓷砖
+                            // 使用瓷砖工厂创建真实瓷砖
                             TileFactory.CreateTile(
                                 config = tileConfig,
                                 uiState = uiState,

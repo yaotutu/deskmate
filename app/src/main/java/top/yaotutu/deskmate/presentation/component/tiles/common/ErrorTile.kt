@@ -17,6 +17,7 @@ import top.yaotutu.deskmate.presentation.component.base.LocalDynamicGap
 import top.yaotutu.deskmate.presentation.component.base.Tile
 import top.yaotutu.deskmate.presentation.component.base.TileGrid
 import top.yaotutu.deskmate.presentation.theme.MetroColors
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 错误类型枚举
@@ -101,9 +102,9 @@ fun ErrorTile(
                 Text(
                     text = message,
                     color = Color.White,
-                    fontSize = 14.sp,
+                    fontSize = MetroTypography.bodySmall(),
                     fontWeight = FontWeight.Light,
-                    lineHeight = 16.sp
+                    lineHeight = MetroTypography.bodyMedium()
                 )
 
                 // 详细信息
@@ -118,13 +119,13 @@ fun ErrorTile(
                             Text(
                                 text = "$key: ",
                                 color = Color.White.copy(alpha = 0.7f),
-                                fontSize = 11.sp,
+                                fontSize = MetroTypography.labelSmall(),
                                 fontWeight = FontWeight.ExtraLight
                             )
                             Text(
                                 text = value,
                                 color = Color.White,
-                                fontSize = 11.sp,
+                                fontSize = MetroTypography.labelSmall(),
                                 fontWeight = FontWeight.Light
                             )
                         }

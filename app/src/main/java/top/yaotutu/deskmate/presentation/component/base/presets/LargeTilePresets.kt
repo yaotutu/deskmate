@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.RotateContent
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 4×4 大方形瓷砖预设
@@ -48,9 +49,9 @@ object LargeTilePresets {
     fun Dashboard(
         title: String,
         metrics: List<Triple<String, String, String>>,
-        titleSize: TextUnit = 24.sp,
-        valueSize: TextUnit = 28.sp,
-        labelSize: TextUnit = 14.sp,
+        titleSize: TextUnit = MetroTypography.bodyLarge(),
+        valueSize: TextUnit = MetroTypography.bodyLarge(),
+        labelSize: TextUnit = MetroTypography.bodySmall(),
         color: Color = Color.White
     ) {
         // 固定使用 ROTATE 动画
@@ -133,10 +134,10 @@ object LargeTilePresets {
         title: String,
         subtitle: String,
         details: List<String>,
-        iconSize: TextUnit = 80.sp,
-        titleSize: TextUnit = 32.sp,
-        subtitleSize: TextUnit = 18.sp,
-        detailSize: TextUnit = 16.sp,
+        iconSize: TextUnit = MetroTypography.displayLarge(),
+        titleSize: TextUnit = MetroTypography.titleLarge(),
+        subtitleSize: TextUnit = MetroTypography.bodyMedium(),
+        detailSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         Column(
@@ -203,8 +204,8 @@ object LargeTilePresets {
         month: String,
         days: List<String>,
         highlightedDays: Set<String> = emptySet(),
-        monthSize: TextUnit = 20.sp,
-        daySize: TextUnit = 14.sp,
+        monthSize: TextUnit = MetroTypography.bodyLarge(),
+        daySize: TextUnit = MetroTypography.bodySmall(),
         color: Color = Color.White
     ) {
         Column(
@@ -254,7 +255,7 @@ object LargeTilePresets {
     @Composable
     fun PhotoGrid(
         photos: List<String>,
-        photoSize: TextUnit = 32.sp,
+        photoSize: TextUnit = MetroTypography.titleLarge(),
         color: Color = Color.White
     ) {
         Column(
@@ -296,9 +297,9 @@ object LargeTilePresets {
     fun NewsList(
         title: String,
         items: List<Pair<String, String>>,
-        titleSize: TextUnit = 20.sp,
-        itemTitleSize: TextUnit = 16.sp,
-        summarySize: TextUnit = 14.sp,
+        titleSize: TextUnit = MetroTypography.bodyLarge(),
+        itemTitleSize: TextUnit = MetroTypography.bodyMedium(),
+        summarySize: TextUnit = MetroTypography.bodySmall(),
         color: Color = Color.White
     ) {
         Column(
@@ -356,9 +357,9 @@ object LargeTilePresets {
     fun DetailedInfo(
         header: String,
         infoItems: List<Pair<String, String>>,
-        headerSize: TextUnit = 24.sp,
-        labelSize: TextUnit = 14.sp,
-        valueSize: TextUnit = 18.sp,
+        headerSize: TextUnit = MetroTypography.bodyLarge(),
+        labelSize: TextUnit = MetroTypography.bodySmall(),
+        valueSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         Column(
@@ -416,9 +417,9 @@ object LargeTilePresets {
         chartTitle: String,
         chartIcon: String,
         summary: String,
-        titleSize: TextUnit = 20.sp,
-        iconSize: TextUnit = 80.sp,
-        summarySize: TextUnit = 16.sp,
+        titleSize: TextUnit = MetroTypography.bodyLarge(),
+        iconSize: TextUnit = MetroTypography.displayLarge(),
+        summarySize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         Column(
@@ -468,9 +469,9 @@ object LargeTilePresets {
         mainIcon: String,
         appName: String,
         features: List<String>,
-        iconSize: TextUnit = 64.sp,
-        nameSize: TextUnit = 28.sp,
-        featureSize: TextUnit = 16.sp,
+        iconSize: TextUnit = MetroTypography.displayLarge(),
+        nameSize: TextUnit = MetroTypography.bodyLarge(),
+        featureSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
         Column(

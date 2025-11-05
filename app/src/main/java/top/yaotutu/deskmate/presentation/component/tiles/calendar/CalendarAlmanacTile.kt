@@ -13,6 +13,7 @@ import top.yaotutu.deskmate.presentation.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.component.base.FlipContent
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
+import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
  * 2×2 黄历瓷砖 - 紧凑的传统黄历显示
@@ -60,22 +61,22 @@ fun CalendarAlmanacTile(
                 ) {
                     Text(
                         text = dayNumber,
-                        fontSize = 96.sp,
+                        fontSize = MetroTypography.displayHuge(),
                         fontWeight = FontWeight.Thin,
                         color = Color.White,
-                        lineHeight = 96.sp
+                        lineHeight = MetroTypography.displayHuge()
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = monthName,
-                        fontSize = 20.sp,
+                        fontSize = MetroTypography.bodyLarge(),
                         fontWeight = FontWeight.Light,
                         color = Color.White.copy(alpha = 0.9f)
                     )
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
                         text = lunarInfo,
-                        fontSize = 16.sp,
+                        fontSize = MetroTypography.bodyMedium(),
                         fontWeight = FontWeight.Light,
                         color = Color.White.copy(alpha = 0.85f)
                     )
@@ -92,25 +93,25 @@ fun CalendarAlmanacTile(
                 ) {
                     Text(
                         text = ganZhi,
-                        fontSize = 14.sp,
+                        fontSize = MetroTypography.bodySmall(),
                         fontWeight = FontWeight.Light,
                         color = Color.White,
-                        lineHeight = 18.sp
+                        lineHeight = MetroTypography.bodyMedium()
                     )
                     Spacer(modifier = Modifier.height(6.dp))
                     Text(
                         text = constellation,
-                        fontSize = 14.sp,
+                        fontSize = MetroTypography.bodySmall(),
                         fontWeight = FontWeight.Light,
                         color = Color.White.copy(alpha = 0.9f)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = luck,
-                        fontSize = 12.sp,
+                        fontSize = MetroTypography.labelSmall(),
                         fontWeight = FontWeight.Light,
                         color = Color.White.copy(alpha = 0.85f),
-                        lineHeight = 16.sp
+                        lineHeight = MetroTypography.bodyMedium()
                     )
                 }
             }
