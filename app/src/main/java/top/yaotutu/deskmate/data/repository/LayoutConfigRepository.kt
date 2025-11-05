@@ -1,6 +1,7 @@
 package top.yaotutu.deskmate.data.repository
 
 import android.content.Context
+import android.content.res.Configuration
 import android.util.Log
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
@@ -14,13 +15,58 @@ import java.io.IOException
 
 /**
  * 布局配置仓库
- * 负责从 assets 目录读取和解析 dashboard_layout.json 配置文件
+ * 负责从 assets 目录读取和解析布局配置文件
+ * 支持根据设备类型（手机/平板）自动加载对应的配置
  */
 class LayoutConfigRepository(private val context: Context) {
 
     private val json = Json {
         ignoreUnknownKeys = true
         isLenient = true
+    }
+
+    companion object {
+        const val PHONE_LAYOUT_FILE = "layout_phone.json"
+        const val TABLET_LAYOUT_FILE = "layout_tablet.json"
+
+        /**
+         * 平板判断标准：最小宽度 >= 600dp
+         * 符合 Android 官方平板定义
+         */
+        const val TABLET_MIN_WIDTH_DP = 600
+    }
+
+    /**
+     * 判断当前设备是否为平板
+     *
+     * 判断标准：Configuration.smallestScreenWidthDp >= 600dp
+     *
+     * @return true 为平板，false 为手机
+     */
+    fun isTablet(): Boolean {
+        val smallestScreenWidthDp = context.resources.configuration.smallestScreenWidthDp
+        val isTablet = smallestScreenWidthDp >= TABLET_MIN_WIDTH_DP
+        Log.d("LayoutConfig", "设备类型判断: smallestScreenWidthDp=$smallestScreenWidthDp, isTablet=$isTablet")
+        return isTablet
+    }
+
+    /**
+     * 根据设备类型自动加载对应的布局配置
+     *
+     * - 平板（sw >= 600dp）: 加载 layout_tablet.json (rows=4)
+     * - 手机（sw < 600dp）: 加载 layout_phone.json (rows=2)
+     *
+     * @return ConfigLoadResult.Success 或 ConfigLoadResult.Error
+     */
+    fun loadLayoutConfigForDevice(): ConfigLoadResult {
+        val fileName = if (isTablet()) {
+            Log.i("LayoutConfig", "检测到平板设备，加载平板布局（rows=4）")
+            TABLET_LAYOUT_FILE
+        } else {
+            Log.i("LayoutConfig", "检测到手机设备，加载手机布局（rows=2）")
+            PHONE_LAYOUT_FILE
+        }
+        return loadLayoutConfigWithResult(fileName)
     }
 
     /**

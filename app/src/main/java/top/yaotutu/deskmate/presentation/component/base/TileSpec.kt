@@ -22,28 +22,33 @@ data class TileSpec(
     companion object {
         /**
          * 创建小方形瓷砖规格 (1×1) - 用于预设，自动获得动画
+         * 默认使用 PULSE 轻微脉冲动画，符合 Metro 设计规范
          */
-        fun small(color: Color) = TileSpec(1, 1, color, null)
+        fun small(color: Color) = TileSpec(1, 1, color, AnimationType.PULSE)
 
         /**
          * 创建标准方形瓷砖规格 (2×2) - 用于预设，自动获得动画
+         * 默认使用 FLIP 翻转动画，适合展示多面信息
          */
-        fun square(color: Color) = TileSpec(2, 2, color, null)
+        fun square(color: Color) = TileSpec(2, 2, color, AnimationType.FLIP)
 
         /**
          * 创建宽矩形瓷砖规格 (4×2) - 用于预设，自动获得动画
+         * 默认使用 SLIDE 滑动动画，适合列表和滚动内容
          */
-        fun wideMedium(color: Color) = TileSpec(4, 2, color, null)
+        fun wideMedium(color: Color) = TileSpec(4, 2, color, AnimationType.SLIDE)
 
         /**
          * 创建高矩形瓷砖规格 (2×4) - 用于预设，自动获得动画
+         * 默认使用 FLIP 翻转动画，适合详细信息展示
          */
-        fun tall(color: Color) = TileSpec(2, 4, color, null)
+        fun tall(color: Color) = TileSpec(2, 4, color, AnimationType.FLIP)
 
         /**
          * 创建大方形瓷砖规格 (4×4) - 用于预设，自动获得动画
+         * 默认使用 FADE 淡入淡出动画，适合仪表盘和复杂布局
          */
-        fun large(color: Color) = TileSpec(4, 4, color, null)
+        fun large(color: Color) = TileSpec(4, 4, color, AnimationType.FADE)
 
         /**
          * 创建带动画的小方形瓷砖规格 (1×1) - 用于自定义内容

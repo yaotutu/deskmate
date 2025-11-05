@@ -11,38 +11,42 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import top.yaotutu.deskmate.presentation.component.base.LocalBaseCellSize
-import top.yaotutu.deskmate.presentation.component.base.LocalDynamicGap
-import top.yaotutu.deskmate.presentation.component.base.Tile
-import top.yaotutu.deskmate.presentation.component.base.TileSize
+import top.yaotutu.deskmate.presentation.component.base.BaseTile
+import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
- * 联系人瓷砖 (1×1 或 2×2)
+ * 联系人瓷砖 (1×1 或 2×2) - 使用 BaseTile 架构
+ *
+ * 特性：
+ * - 支持自动 PULSE 动画（通过 TileSpec）
+ * - 圆形头像设计
+ * - 响应式布局（根据尺寸调整）
  *
  * @param name 联系人姓名
  * @param avatar 头像（暂时用首字母代替）
- * @param size 瓷砖尺寸
+ * @param columns 瓷砖列数（1 或 2）
+ * @param rows 瓷砖行数（1 或 2）
  * @param backgroundColor 背景颜色
+ * @param onClick 点击回调
+ * @param modifier 修饰符
  */
 @Composable
 fun ContactTile(
     name: String = "联系人",
     avatar: String = name.take(1),
-    size: TileSize = TileSize.SMALL,
+    columns: Int = 1,
+    rows: Int = 1,
     backgroundColor: Color = MetroTileColors.Contact,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    val baseCellSize = LocalBaseCellSize.current
-    val dynamicGap = LocalDynamicGap.current
+    val isSmall = columns == 1 && rows == 1
 
-    Tile(
-        size = size,
-        backgroundColor = backgroundColor,
-        baseCellSize = baseCellSize,
-        dynamicGap = dynamicGap,
+    BaseTile(
+        spec = TileSpec(columns, rows, backgroundColor),
+        onClick = onClick,
         modifier = modifier
     ) {
         Box(
@@ -51,26 +55,26 @@ fun ContactTile(
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(if (size == TileSize.SMALL) 4.dp else 8.dp)
+                verticalArrangement = Arrangement.spacedBy(if (isSmall) 4.dp else 8.dp)
             ) {
                 // 头像圆形
                 Box(
                     modifier = Modifier
-                        .size(if (size == TileSize.SMALL) 32.dp else 48.dp)
+                        .size(if (isSmall) 32.dp else 48.dp)
                         .clip(CircleShape)
                         .background(Color.White.copy(alpha = 0.3f)),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = avatar,
-                        fontSize = if (size == TileSize.SMALL) MetroTypography.bodyMedium() else MetroTypography.bodyLarge(),
+                        fontSize = if (isSmall) MetroTypography.bodyMedium() else MetroTypography.bodyLarge(),
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
                 }
 
                 // 姓名（仅在2×2及以上显示）
-                if (size != TileSize.SMALL) {
+                if (!isSmall) {
                     Text(
                         text = name,
                         fontSize = MetroTypography.bodySmall(),

@@ -9,24 +9,25 @@ import top.yaotutu.deskmate.presentation.component.base.presets.WideTilePresets
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 
 /**
- * 新闻瓷砖 (4×2)
+ * 详细新闻瓷砖 (2×4) - 使用 BaseTile 架构
  *
  * 特性：
- * - 显示新闻标题和摘要
- * - 使用 MediaPlayer 预设获得横向滑动动画效果
- * - 适合展示新闻信息和媒体内容
+ * - 支持自动 MARQUEE 动画（通过 TileSpec）
+ * - 横向展示新闻详细信息
+ * - 使用 IconTextSide 预设展示图标、标题和摘要
+ * - 适合展示完整新闻内容
  *
- * @param icon 新闻类型图标（如 "📰", "📺", "🌐"）
+ * @param icon 新闻图标（如 "📰"）
  * @param title 新闻标题
- * @param summary 新闻摘要或来源
+ * @param summary 新闻摘要
  * @param time 发布时间（如 "2小时前"）
  * @param backgroundColor 背景颜色（默认 Metro 红色）
  * @param onClick 点击回调
  * @param modifier 修饰符
  */
 @Composable
-fun NewsTile(
-    icon: String,
+fun News2x4Tile(
+    icon: String = "📰",
     title: String,
     summary: String,
     time: String = "",
@@ -39,11 +40,10 @@ fun NewsTile(
         onClick = onClick,
         modifier = modifier
     ) {
-        WideTilePresets.MediaPlayer(
+        WideTilePresets.IconTextSide(
             icon = icon,
             title = title,
-            artist = summary,
-            duration = time
+            subtitle = if (time.isNotEmpty()) "$summary · $time" else summary
         )
     }
 }

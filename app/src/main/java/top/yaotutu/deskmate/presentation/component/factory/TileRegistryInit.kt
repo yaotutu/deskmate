@@ -929,18 +929,18 @@ fun registerCalendarVariants() {
             variant = "2x2",
             supportedSizes = listOf(2 to 2),
             defaultSize = 2 to 2,
-            view = { config, uiState, onClick ->
+            view = { _, uiState, onClick ->
                 // 优先显示节日或节气，其次显示农历日期
-                val backLabel = when {
+                val lunarInfo = when {
                     !uiState.lunarFestival.isNullOrEmpty() -> uiState.lunarFestival
                     !uiState.lunarSolarTerm.isNullOrEmpty() -> uiState.lunarSolarTerm
                     else -> uiState.lunarDayName
                 }
 
-                CalendarStandardTile(
+                Calendar2x2Tile(
                     dayNumber = uiState.currentDayNumber,
                     monthName = uiState.currentMonthName,
-                    lunarDayName = backLabel,
+                    lunarDayName = lunarInfo,
                     onClick = onClick
                 )
             }
@@ -1104,6 +1104,28 @@ fun registerTodoVariants() {
         )
     )
 
+    // 高版待办列表瓷砖 (4×2)
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "todo",
+            variant = "4x2",
+            supportedSizes = listOf(2 to 4),
+            defaultSize = 2 to 4,
+            view = { _, _, onClick ->
+                Todo4x2Tile(
+                    items = listOf(
+                        "完成项目报告",
+                        "回复邮件",
+                        "团队会议 15:00",
+                        "健身锻炼",
+                        "阅读专业书籍"
+                    ),
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
     // 宽版待办瓷砖 (2×4)
     TileRegistry.register(
         TileVariantSpec(
@@ -1117,28 +1139,6 @@ fun registerTodoVariants() {
                         Triple("待办", "5", "项"),
                         Triple("进行中", "3", "项"),
                         Triple("已完成", "12", "项")
-                    ),
-                    onClick = onClick
-                )
-            }
-        )
-    )
-
-    // 高版待办列表瓷砖 (4×2)
-    TileRegistry.register(
-        TileVariantSpec(
-            type = "todo",
-            variant = "4x2",
-            supportedSizes = listOf(2 to 4),
-            defaultSize = 2 to 4,
-            view = { config, uiState, onClick ->
-                TodoListTile(
-                    items = listOf(
-                        "完成项目报告",
-                        "回复邮件",
-                        "团队会议 15:00",
-                        "健身锻炼",
-                        "阅读专业书籍"
                     ),
                     onClick = onClick
                 )
@@ -1230,8 +1230,8 @@ fun registerNewsVariants() {
             variant = "2x4",
             supportedSizes = listOf(4 to 2),
             defaultSize = 4 to 2,
-            view = { config, uiState, onClick ->
-                NewsTile(
+            view = { _, _, onClick ->
+                News2x4Tile(
                     icon = "📰",
                     title = "科技新闻：AI 技术突破性进展",
                     summary = "自然语言处理达到新高度，应用前景广阔",

@@ -80,6 +80,32 @@ fun BaseTile(
     val baseCellSize = LocalBaseCellSize.current
     val dynamicGap = LocalDynamicGap.current
 
+    // ⭐ 根据 spec.animation 自动应用简单动画
+    val animatedContent: @Composable () -> Unit = {
+        when (spec.animation) {
+            AnimationType.PULSE -> PulseContent(
+                scaleRange = 0.98f to 1.02f,  // 增大缩放范围：从 98% 到 102%（共 4% 变化）
+                pulseDurationMillis = 800      // 加快速度：0.8秒一个方向
+            ) { content() }
+            AnimationType.ROTATE -> RotateContent { content() }
+            AnimationType.SHIMMER -> ShimmerContent { content() }
+            AnimationType.DEPTH -> DepthContent { content() }
+            AnimationType.BOUNCE -> BounceContent { content() }
+            AnimationType.SHAKE -> ShakeContent { content() }
+
+            // 复杂动画需要在 content 中显式调用对应的包装器
+            // FLIP - 需要 FlipContent(front, back)
+            // SLIDE - 需要 SlideContent(contents)
+            // FADE - 需要 FadeContent(contents)
+            // PEEK - 需要 PeekContent(mainContent, peekContent)
+            // MARQUEE - 需要 MarqueeContent(...) { content }
+            // WIPE - 需要 WipeContent(contents)
+            // COUNTER - 需要 CounterContent(targetValue) { value -> content }
+
+            else -> content()  // NONE 或需要手动处理的动画
+        }
+    }
+
     // 调用底层 Tile 函数（框架处理布局）
     Tile(
         columns = spec.columns,
@@ -90,7 +116,7 @@ fun BaseTile(
         onClick = onClick,
         clickEffect = TileClickEffect.PRESS_SCALE,
         modifier = modifier,
-        content = content
+        content = animatedContent  // ← 使用包装后的 content
     )
 }
 
@@ -465,4 +491,76 @@ fun RotateContent(
     content: @Composable () -> Unit
 ) {
     RotateTileAnimation(content = content)
+}
+
+/**
+ * ShimmerContent - 微光动画内容辅助组件
+ *
+ * 用于在 BaseTile 中定义微光动画。
+ * 这个组件会自动调用 ShimmerTileAnimation 处理微光效果。
+ *
+ * 使用示例：
+ * ```
+ * BaseTile(spec = TileSpec.square(MetroColors.Blue)) {
+ *     ShimmerContent {
+ *         Text("加载中...", fontSize = 24.sp, color = Color.White)
+ *     }
+ * }
+ * ```
+ *
+ * @param content 内容
+ */
+@Composable
+fun ShimmerContent(
+    content: @Composable () -> Unit
+) {
+    ShimmerTileAnimation(content = content)
+}
+
+/**
+ * BounceContent - 弹跳动画内容辅助组件
+ *
+ * 用于在 BaseTile 中定义弹跳动画。
+ * 这个组件会自动调用 BounceTileAnimation 处理弹跳效果。
+ *
+ * 使用示例：
+ * ```
+ * BaseTile(spec = TileSpec.square(MetroColors.Green)) {
+ *     BounceContent {
+ *         Text("🔔", fontSize = 64.sp, color = Color.White)
+ *     }
+ * }
+ * ```
+ *
+ * @param content 内容
+ */
+@Composable
+fun BounceContent(
+    content: @Composable () -> Unit
+) {
+    BounceTileAnimation(content = content)
+}
+
+/**
+ * ShakeContent - 抖动动画内容辅助组件
+ *
+ * 用于在 BaseTile 中定义抖动动画。
+ * 这个组件会自动调用 ShakeTileAnimation 处理抖动效果。
+ *
+ * 使用示例：
+ * ```
+ * BaseTile(spec = TileSpec.square(MetroColors.Red)) {
+ *     ShakeContent {
+ *         Text("⚠️", fontSize = 64.sp, color = Color.White)
+ *     }
+ * }
+ * ```
+ *
+ * @param content 内容
+ */
+@Composable
+fun ShakeContent(
+    content: @Composable () -> Unit
+) {
+    ShakeTileAnimation(content = content)
 }
