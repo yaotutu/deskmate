@@ -18,17 +18,16 @@ import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
- * 邮件瓷砖 (2×2) - 使用 BaseTile 架构
+ * 邮件瓷砖 (可变尺寸，默认 2×2) - 使用 BaseTile 架构
  *
  * 特性：
- * - 支持自动 PULSE 动画（通过 TileSpec）
  * - 显示未读邮件数量
- * - 右上角角标提示
+ * - 右上角角标提示（有未读时显示）
  * - 灰色 Metro 风格
  *
  * @param unreadCount 未读邮件数
- * @param columns 瓷砖列数
- * @param rows 瓷砖行数
+ * @param columns 瓷砖列数（默认 2）
+ * @param rows 瓷砖行数（默认 2）
  * @param backgroundColor 背景颜色
  * @param onClick 点击回调
  * @param modifier 修饰符

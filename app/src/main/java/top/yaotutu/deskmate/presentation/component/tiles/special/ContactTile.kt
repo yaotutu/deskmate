@@ -17,17 +17,17 @@ import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
- * 联系人瓷砖 (1×1 或 2×2) - 使用 BaseTile 架构
+ * 联系人瓷砖 (可变尺寸) - 使用 BaseTile 架构
  *
  * 特性：
- * - 支持自动 PULSE 动画（通过 TileSpec）
  * - 圆形头像设计
- * - 响应式布局（根据尺寸调整）
+ * - 响应式布局（根据尺寸自动调整头像和文字大小）
+ * - 1×1 时仅显示头像，2×2 及以上显示头像+姓名
  *
  * @param name 联系人姓名
  * @param avatar 头像（暂时用首字母代替）
- * @param columns 瓷砖列数（1 或 2）
- * @param rows 瓷砖行数（1 或 2）
+ * @param columns 瓷砖列数
+ * @param rows 瓷砖行数
  * @param backgroundColor 背景颜色
  * @param onClick 点击回调
  * @param modifier 修饰符

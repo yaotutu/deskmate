@@ -12,7 +12,7 @@ import top.yaotutu.deskmate.presentation.theme.MetroTileColors
  * 高版待办列表瓷砖 (4×2) - 使用 BaseTile 架构
  *
  * 特性：
- * - 支持自动 SLIDE 动画（通过 TileSpec）
+ * - 支持自动 FLIP 动画（通过 TileSpec.tall）
  * - 垂直展示待办事项列表
  * - 使用 VerticalList 预设
  * - 适合展示多个待办任务

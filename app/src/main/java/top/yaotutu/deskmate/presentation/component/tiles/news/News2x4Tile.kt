@@ -12,7 +12,7 @@ import top.yaotutu.deskmate.presentation.theme.MetroTileColors
  * 详细新闻瓷砖 (2×4) - 使用 BaseTile 架构
  *
  * 特性：
- * - 支持自动 MARQUEE 动画（通过 TileSpec）
+ * - 支持自动 SLIDE 动画（通过 TileSpec.wideMedium）
  * - 横向展示新闻详细信息
  * - 使用 IconTextSide 预设展示图标、标题和摘要
  * - 适合展示完整新闻内容
