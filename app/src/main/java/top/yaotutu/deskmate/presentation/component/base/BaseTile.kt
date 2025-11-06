@@ -108,8 +108,8 @@ fun BaseTile(
 
     // 调用底层 Tile 函数（框架处理布局）
     Tile(
-        columns = spec.columns,
         rows = spec.rows,
+        columns = spec.columns,
         backgroundColor = spec.color,
         baseCellSize = baseCellSize,
         dynamicGap = dynamicGap,

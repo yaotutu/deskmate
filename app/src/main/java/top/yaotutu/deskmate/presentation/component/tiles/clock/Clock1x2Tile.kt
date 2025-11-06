@@ -9,7 +9,7 @@ import top.yaotutu.deskmate.presentation.component.base.presets.CompactTilePrese
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 
 /**
- * 时钟瓷砖 2×1 - 紧凑版
+ * 时钟瓷砖 1×2 - 紧凑版
  *
  * 特性：
  * - 横条布局，高度只有一个单元格
@@ -24,7 +24,7 @@ import top.yaotutu.deskmate.presentation.theme.MetroTileColors
  * @param modifier 修饰符
  */
 @Composable
-fun Clock2x1Tile(
+fun Clock1x2Tile(
     time: String,
     date: String,
     backgroundColor: Color = MetroTileColors.Time,

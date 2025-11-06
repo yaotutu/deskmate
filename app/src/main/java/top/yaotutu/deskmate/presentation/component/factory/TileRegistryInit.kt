@@ -50,15 +50,15 @@ private fun registerClockVariants() {
         )
     )
 
-    // 2×1 变体
+    // 1×2 变体（1行×2列 = 短横条）
     TileRegistry.register(
         TileVariantSpec(
             type = "clock",
             variant = "1x2",
-            supportedSizes = listOf(2 to 1),
-            defaultSize = 2 to 1,
+            supportedSizes = listOf(1 to 2),
+            defaultSize = 1 to 2,
             view = { _, uiState, onClick ->
-                Clock2x1Tile(
+                Clock1x2Tile(
                     time = uiState.currentTime,
                     date = "10/28",  // TODO: 格式化日期
                     onClick = onClick
@@ -85,15 +85,15 @@ private fun registerClockVariants() {
         )
     )
 
-    // 2×4 变体
+    // 4×2 变体（4行×2列 = 高矩形）
     TileRegistry.register(
         TileVariantSpec(
             type = "clock",
             variant = "4x2",
-            supportedSizes = listOf(2 to 4),
-            defaultSize = 2 to 4,
+            supportedSizes = listOf(4 to 2),
+            defaultSize = 4 to 2,
             view = { _, uiState, onClick ->
-                Clock2x4Tile(
+                Clock4x2Tile(
                     time = uiState.currentTime,
                     date = uiState.currentDate,
                     weekday = "星期二",  // TODO: 从 uiState 获取
@@ -103,15 +103,15 @@ private fun registerClockVariants() {
         )
     )
 
-    // 4×2 变体
+    // 2×4 变体（2行×4列 = 宽矩形）
     TileRegistry.register(
         TileVariantSpec(
             type = "clock",
             variant = "2x4",
-            supportedSizes = listOf(4 to 2),
-            defaultSize = 4 to 2,
+            supportedSizes = listOf(2 to 4),
+            defaultSize = 2 to 4,
             view = { _, uiState, onClick ->
-                Clock4x2Tile(
+                Clock2x4Tile(
                     time = uiState.currentTime,
                     date = uiState.currentDate,
                     lunarDate = uiState.lunarDate,
@@ -178,8 +178,8 @@ private fun registerAnimationDemoVariants() {
         TileVariantSpec(
             type = "animation_demo",
             variant = "flip",
-            supportedSizes = listOf(4 to 2),
-            defaultSize = 4 to 2,
+            supportedSizes = listOf(2 to 4),
+            defaultSize = 2 to 4,
             view = { _, _, onClick ->
                 AnimationDemoFlip(onClick = onClick)
             }
@@ -326,11 +326,11 @@ private fun registerPresetsDemoVariants() {
         TileVariantSpec(
             type = "demo_progress",
             variant = "progress",
-            supportedSizes = listOf(2 to 1),
-            defaultSize = 2 to 1,
+            supportedSizes = listOf(1 to 2),
+            defaultSize = 1 to 2,
             view = { _, _, onClick ->
                 BaseTile(
-                    spec = TileSpec(2, 1, MetroColors.Green),
+                    spec = TileSpec(1, 2, MetroColors.Green),
                     onClick = onClick
                 ) {
                     CompactTilePresets.ProgressBar(
@@ -543,8 +543,8 @@ private fun registerPresetsDemoVariants() {
         TileVariantSpec(
             type = "demo_photos",
             variant = "icon_grid",
-            supportedSizes = listOf(4 to 2),
-            defaultSize = 4 to 2,
+            supportedSizes = listOf(2 to 4),
+            defaultSize = 2 to 4,
             view = { _, _, onClick ->
                 BaseTile(
                     spec = TileSpec.wideMedium(MetroColors.Rose),
@@ -565,8 +565,8 @@ private fun registerPresetsDemoVariants() {
         TileVariantSpec(
             type = "demo_media",
             variant = "media_player",
-            supportedSizes = listOf(4 to 2),
-            defaultSize = 4 to 2,
+            supportedSizes = listOf(2 to 4),
+            defaultSize = 2 to 4,
             view = { _, _, onClick ->
                 BaseTile(
                     spec = TileSpec.wideMedium(MetroTileColors.Music),
@@ -588,8 +588,8 @@ private fun registerPresetsDemoVariants() {
         TileVariantSpec(
             type = "demo_timeline",
             variant = "timeline",
-            supportedSizes = listOf(4 to 2),
-            defaultSize = 4 to 2,
+            supportedSizes = listOf(2 to 4),
+            defaultSize = 2 to 4,
             view = { _, _, onClick ->
                 BaseTile(
                     spec = TileSpec.wideMedium(MetroColors.Olive),
@@ -612,8 +612,8 @@ private fun registerPresetsDemoVariants() {
         TileVariantSpec(
             type = "demo_metrics",
             variant = "three_columns",
-            supportedSizes = listOf(4 to 2),
-            defaultSize = 4 to 2,
+            supportedSizes = listOf(2 to 4),
+            defaultSize = 2 to 4,
             view = { _, _, onClick ->
                 BaseTile(
                     spec = TileSpec.wideMedium(MetroColors.Steel),
@@ -638,8 +638,8 @@ private fun registerPresetsDemoVariants() {
         TileVariantSpec(
             type = "demo_todo",
             variant = "list",
-            supportedSizes = listOf(2 to 4),
-            defaultSize = 2 to 4,
+            supportedSizes = listOf(4 to 2),
+            defaultSize = 4 to 2,
             view = { _, _, onClick ->
                 BaseTile(
                     spec = TileSpec.tall(MetroTileColors.Todo),
@@ -664,8 +664,8 @@ private fun registerPresetsDemoVariants() {
         TileVariantSpec(
             type = "demo_forecast",
             variant = "weather_forecast",
-            supportedSizes = listOf(2 to 4),
-            defaultSize = 2 to 4,
+            supportedSizes = listOf(4 to 2),
+            defaultSize = 4 to 2,
             view = { _, _, onClick ->
                 BaseTile(
                     spec = TileSpec.tall(MetroTileColors.Weather),
@@ -768,8 +768,8 @@ fun registerWeatherVariants() {
         TileVariantSpec(
             type = "weather",
             variant = "1x2",
-            supportedSizes = listOf(2 to 1),
-            defaultSize = 2 to 1,
+            supportedSizes = listOf(1 to 2),
+            defaultSize = 1 to 2,
             view = { _, uiState, onClick ->
                 Weather1x2Tile(
                     temperature = uiState.weatherData.temperature,
@@ -804,10 +804,10 @@ fun registerWeatherVariants() {
         TileVariantSpec(
             type = "weather",
             variant = "2x4",
-            supportedSizes = listOf(4 to 2),
-            defaultSize = 4 to 2,
+            supportedSizes = listOf(2 to 4),
+            defaultSize = 2 to 4,
             view = { _, uiState, onClick ->
-                Weather2x4Tile(
+                Weather4x2Tile(
                     forecasts = uiState.weatherForecast,
                     currentTemp = uiState.weatherData.temperature,
                     currentCondition = uiState.weatherData.condition,
@@ -822,8 +822,8 @@ fun registerWeatherVariants() {
         TileVariantSpec(
             type = "weather",
             variant = "4x2",
-            supportedSizes = listOf(2 to 4),
-            defaultSize = 2 to 4,
+            supportedSizes = listOf(4 to 2),
+            defaultSize = 4 to 2,
             view = { _, uiState, onClick ->
                 // 转换预报数据为Weather4x2Tile所需的格式
                 val forecasts = uiState.weatherForecast.take(4).map { forecast ->
@@ -832,7 +832,7 @@ fun registerWeatherVariants() {
                     Triple(date, icon, "${forecast.maxTemp}°")
                 }
 
-                Weather4x2Tile(
+                Weather2x4Tile(
                     forecasts = forecasts.ifEmpty {
                         listOf(
                             Triple("今天", "☀️", "${uiState.weatherData.temperature}°")
@@ -910,8 +910,8 @@ fun registerCalendarVariants() {
         TileVariantSpec(
             type = "calendar",
             variant = "1x2",
-            supportedSizes = listOf(2 to 1),
-            defaultSize = 2 to 1,
+            supportedSizes = listOf(1 to 2),
+            defaultSize = 1 to 2,
             view = { _, uiState, onClick ->
                 Calendar1x2Tile(
                     day = uiState.currentDay.toString(),
@@ -987,10 +987,10 @@ fun registerCalendarVariants() {
         TileVariantSpec(
             type = "calendar",
             variant = "2x4",
-            supportedSizes = listOf(4 to 2),
-            defaultSize = 4 to 2,
+            supportedSizes = listOf(2 to 4),
+            defaultSize = 2 to 4,
             view = { _, _, onClick ->
-                Calendar2x4Tile(
+                Calendar4x2Tile(
                     timeline = listOf(
                         "09:00" to "晨会",
                         "14:00" to "项目讨论",
@@ -1007,10 +1007,10 @@ fun registerCalendarVariants() {
         TileVariantSpec(
             type = "calendar",
             variant = "4x2",
-            supportedSizes = listOf(2 to 4),
-            defaultSize = 2 to 4,
+            supportedSizes = listOf(4 to 2),
+            defaultSize = 4 to 2,
             view = { _, _, onClick ->
-                Calendar4x2Tile(
+                Calendar2x4Tile(
                     events = listOf(
                         "会议 10:00",
                         "午餐 12:00",
@@ -1075,8 +1075,8 @@ fun registerTodoVariants() {
         TileVariantSpec(
             type = "todo",
             variant = "1x2",
-            supportedSizes = listOf(2 to 1),
-            defaultSize = 2 to 1,
+            supportedSizes = listOf(1 to 2),
+            defaultSize = 1 to 2,
             view = { config, uiState, onClick ->
                 TodoCompactTile(
                     label = "今日任务",
@@ -1104,41 +1104,37 @@ fun registerTodoVariants() {
         )
     )
 
-    // 高版待办列表瓷砖 (4×2)
+    // 高版待办列表瓷砖 (4×2) - 横向宽版
     TileRegistry.register(
         TileVariantSpec(
             type = "todo",
             variant = "4x2",
-            supportedSizes = listOf(2 to 4),
-            defaultSize = 2 to 4,
-            view = { _, _, onClick ->
+            supportedSizes = listOf(4 to 2),
+            defaultSize = 4 to 2,
+            view = { _, uiState, onClick ->
                 Todo4x2Tile(
-                    items = listOf(
-                        "完成项目报告",
-                        "回复邮件",
-                        "团队会议 15:00",
-                        "健身锻炼",
-                        "阅读专业书籍"
-                    ),
+                    todoItems = uiState.todoItems,
                     onClick = onClick
                 )
             }
         )
     )
 
-    // 宽版待办瓷砖 (2×4)
+    // 高版待办瓷砖 (2×4) - 纵向高版
     TileRegistry.register(
         TileVariantSpec(
             type = "todo",
             variant = "2x4",
-            supportedSizes = listOf(4 to 2),
-            defaultSize = 4 to 2,
+            supportedSizes = listOf(2 to 4),
+            defaultSize = 2 to 4,
             view = { _, _, onClick ->
                 Todo2x4Tile(
-                    metrics = listOf(
-                        Triple("待办", "5", "项"),
-                        Triple("进行中", "3", "项"),
-                        Triple("已完成", "12", "项")
+                    items = listOf(
+                        "完成项目报告",
+                        "回复邮件",
+                        "团队会议 15:00",
+                        "健身锻炼",
+                        "阅读专业书籍"
                     ),
                     onClick = onClick
                 )
@@ -1193,8 +1189,8 @@ fun registerNewsVariants() {
         TileVariantSpec(
             type = "news",
             variant = "1x2",
-            supportedSizes = listOf(2 to 1),
-            defaultSize = 2 to 1,
+            supportedSizes = listOf(1 to 2),
+            defaultSize = 1 to 2,
             view = { _, _, onClick ->
                 News1x2Tile(
                     title = "科技突破：AI技术新进展",
@@ -1223,40 +1219,40 @@ fun registerNewsVariants() {
         )
     )
 
-    // 详细新闻瓷砖 (2×4)
+    // 详细新闻瓷砖 (2×4) - 纵向高版
     TileRegistry.register(
         TileVariantSpec(
             type = "news",
             variant = "2x4",
-            supportedSizes = listOf(4 to 2),
-            defaultSize = 4 to 2,
-            view = { _, _, onClick ->
-                News2x4Tile(
-                    icon = "📰",
-                    title = "科技新闻：AI 技术突破性进展",
-                    summary = "自然语言处理达到新高度，应用前景广阔",
-                    time = "2小时前",
-                    onClick = onClick
-                )
-            }
-        )
-    )
-
-    // 高版新闻瓷砖 (4×2)
-    TileRegistry.register(
-        TileVariantSpec(
-            type = "news",
-            variant = "4x2",
             supportedSizes = listOf(2 to 4),
             defaultSize = 2 to 4,
             view = { _, _, onClick ->
-                News4x2Tile(
+                News2x4Tile(
                     headlines = listOf(
                         "科技：AI技术突破",
                         "财经：股市创新高",
                         "体育：中国队夺冠",
                         "娱乐：新片上映"
                     ),
+                    onClick = onClick
+                )
+            }
+        )
+    )
+
+    // 高版新闻瓷砖 (4×2) - 横向宽版
+    TileRegistry.register(
+        TileVariantSpec(
+            type = "news",
+            variant = "4x2",
+            supportedSizes = listOf(4 to 2),
+            defaultSize = 4 to 2,
+            view = { _, _, onClick ->
+                News4x2Tile(
+                    icon = "📰",
+                    title = "科技新闻：AI 技术突破性进展",
+                    summary = "自然语言处理达到新高度，应用前景广阔",
+                    time = "2小时前",
                     onClick = onClick
                 )
             }

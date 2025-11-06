@@ -1,51 +1,31 @@
 {
-  "comment": "手机布局 - rows=2，主要使用 1×1 瓷砖",
-  "columns": 4,
-  "rows": 2,
+  "comment": "手机布局 - 4行网格（2025-01-06 重构）",
   "areas": [
-    "C W T N",
-    "A B D E"
+    "C C W W",
+    "C C W W",
+    "A A T T",
+    "A A T T"
   ],
   "tiles": {
     "C": {
       "type": "clock",
-      "variant": "1x1",
-      "comment": "时钟 - 1×1 简约版"
+      "variant": "2x2",
+      "comment": "时钟 - 2×2 标准版"
     },
     "W": {
       "type": "weather",
-      "variant": "1x1",
-      "comment": "天气 - 1×1 简约版"
-    },
-    "T": {
-      "type": "todo",
-      "variant": "1x1",
-      "comment": "待办 - 1×1 简约版"
-    },
-    "N": {
-      "type": "news",
-      "variant": "1x1",
-      "comment": "新闻 - 1×1 简约版"
+      "variant": "2x2",
+      "comment": "天气 - 2×2 标准版"
     },
     "A": {
       "type": "calendar",
-      "variant": "1x1",
-      "comment": "日历 - 1×1 简约版"
+      "variant": "2x2",
+      "comment": "日历 - 2×2 标准版"
     },
-    "B": {
-      "type": "clock",
-      "variant": "1x1",
-      "comment": "时钟 - 1×1 简约版"
-    },
-    "D": {
-      "type": "weather",
-      "variant": "1x1",
-      "comment": "天气 - 1×1 简约版"
-    },
-    "E": {
+    "T": {
       "type": "todo",
-      "variant": "1x1",
-      "comment": "待办 - 1×1 简约版"
+      "variant": "2x2",
+      "comment": "待办 - 2×2 标准版"
     }
   }
 }

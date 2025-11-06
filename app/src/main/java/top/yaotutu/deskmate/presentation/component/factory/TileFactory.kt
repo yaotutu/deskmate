@@ -72,8 +72,7 @@ object TileFactory {
                     rows = config.rows,
                     errorType = TileErrorType.UNKNOWN_VARIANT,
                     message = "未知变体：${config.type}:${config.variant}",
-                    details = mapOf("建议" to "检查配置文件拼写"),
-                    modifier = modifier
+                    details = mapOf("建议" to "检查配置文件拼写")
                 )
             }
 
@@ -88,8 +87,7 @@ object TileFactory {
                     details = mapOf(
                         "变体" to "${config.type}:${config.variant}",
                         "建议" to "在 TileRegistryInit 中为该变体添加 supportedSizes"
-                    ),
-                    modifier = modifier
+                    )
                 )
             }
 
@@ -104,14 +102,14 @@ object TileFactory {
                     details = mapOf(
                         "当前配置" to "${config.columns}×${config.rows}",
                         "支持的尺寸" to TileRegistry.getSupportedSizesString(config.type, config.variant)
-                    ),
-                    modifier = modifier
+                    )
                 )
             }
 
             else -> {
                 // 正常渲染
                 Log.d("TileFactory", "正常渲染: ${config.type}:${config.variant}")
+                // ✅ 直接渲染，让 BaseTile/Tile 自己处理尺寸
                 spec.view(config, uiState, onClick)
             }
         }

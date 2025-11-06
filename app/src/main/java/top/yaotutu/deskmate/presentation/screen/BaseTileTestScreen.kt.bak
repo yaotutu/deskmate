@@ -1,0 +1,105 @@
+package top.yaotutu.deskmate.presentation.screen
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import top.yaotutu.deskmate.data.model.LayoutConfig
+import top.yaotutu.deskmate.data.model.TileDefinition
+import top.yaotutu.deskmate.presentation.component.base.BaseTile
+import top.yaotutu.deskmate.presentation.component.base.ProvideTileGrid
+import top.yaotutu.deskmate.presentation.component.base.TileGridContainer
+import top.yaotutu.deskmate.presentation.component.base.TileSpec
+import top.yaotutu.deskmate.presentation.component.layout.GridAreaLayout
+import top.yaotutu.deskmate.presentation.theme.MetroColors
+
+/**
+ * BaseTile 尺寸验证测试页面
+ *
+ * 展示所有支持的瓷砖尺寸（除4×4外）
+ * 验证新的约定：rows × columns (行×列)
+ */
+@Composable
+fun BaseTileTestScreen() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFF000000))
+            .padding(8.dp)
+    ) {
+        TileGridContainer(Modifier.fillMaxSize()) { baseCellSize, dynamicGap, columns, screenHeight ->
+            ProvideTileGrid(baseCellSize, dynamicGap, columns) {
+                // 调试日志
+                android.util.Log.d("BaseTileTest", "screenHeight=$screenHeight, baseCellSize=$baseCellSize, dynamicGap=$dynamicGap")
+
+                // ⭐ 使用标准的 4 行布局，展示关键尺寸
+                // 核心对比：2×4(宽矩形) vs 4×2(高矩形，占满屏幕)
+                // 展示尺寸：1×1, 1×2, 4×2, 2×4
+                val layoutConfig = LayoutConfig(
+                    columns = 6,
+                    rows = 4,
+                    areas = listOf(
+                        "F F E E E E",        // 行0: 4×2高矩形开始, 2×4宽矩形开始
+                        "F F E E E E",        // 行1: 4×2继续, 2×4结束
+                        "F F A B B C",        // 行2: 4×2继续, 1×1, 1×2, 1×2
+                        "F F D D . ."         // 行3: 4×2结束, 1×2, 空
+                    ),
+                    tiles = mapOf(
+                        "A" to TileDefinition("test", "1x1"),
+                        "B" to TileDefinition("test", "1x2"),
+                        "C" to TileDefinition("test", "1x2_c"),  // 1×2（第二个）
+                        "D" to TileDefinition("test", "1x2_d"),  // 1×2（第三个）
+                        "E" to TileDefinition("test", "2x4"),    // 2×4 宽矩形
+                        "F" to TileDefinition("test", "4x2")     // 4×2 高矩形
+                    )
+                )
+
+                GridAreaLayout(
+                    config = layoutConfig,
+                    baseCellSize = baseCellSize,
+                    dynamicGap = dynamicGap,
+                    modifier = Modifier.fillMaxSize()
+                ) { tileConfig, index ->
+                    // 根据配置确定颜色和标签（直接渲染，不使用 TileFactory）
+                    val (color, label) = when {
+                        tileConfig.rows == 1 && tileConfig.columns == 1 -> Color(0xFF0078D7) to "1×1"
+                        tileConfig.rows == 1 && tileConfig.columns == 2 -> Color(0xFF00ABA9) to "1×2"
+                        tileConfig.rows == 2 && tileConfig.columns == 2 -> Color(0xFFFF8C00) to "2×2"
+                        tileConfig.rows == 2 && tileConfig.columns == 4 -> Color(0xFF00A300) to "2×4\n宽矩形"
+                        tileConfig.rows == 4 && tileConfig.columns == 2 -> Color(0xFFAA00FF) to "4×2\n高矩形\n(占满屏幕)"
+                        else -> Color.Gray to "${tileConfig.rows}×${tileConfig.columns}"
+                    }
+
+                    // 直接使用 BaseTile 渲染，不通过 TileFactory
+                    BaseTile(
+                        spec = TileSpec(tileConfig.rows, tileConfig.columns, color),
+                        onClick = {},
+                        modifier = Modifier
+                    ) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = label,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

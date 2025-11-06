@@ -12,7 +12,7 @@
     "A": {
       "type": "clock",
       "variant": "1x2",
-      "comment": "时钟 1×2 - 测试自动 PULSE 动画"
+      "comment": "时钟 1×2（1行×2列，短横条）- 测试自动 PULSE 动画"
     },
     "B": {
       "type": "weather",
@@ -32,7 +32,7 @@
     "E": {
       "type": "todo",
       "variant": "4x2",
-      "comment": "待办 4×2 - SLIDE 动画"
+      "comment": "待办 4×2（4行×2列，竖长）- SLIDE 动画"
     }
   }
 }

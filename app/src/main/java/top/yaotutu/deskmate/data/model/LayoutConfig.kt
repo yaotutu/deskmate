@@ -7,11 +7,14 @@ import kotlinx.serialization.Serializable
  *
  * 采用 CSS Grid Template Areas 风格的布局配置
  *
+ * **2025-01-06 重构**：
+ * - 移除冗余的 columns 和 rows 字段，改为从 areas 自动推断
+ * - 行数 = areas.size
+ * - 列数 = areas 第一行的列数
+ *
  * 示例配置：
  * ```json
  * {
- *   "columns": 6,
- *   "rows": 4,
  *   "areas": [
  *     "N N N N W W",
  *     "N N N N W W",
@@ -19,17 +22,15 @@ import kotlinx.serialization.Serializable
  *     "T T C C . ."
  *   ],
  *   "tiles": {
- *     "N": {"type": "news", "variant": "standard"},
- *     "W": {"type": "weather", "variant": "standard"},
- *     "C": {"type": "calendar", "variant": "standard"},
- *     "T": {"type": "todo", "variant": "list"},
+ *     "N": {"type": "news", "variant": "2x4"},
+ *     "W": {"type": "weather", "variant": "2x2"},
+ *     "C": {"type": "calendar", "variant": "2x2"},
+ *     "T": {"type": "todo", "variant": "2x2"},
  *     "K": {"type": "clock", "variant": "2x2"}
  *   }
  * }
  * ```
  *
- * @property columns 网格总列数（通常为 6）
- * @property rows 网格总行数（通常为 4）
  * @property areas 网格区域定义（每行是一个字符串，用空格分隔列）
  * @property tiles 瓷砖定义映射表（ID -> TileDefinition）
  *
@@ -37,21 +38,28 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class LayoutConfig(
-    val columns: Int = 6,
-    val rows: Int = 4,
     val areas: List<String>,
     val tiles: Map<String, TileDefinition>
 ) {
-    init {
-        require(columns > 0) { "columns 必须 > 0，当前值: $columns" }
-        require(rows > 0) { "rows 必须 > 0，当前值: $rows" }
-        require(areas.size == rows) { "areas 行数必须等于 rows，期望: $rows，实际: ${areas.size}" }
+    /**
+     * 网格总行数（从 areas 自动推断）
+     */
+    val rows: Int get() = areas.size
 
-        // 验证每行的列数
+    /**
+     * 网格总列数（从 areas 第一行自动推断）
+     */
+    val columns: Int get() = areas.firstOrNull()?.trim()?.split(Regex("\\s+"))?.size ?: 0
+
+    init {
+        require(areas.isNotEmpty()) { "areas 不能为空" }
+
+        // 验证每行的列数一致
+        val expectedColumns = columns
         areas.forEachIndexed { index, row ->
             val cells = row.trim().split(Regex("\\s+"))
-            require(cells.size == columns) {
-                "areas[${index}] 列数必须等于 columns，期望: $columns，实际: ${cells.size}"
+            require(cells.size == expectedColumns) {
+                "areas[${index}] 列数不一致，期望: $expectedColumns，实际: ${cells.size}"
             }
         }
 

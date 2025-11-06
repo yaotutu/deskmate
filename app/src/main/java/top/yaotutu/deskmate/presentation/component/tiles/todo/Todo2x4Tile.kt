@@ -3,41 +3,37 @@ package top.yaotutu.deskmate.presentation.component.tiles.todo
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
-import top.yaotutu.deskmate.presentation.component.base.presets.WideTilePresets
+import top.yaotutu.deskmate.presentation.component.base.presets.TallTilePresets
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 
 /**
- * 宽版待办瓷砖 (2×4)
+ * 高版待办列表瓷砖 (4×2) - 使用 BaseTile 架构
  *
  * 特性：
- * - 横向展示待办统计
- * - 使用 ThreeColumns 预设展示多项指标
- * - 适合展示任务分类统计
+ * - 支持自动 FLIP 动画（通过 TileSpec.tall）
+ * - 垂直展示待办事项列表
+ * - 使用 VerticalList 预设
+ * - 适合展示多个待办任务
  *
- * @param metrics 待办指标列表（标签, 数值, 单位）
+ * @param items 待办事项列表（如 ["完成报告", "回复邮件", "团队会议"]）
  * @param backgroundColor 背景颜色（默认 Metro 紫色）
  * @param onClick 点击回调
  * @param modifier 修饰符
  */
 @Composable
 fun Todo2x4Tile(
-    metrics: List<Triple<String, String, String>>,
+    items: List<String>,
     backgroundColor: Color = MetroTileColors.Todo,
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BaseTile(
-        spec = TileSpec.wideMedium(backgroundColor),
+        spec = TileSpec.tall(backgroundColor),
         onClick = onClick,
         modifier = modifier
     ) {
-        WideTilePresets.ThreeColumns(
-            items = metrics,
-            valueSize = 40.sp,
-            labelSize = 16.sp
-        )
+        TallTilePresets.VerticalList(items = items)
     }
 }

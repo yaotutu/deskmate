@@ -15,7 +15,7 @@ import top.yaotutu.deskmate.presentation.component.base.SlideContent
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
- * 2×4 高矩形瓷砖预设
+ * 4×2 高矩形瓷砖预设（4行×2列）
  *
  * 空间：约 160-240dp × 320-480dp
  * 设计原则：纵向布局，列表展示

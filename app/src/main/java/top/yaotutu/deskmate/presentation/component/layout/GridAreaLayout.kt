@@ -42,6 +42,8 @@ fun GridAreaLayout(
     baseCellSize: Dp,
     dynamicGap: Dp,
     modifier: Modifier = Modifier,
+    screenWidth: Dp? = null,   // ⭐ 新增：实际屏幕宽度
+    screenHeight: Dp? = null,  // ⭐ 新增：实际屏幕高度
     tileContent: @Composable (TileConfig, Int) -> Unit
 ) {
     val TAG = "GridAreaLayout"
@@ -55,18 +57,31 @@ fun GridAreaLayout(
         is GridAreaParser.ParseResult.Success -> {
             Log.d(TAG, "布局解析成功: ${parseResult.positions.size} 个瓷砖")
 
-            // 计算内容尺寸（不包含外部 gap，由外层容器的 padding 负责）
-            // 宽度 = baseCellSize * columns + gap * (columns - 1)
-            val contentWidth = baseCellSize * config.columns + dynamicGap * (config.columns - 1)
-            // 高度 = baseCellSize * rows + gap * (rows - 1)
-            val contentHeight = baseCellSize * config.rows + dynamicGap * (config.rows - 1)
+            // ⭐ 重新计算 baseCellSize，同时考虑宽度和高度约束
+            val adjustedBaseCellSize = if (screenWidth != null && screenHeight != null) {
+                // 根据宽度计算 baseCellSize
+                val widthBasedCellSize = (screenWidth - dynamicGap * (config.columns - 1)) / config.columns
 
-            // 渲染瓷砖
-            Box(modifier = modifier.width(contentWidth).height(contentHeight)) {
+                // 根据高度计算 baseCellSize
+                val heightBasedCellSize = (screenHeight - dynamicGap * (config.rows - 1)) / config.rows
+
+                // ⭐ 取较小值，确保整个网格都能显示
+                minOf(widthBasedCellSize, heightBasedCellSize)
+            } else {
+                baseCellSize
+            }
+
+            Log.d(TAG, "GridAreaLayout 容器尺寸: ${config.columns}×${config.rows} (配置)")
+            Log.d(TAG, "GridAreaLayout 屏幕: $screenWidth × $screenHeight")
+            Log.d(TAG, "GridAreaLayout 原始 baseCellSize=$baseCellSize, 调整后=$adjustedBaseCellSize")
+            Log.d(TAG, "GridAreaLayout gap=$dynamicGap")
+
+            // 渲染瓷砖 - 使用调整后的 baseCellSize
+            Box(modifier = modifier.fillMaxSize()) {
                 parseResult.positions.forEachIndexed { index, areaPosition ->
                     RenderTile(
                         areaPosition = areaPosition,
-                        baseCellSize = baseCellSize,
+                        baseCellSize = adjustedBaseCellSize,
                         dynamicGap = dynamicGap,
                         index = index,
                         tileContent = tileContent
@@ -135,11 +150,12 @@ private fun RenderTile(
     )
 
     // 转换为 TileConfig 格式（兼容现有的 TileFactory）
+    // 注意：TileConfig 参数顺序是 (type, variant, rows, columns)
     val tileConfig = TileConfig(
         type = areaPosition.tileDefinition.type,
         variant = areaPosition.tileDefinition.variant,
-        columns = areaPosition.width,
-        rows = areaPosition.height
+        rows = areaPosition.height,      // ✅ 行数
+        columns = areaPosition.width     // ✅ 列数
     )
 
     // 使用 Box + offset 实现绝对定位

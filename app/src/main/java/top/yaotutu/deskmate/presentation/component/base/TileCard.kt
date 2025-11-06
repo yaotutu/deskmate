@@ -20,26 +20,26 @@ import top.yaotutu.deskmate.presentation.component.common.TileWithInteraction
  * 瓷砖尺寸定义（基于格子倍数）
  *
  * 新的尺寸系统基于相对格子数量，而不是固定尺寸
- * 例如：MEDIUM(2, 2) 表示占用 2列×2行 的格子
+ * 例如：MEDIUM(2, 2) 表示占用 2行×2列 的格子
  *
- * @param columns 占用的列数
  * @param rows 占用的行数
+ * @param columns 占用的列数
  */
-enum class TileSize(val columns: Int, val rows: Int) {
+enum class TileSize(val rows: Int, val columns: Int) {
     /** 小方块：1×1 格子 */
     SMALL(1, 1),
 
     /** 中方块：2×2 格子 */
     MEDIUM(2, 2),
 
-    /** 短横条：3×1 格子 */
-    WIDE_SHORT(3, 1),
+    /** 短横条：1×3 格子 */
+    WIDE_SHORT(1, 3),
 
-    /** 中横条：4×2 格子（时钟瓷砖常用） */
-    WIDE_MEDIUM(4, 2),
+    /** 中横条：2×4 格子（时钟瓷砖常用） */
+    WIDE_MEDIUM(2, 4),
 
-    /** 竖长条：2×3 格子 */
-    TALL(2, 3),
+    /** 竖长条：3×2 格子 */
+    TALL(3, 2),
 
     /** 大方块：3×3 格子 */
     LARGE(3, 3),
@@ -54,19 +54,19 @@ enum class TileSize(val columns: Int, val rows: Int) {
          */
         fun fullWidth(columns: Int): TileSize {
             // 返回一个临时的 TileSize，仅用于全宽场景
-            return WIDE_MEDIUM.copy(columns = columns, rows = 1)
+            return WIDE_MEDIUM.copy(rows = 1, columns = columns)
         }
 
-        private fun TileSize.copy(columns: Int = this.columns, rows: Int = this.rows): TileSize {
+        private fun TileSize.copy(rows: Int = this.rows, columns: Int = this.columns): TileSize {
             // 注意：这是一个简化实现，实际中可能需要更复杂的处理
             return when {
-                columns == 1 && rows == 1 -> SMALL
-                columns == 2 && rows == 2 -> MEDIUM
-                columns == 3 && rows == 1 -> WIDE_SHORT
-                columns == 4 && rows == 2 -> WIDE_MEDIUM
-                columns == 2 && rows == 3 -> TALL
-                columns == 3 && rows == 3 -> LARGE
-                columns == 4 && rows == 4 -> EXTRA_LARGE
+                rows == 1 && columns == 1 -> SMALL
+                rows == 2 && columns == 2 -> MEDIUM
+                rows == 1 && columns == 3 -> WIDE_SHORT
+                rows == 2 && columns == 4 -> WIDE_MEDIUM
+                rows == 3 && columns == 2 -> TALL
+                rows == 3 && columns == 3 -> LARGE
+                rows == 4 && columns == 4 -> EXTRA_LARGE
                 else -> MEDIUM // 默认回退
             }
         }
@@ -114,12 +114,11 @@ fun Tile(
     TileWithInteraction(
         effect = clickEffect,
         onTap = onClick,
-        modifier = modifier
+        modifier = modifier.fillMaxSize()  // ✅ 填充 GridAreaLayout 的 Box
     ) {
         Box(
             modifier = Modifier
-                .width(tileWidth)
-                .height(tileHeight)
+                .fillMaxSize()  // ✅ 填充 TileWithInteraction
                 .clip(RectangleShape)  // Metro 风格：直角瓷砖
                 .background(backgroundColor)
                 .padding(padding)
@@ -132,10 +131,10 @@ fun Tile(
 /**
  * 瓷砖容器 - 支持任意尺寸（用于变体系统）
  *
- * 与上面的 Tile 函数类似，但支持直接传递列数和行数
+ * 与上面的 Tile 函数类似，但支持直接传递行数和列数
  *
- * @param columns 瓷砖占用的列数
  * @param rows 瓷砖占用的行数
+ * @param columns 瓷砖占用的列数
  * @param backgroundColor 背景颜色
  * @param baseCellSize 基础格子尺寸
  * @param dynamicGap 动态间距
@@ -147,8 +146,8 @@ fun Tile(
  */
 @Composable
 fun Tile(
-    columns: Int,
     rows: Int,
+    columns: Int,
     backgroundColor: Color,
     baseCellSize: Dp,
     dynamicGap: Dp,
@@ -162,6 +161,8 @@ fun Tile(
     val tileWidth = TileGrid.calculateTileWidth(baseCellSize, columns, dynamicGap)
     val tileHeight = TileGrid.calculateTileHeight(baseCellSize, rows, dynamicGap)
 
+    android.util.Log.d("Tile", "瓷砖尺寸: ${columns}×${rows}, baseCellSize=$baseCellSize, gap=$dynamicGap, width=$tileWidth, height=$tileHeight")
+
     // 根据瓷砖尺寸自动选择内边距
     val totalCells = columns * rows
     val padding = contentPadding ?: when {
@@ -173,12 +174,11 @@ fun Tile(
     TileWithInteraction(
         effect = clickEffect,
         onTap = onClick,
-        modifier = modifier
+        modifier = modifier.fillMaxSize()  // ✅ 填充 GridAreaLayout 的 Box
     ) {
         Box(
             modifier = Modifier
-                .width(tileWidth)
-                .height(tileHeight)
+                .fillMaxSize()  // ✅ 填充 TileWithInteraction
                 .clip(RectangleShape)  // Metro 风格：直角瓷砖
                 .background(backgroundColor)
                 .padding(padding)

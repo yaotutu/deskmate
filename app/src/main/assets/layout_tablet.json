@@ -1,38 +1,40 @@
 {
-  "comment": "多组件展示布局 - 5种核心组件，紧凑实用",
-  "columns": 6,
-  "rows": 4,
+  "comment": "平板布局 - 8行网格（2025-01-06 重构）",
   "areas": [
-    "C C W W A A",
-    "C C W W A A",
-    "T T T T N N",
-    "T T T T N N"
+    "C C C C W W W W",
+    "C C C C W W W W",
+    "C C C C W W W W",
+    "C C C C W W W W",
+    "A A A A N N T T",
+    "A A A A N N T T",
+    "A A A A N N T T",
+    "A A A A N N T T"
   ],
   "tiles": {
     "C": {
       "type": "clock",
-      "variant": "2x2",
-      "comment": "时钟 - 2×2 标准版"
+      "variant": "4x4",
+      "comment": "时钟 - 4×4 大型版"
     },
     "W": {
       "type": "weather",
-      "variant": "flip",
-      "comment": "天气 - 2×2 翻转版（西安）"
+      "variant": "4x4",
+      "comment": "天气 - 4×4 大型版"
     },
     "A": {
       "type": "calendar",
-      "variant": "almanac",
-      "comment": "黄历 - 2×2 紧凑版"
+      "variant": "4x4",
+      "comment": "日历 - 4×4 大型版"
+    },
+    "N": {
+      "type": "news",
+      "variant": "2x4",
+      "comment": "新闻 - 2×4 高版（2列×4行）"
     },
     "T": {
       "type": "todo",
       "variant": "2x4",
-      "comment": "待办 - 2×4 详细版"
-    },
-    "N": {
-      "type": "news",
-      "variant": "2x2",
-      "comment": "新闻 - 2×2 标准版"
+      "comment": "待办 - 2×4 高版（2列×4行）"
     }
   }
 }

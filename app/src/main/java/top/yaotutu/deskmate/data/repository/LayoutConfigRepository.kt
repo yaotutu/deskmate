@@ -158,8 +158,6 @@ class LayoutConfigRepository(private val context: Context) {
     fun getDefaultLayoutConfig(): LayoutConfig {
         Log.w("LayoutConfig", "使用默认配置（空瓷砖映射）")
         return LayoutConfig(
-            columns = 6,
-            rows = 4,
             areas = listOf(
                 ". . . . . .",
                 ". . . . . .",
@@ -176,8 +174,6 @@ class LayoutConfigRepository(private val context: Context) {
     fun getSafeDefaultLayoutConfig(): LayoutConfig {
         Log.w("LayoutConfig", "使用安全默认配置（包含示例时钟瓷砖）")
         return LayoutConfig(
-            columns = 6,
-            rows = 4,
             areas = listOf(
                 "K K . . . .",
                 "K K . . . .",

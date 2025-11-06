@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.rememberNavController
 import top.yaotutu.deskmate.navigation.NavGraph
+import top.yaotutu.deskmate.navigation.Screen
 import top.yaotutu.deskmate.presentation.component.factory.registerAllTileVariants
 import top.yaotutu.deskmate.presentation.theme.DeskmateTheme
 
@@ -34,8 +35,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DeskmateTheme {
+                // 导航到主页
                 val navController = rememberNavController()
-                NavGraph(navController = navController)
+                NavGraph(navController = navController, startDestination = Screen.Dashboard.route)
             }
         }
     }

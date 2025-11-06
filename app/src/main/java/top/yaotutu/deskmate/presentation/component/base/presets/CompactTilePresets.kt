@@ -14,7 +14,7 @@ import top.yaotutu.deskmate.presentation.component.base.FadeContent
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
 /**
- * 2×1 紧凑横向瓷砖预设
+ * 1×2 紧凑横向瓷砖预设（1行×2列）
  *
  * 空间限制：宽约 160-240dp，高约 80-120dp
  * 设计原则：横向布局，信息紧凑

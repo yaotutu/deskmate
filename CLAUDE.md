@@ -21,6 +21,7 @@ Deskmate 是一个基于 Kotlin + Jetpack Compose 的现代化 Android 桌面小
 - 📁 **扁平化目录结构** - 移除冗余嵌套，提升代码可读性 (2025-11-01 重构)
 - 🏷️ **直观的尺寸命名** - 使用 1x1、2x2 等直观命名，替代语义化命名 (2025-11-01 重构)
 - 🎯 **MetroTypography 设计令牌** - 响应式字号系统，自动适配不同密度屏幕 (2025-01-05 重构)
+- 🔍 **容器级全局缩放系统** - 类似前端 zoom，所有元素等比缩放，零代码侵入 (2025-01-05 新增)
 
 ### 🔄 重构历史
 
@@ -32,6 +33,16 @@ Deskmate 是一个基于 Kotlin + Jetpack Compose 的现代化 Android 桌面小
 - ✅ 更新 variant ID 命名：`simple` → `1x1`，`standard` → `2x2` 等
 - ✅ 更新所有配置文件（clock_showcase.json, perfect_layout.json, dashboard_layout.json）
 - ✅ 更新 200+ 个 package 声明和 import 语句
+
+**2025-01-05 容器级全局缩放系统**
+- ✅ 创建 `MetroScaleSystem.kt` 全局缩放系统（类似前端 zoom）
+- ✅ 修改 `TileGridContainer` 添加容器级 graphicsLayer 缩放
+- ✅ 实现基准屏幕系统（BASE_CELL_SIZE = 264dp）
+- ✅ 自动计算缩放系数：scaleRatio = 当前尺寸 / 基准尺寸
+- ✅ 所有元素（字体、图标、间距、圆角）自动等比缩放
+- ✅ 零代码侵入，无需修改任何瓷砖组件（50+ 文件）
+- ✅ 创建 `ScaleTestScreen` 测试页面，支持动态调整缩放比例
+- ✅ 完美解决不同屏幕尺寸下的视觉一致性问题
 
 **2025-01-05 字号系统重构**
 - ✅ 创建 `MetroTypography.kt` 设计令牌系统
@@ -247,14 +258,17 @@ app/src/main/java/top/yaotutu/deskmate/
 │   │   ├── DashboardScreen.kt       # 主页面（配置驱动）
 │   │   ├── InteractionDemoScreen.kt # 交互演示页面
 │   │   ├── AnimationDemoScreen.kt   # 动画演示页面
-│   │   └── PresetsDemoScreen.kt     # 预设演示页面
+│   │   ├── PresetsDemoScreen.kt     # 预设演示页面
+│   │   └── ScaleTestScreen.kt       # 缩放测试页面 ⭐ 新增
 │   ├── theme/                       # Material3 主题配置
 │   │   ├── Color.kt                 # 基础颜色定义
 │   │   ├── MetroColors.kt           # Metro 配色方案（高饱和度）
 │   │   ├── Type.kt                  # 字体配置（Thin/Light）
 │   │   ├── Theme.kt                 # Material3 主题
 │   │   ├── MetroTheme.kt            # Metro 主题系统
-│   │   └── MetroEasing.kt           # Metro 缓动函数
+│   │   ├── MetroEasing.kt           # Metro 缓动函数
+│   │   ├── MetroTypography.kt       # 响应式字号系统
+│   │   └── MetroScaleSystem.kt      # 容器级全局缩放系统 ⭐ 新增
 │   └── viewmodel/                   # ViewModel 层
 │       └── DashboardViewModel.kt    # UI 状态管理
 └── MainActivity.kt                   # 应用入口

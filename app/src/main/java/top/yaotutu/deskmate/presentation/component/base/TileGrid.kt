@@ -1,21 +1,28 @@
 package top.yaotutu.deskmate.presentation.component.base
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import top.yaotutu.deskmate.presentation.theme.MetroScaleSystem
+import top.yaotutu.deskmate.presentation.theme.ProvideScaleRatio
 
 /**
  * 动态自适应网格系统 - 基于屏幕尺寸的瓷砖布局
  *
- * 核心理念：
- * - min(宽度, 高度) ÷ 4 = 基础格子尺寸（正方形）
- * - 横屏时 min(宽, 高) 就是高度
- * - 根据屏幕宽度动态计算列数（2-8列）
- * - 动态间距填满整个宽度，无黑边
+ * 核心理念（2025-01-06 重构）：
+ * - 平板：min(宽度, 高度) ÷ 8 = 基础格子尺寸（8行固定）
+ * - 手机：min(宽度, 高度) ÷ 4 = 基础格子尺寸（4行固定）
+ * - 列数 = floor(宽度 / 基础格子尺寸)（动态计算）
+ * - 间距固定 8dp（渲染时应用，计算时不预留）
  * - 确保旋转后瓷砖尺寸保持一致
  *
  * @author Deskmate Team
@@ -23,15 +30,10 @@ import androidx.compose.ui.unit.dp
  */
 object TileGrid {
     /**
-     * 列数限制
+     * 固定行数（2025-01-06 重构）
      */
-    const val MIN_COLUMNS = 2  // 最少2列
-    const val MAX_COLUMNS = 8  // 最多8列
-
-    /**
-     * 基准：横屏高度的 1/4
-     */
-    const val BASE_GRID_ROWS = 4
+    const val TABLET_GRID_ROWS = 8  // 平板固定 8 行
+    const val PHONE_GRID_ROWS = 4   // 手机固定 4 行
 
     /**
      * 固定间距（符合 Metro / Material Design 最佳实践）
@@ -42,56 +44,51 @@ object TileGrid {
     /**
      * 计算基础格子尺寸（正方形）
      *
-     * 基于可用尺寸除以配置的行数，预留固定间距空间
+     * **2025-01-06 重构**：
+     * - 基于设备类型确定固定行数（平板8行，手机4行）
+     * - 直接除法，不预留间距（间距在渲染时应用）
+     *
+     * 公式：baseCellSize = min(宽度, 高度) / rows
+     *
      * 注：传入的 screenWidth/Height 应该是 BoxWithConstraints 的 maxWidth/maxHeight，
      * 已经减去了外层容器的 padding
      *
-     * 公式：baseCellSize = (可用高度 - 间距总和) / rows
-     * 其中：间距总和 = FIXED_GAP × (rows - 1)
-     *
-     * 最佳实践：固定间距（8dp），动态瓷砖尺寸
-     *
      * @param screenWidth 可用宽度（BoxWithConstraints.maxWidth）
      * @param screenHeight 可用高度（BoxWithConstraints.maxHeight）
-     * @param gridRows 网格行数（从配置文件读取），默认为 4
+     * @param isTablet 是否为平板设备
      * @return 基础格子边长
      * @throws IllegalArgumentException 如果参数不合法
      */
     fun calculateBaseCellSize(
         screenWidth: Dp,
         screenHeight: Dp,
-        gridRows: Int = BASE_GRID_ROWS
+        isTablet: Boolean
     ): Dp {
         require(screenWidth > 0.dp && screenHeight > 0.dp) {
             "screenWidth 和 screenHeight 必须大于 0，当前值: width=$screenWidth, height=$screenHeight"
-        }
-        require(gridRows > 0) {
-            "gridRows 必须大于 0，当前值: $gridRows"
         }
 
         // 基准尺寸 = min(可用宽度, 可用高度)
         val baseScreenSize = minOf(screenWidth.value, screenHeight.value)
 
-        // 预留固定间距空间（rows - 1 个间距，每个 8dp）
-        val totalGapSpace = FIXED_GAP * (gridRows - 1)
+        // 根据设备类型确定固定行数
+        val gridRows = if (isTablet) TABLET_GRID_ROWS else PHONE_GRID_ROWS
 
-        // 实际可用于格子的空间
-        val availableForCells = baseScreenSize - totalGapSpace
-
-        return (availableForCells / gridRows).dp
+        // 直接除法，不预留间距
+        return (baseScreenSize / gridRows).dp
     }
 
     /**
-     * 计算实际列数（2-8 列）
+     * 计算实际列数
      *
-     * 根据屏幕宽度和基础格子尺寸计算理论列数，
-     * 然后应用最小最大限制
+     * **2025-01-06 重构**：
+     * - 直接除法计算列数，移除范围限制
      *
-     * 公式：(宽度 + FIXED_GAP) / (格子尺寸 + FIXED_GAP)
+     * 公式：columns = floor(宽度 / 基础格子尺寸)
      *
      * @param screenWidth 屏幕宽度
      * @param baseCellSize 基础格子尺寸
-     * @return 实际列数（2-8）
+     * @return 实际列数
      * @throws IllegalArgumentException 如果任何参数 <= 0
      */
     fun calculateColumns(
@@ -105,13 +102,8 @@ object TileGrid {
             "baseCellSize 必须大于 0，当前值: $baseCellSize"
         }
 
-        // 计算理论列数（使用固定间距 8dp）
-        // 公式：(宽度 + 间距) / (格子尺寸 + 间距)
-        val theoreticalColumns = ((screenWidth.value + FIXED_GAP) /
-                (baseCellSize.value + FIXED_GAP)).toInt()
-
-        // 应用限制：2-8 列
-        return theoreticalColumns.coerceIn(MIN_COLUMNS, MAX_COLUMNS)
+        // 直接除法计算列数
+        return (screenWidth.value / baseCellSize.value).toInt()
     }
 
     /**
@@ -164,41 +156,94 @@ object TileGrid {
 }
 
 /**
- * 网格容器 - 自动计算并提供网格参数
+ * 网格容器 - 自动计算并提供网格参数，支持全局缩放
  *
  * 检测屏幕尺寸，计算基础格子尺寸、列数和固定间距，
- * 并通过回调传递给子组件
+ * 并通过回调传递给子组件。
+ *
+ * **2025-01-06 重构**：
+ * - 基于设备类型确定固定行数（平板8行，手机4行）
+ * - baseCellSize = min(width, height) / rows（不预留间距）
+ * - columns = floor(width / baseCellSize)
+ * - 支持容器级全局缩放（类似前端 zoom）
  *
  * 注：使用 BoxWithConstraints 获取可用尺寸，已经减去了外层容器的 padding
  *
- * 最佳实践：固定间距（8dp）+ 动态瓷砖尺寸
+ * 最佳实践：固定间距（8dp）+ 动态瓷砖尺寸 + 容器级缩放
  *
  * @param modifier 修饰符
- * @param gridRows 网格行数（从配置文件读取），默认为 4
- * @param content 接收网格参数的内容 lambda
+ * @param isTablet 是否为平板设备
+ * @param enableScale 是否启用容器级缩放，默认为 true
+ * @param content 接收网格参数的内容 lambda (baseCellSize, fixedGap, columns, gridRows)
  */
 @Composable
 fun TileGridContainer(
     modifier: Modifier = Modifier,
-    gridRows: Int = TileGrid.BASE_GRID_ROWS,
-    content: @Composable (baseCellSize: Dp, fixedGap: Dp, columns: Int, screenHeight: Dp) -> Unit
+    isTablet: Boolean,
+    enableScale: Boolean = true,
+    content: @Composable (baseCellSize: Dp, fixedGap: Dp, columns: Int, gridRows: Int) -> Unit
 ) {
     BoxWithConstraints(modifier = modifier) {
         // 获取可用尺寸（BoxWithConstraints 自动减去了父容器的 padding）
         val screenWidth = maxWidth
         val screenHeight = maxHeight
 
-        // 步骤1: 计算基础格子尺寸（预留固定间距 8dp）
-        val baseCellSize = TileGrid.calculateBaseCellSize(screenWidth, screenHeight, gridRows)
+        // 步骤1: 计算当前屏幕的 baseCellSize（不预留间距）
+        val currentBaseCellSize = TileGrid.calculateBaseCellSize(screenWidth, screenHeight, isTablet)
 
-        // 步骤2: 计算实际列数（基于固定间距 8dp）
-        val columns = TileGrid.calculateColumns(screenWidth, baseCellSize)
+        // 步骤2: 获取固定行数
+        val gridRows = if (isTablet) TileGrid.TABLET_GRID_ROWS else TileGrid.PHONE_GRID_ROWS
 
-        // 步骤3: 使用固定间距（8dp）
-        val fixedGap = TileGrid.getFixedGap()
+        // 步骤3-7: 根据是否启用缩放，选择不同的布局策略
+        if (enableScale) {
+            // ===== 缩放模式：使用基准尺寸 + 容器级缩放 =====
+            val scaleRatio = MetroScaleSystem.calculateScaleRatio(currentBaseCellSize, isTablet)
+            val baseBaseCellSize = Dp(MetroScaleSystem.getBaseCellSize(isTablet))
+            val baseColumns = TileGrid.calculateColumns(screenWidth / scaleRatio, baseBaseCellSize)
+            val fixedGap = TileGrid.getFixedGap()
+            val scaledWidth = MetroScaleSystem.calculateScaledSize(screenWidth, scaleRatio)
+            val scaledHeight = MetroScaleSystem.calculateScaledSize(screenHeight, scaleRatio)
 
-        // 传递参数给子组件
-        content(baseCellSize, fixedGap, columns, screenHeight)
+            android.util.Log.d("TileGridContainer", "=== 网格系统信息 (缩放模式) ===")
+            android.util.Log.d("TileGridContainer", "设备类型: ${if (isTablet) "平板" else "手机"}")
+            android.util.Log.d("TileGridContainer", "屏幕: ${screenWidth} × ${screenHeight}")
+            android.util.Log.d("TileGridContainer", "网格: $gridRows 行 × $baseColumns 列")
+            android.util.Log.d("TileGridContainer", "current baseCellSize: $currentBaseCellSize")
+            android.util.Log.d("TileGridContainer", "base baseCellSize: $baseBaseCellSize")
+            android.util.Log.d("TileGridContainer", "scaleRatio: $scaleRatio")
+
+            ProvideScaleRatio(scaleRatio) {
+                Box(
+                    modifier = Modifier
+                        .size(scaledWidth, scaledHeight)
+                        .graphicsLayer {
+                            this.scaleX = scaleRatio
+                            this.scaleY = scaleRatio
+                            this.transformOrigin = TransformOrigin(0f, 0f)
+                        }
+                ) {
+                    content(baseBaseCellSize, fixedGap, baseColumns, gridRows)
+                }
+            }
+        } else {
+            // ===== 直接模式：使用实际计算的 baseCellSize =====
+            val actualColumns = TileGrid.calculateColumns(screenWidth, currentBaseCellSize)
+            val fixedGap = TileGrid.getFixedGap()
+
+            android.util.Log.d("TileGridContainer", "=== 网格系统信息 (直接模式) ===")
+            android.util.Log.d("TileGridContainer", "设备类型: ${if (isTablet) "平板" else "手机"}")
+            android.util.Log.d("TileGridContainer", "屏幕: ${screenWidth} × ${screenHeight}")
+            android.util.Log.d("TileGridContainer", "网格: $gridRows 行 × $actualColumns 列")
+            android.util.Log.d("TileGridContainer", "baseCellSize: $currentBaseCellSize")
+            android.util.Log.d("TileGridContainer", "fixedGap: $fixedGap")
+
+            // 不应用缩放，直接使用 fillMaxSize
+            ProvideScaleRatio(1f) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    content(currentBaseCellSize, fixedGap, actualColumns, gridRows)
+                }
+            }
+        }
     }
 }
 

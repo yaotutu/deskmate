@@ -7,15 +7,15 @@ import kotlinx.serialization.Serializable
  *
  * @property type 瓷砖类型（"clock", "weather", "calendar", "todo", "news"）
  * @property variant 变体名称（如 "simple", "standard", "detailed"）
- * @property columns 占用的列数（网格单元数）
  * @property rows 占用的行数（网格单元数）
+ * @property columns 占用的列数（网格单元数）
  */
 @Serializable
 data class TileConfig(
     val type: String,
     val variant: String,
-    val columns: Int,
-    val rows: Int
+    val rows: Int,
+    val columns: Int
 )
 
 /**
