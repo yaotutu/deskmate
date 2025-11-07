@@ -1,31 +1,27 @@
 {
-  "comment": "手机布局 - 4行网格（2025-01-06 重构）",
+  "comment": "手机布局 - 4行×10列（支持横向滚动，2025-01-07 更新）",
   "areas": [
-    "C C W W",
-    "C C W W",
-    "A A T T",
-    "A A T T"
+    "C C W W A B P P Q R",
+    "C C W W D E P P S T",
+    "F F G G H H U U V V",
+    "F F G G H H U U V V"
   ],
   "tiles": {
-    "C": {
-      "type": "clock",
-      "variant": "2x2",
-      "comment": "时钟 - 2×2 标准版"
-    },
-    "W": {
-      "type": "weather",
-      "variant": "2x2",
-      "comment": "天气 - 2×2 标准版"
-    },
-    "A": {
-      "type": "calendar",
-      "variant": "2x2",
-      "comment": "日历 - 2×2 标准版"
-    },
-    "T": {
-      "type": "todo",
-      "variant": "2x2",
-      "comment": "待办 - 2×2 标准版"
-    }
+    "C": {"type": "clock", "variant": "2x2"},
+    "W": {"type": "weather", "variant": "2x2"},
+    "A": {"type": "calendar", "variant": "1x1"},
+    "B": {"type": "todo", "variant": "1x1"},
+    "D": {"type": "news", "variant": "1x1"},
+    "E": {"type": "weather", "variant": "1x1"},
+    "F": {"type": "calendar", "variant": "2x2"},
+    "G": {"type": "todo", "variant": "2x2"},
+    "H": {"type": "news", "variant": "2x2"},
+    "P": {"type": "todo", "variant": "2x2"},
+    "Q": {"type": "clock", "variant": "1x1"},
+    "R": {"type": "news", "variant": "1x1"},
+    "S": {"type": "weather", "variant": "1x1"},
+    "T": {"type": "calendar", "variant": "1x1"},
+    "U": {"type": "clock", "variant": "2x2"},
+    "V": {"type": "weather", "variant": "2x2"}
   }
 }

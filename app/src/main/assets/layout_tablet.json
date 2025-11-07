@@ -1,40 +1,61 @@
 {
-  "comment": "平板布局 - 8行网格（2025-01-06 重构）",
+  "comment": "平板布局 - 8行×14列（支持横向滚动，2025-01-07 更新）",
   "areas": [
-    "C C C C W W W W",
-    "C C C C W W W W",
-    "C C C C W W W W",
-    "C C C C W W W W",
-    "A A A A N N T T",
-    "A A A A N N T T",
-    "A A A A N N T T",
-    "A A A A N N T T"
+    "C C W W A B P P Q Q R S a b",
+    "C C W W D E P P Q Q T U c d",
+    "F F G G H H V V X X Y Y e e",
+    "F F G G H H V V X X Y Y e e",
+    "I I I I J J Z Z Z Z 1 2 f f",
+    "I I I I J J Z Z Z Z 3 4 f f",
+    "K K K K L M 5 5 6 6 7 8 g h",
+    "K K K K N O 5 5 6 6 9 0 i j"
   ],
   "tiles": {
-    "C": {
-      "type": "clock",
-      "variant": "4x4",
-      "comment": "时钟 - 4×4 大型版"
-    },
-    "W": {
-      "type": "weather",
-      "variant": "4x4",
-      "comment": "天气 - 4×4 大型版"
-    },
-    "A": {
-      "type": "calendar",
-      "variant": "4x4",
-      "comment": "日历 - 4×4 大型版"
-    },
-    "N": {
-      "type": "news",
-      "variant": "2x4",
-      "comment": "新闻 - 2×4 高版（2列×4行）"
-    },
-    "T": {
-      "type": "todo",
-      "variant": "2x4",
-      "comment": "待办 - 2×4 高版（2列×4行）"
-    }
+    "C": {"type": "clock", "variant": "2x2"},
+    "W": {"type": "weather", "variant": "2x2"},
+    "A": {"type": "calendar", "variant": "1x1"},
+    "B": {"type": "todo", "variant": "1x1"},
+    "D": {"type": "news", "variant": "1x1"},
+    "E": {"type": "weather", "variant": "1x1"},
+    "F": {"type": "calendar", "variant": "2x2"},
+    "G": {"type": "todo", "variant": "2x2"},
+    "H": {"type": "news", "variant": "2x2"},
+    "I": {"type": "news", "variant": "4x2"},
+    "J": {"type": "clock", "variant": "2x2"},
+    "K": {"type": "weather", "variant": "4x2"},
+    "L": {"type": "clock", "variant": "1x1"},
+    "M": {"type": "calendar", "variant": "1x1"},
+    "N": {"type": "todo", "variant": "1x1"},
+    "O": {"type": "news", "variant": "1x1"},
+    "P": {"type": "clock", "variant": "2x2"},
+    "Q": {"type": "calendar", "variant": "2x2"},
+    "R": {"type": "todo", "variant": "1x1"},
+    "S": {"type": "news", "variant": "1x1"},
+    "T": {"type": "weather", "variant": "1x1"},
+    "U": {"type": "clock", "variant": "1x1"},
+    "V": {"type": "weather", "variant": "2x2"},
+    "X": {"type": "todo", "variant": "2x2"},
+    "Y": {"type": "news", "variant": "2x2"},
+    "Z": {"type": "calendar", "variant": "4x2"},
+    "1": {"type": "clock", "variant": "1x1"},
+    "2": {"type": "todo", "variant": "1x1"},
+    "3": {"type": "news", "variant": "1x1"},
+    "4": {"type": "weather", "variant": "1x1"},
+    "5": {"type": "todo", "variant": "2x2"},
+    "6": {"type": "clock", "variant": "2x2"},
+    "7": {"type": "calendar", "variant": "1x1"},
+    "8": {"type": "news", "variant": "1x1"},
+    "9": {"type": "weather", "variant": "1x1"},
+    "0": {"type": "todo", "variant": "1x1"},
+    "a": {"type": "weather", "variant": "1x1"},
+    "b": {"type": "clock", "variant": "1x1"},
+    "c": {"type": "news", "variant": "1x1"},
+    "d": {"type": "calendar", "variant": "1x1"},
+    "e": {"type": "todo", "variant": "2x2"},
+    "f": {"type": "weather", "variant": "2x2"},
+    "g": {"type": "clock", "variant": "1x1"},
+    "h": {"type": "news", "variant": "1x1"},
+    "i": {"type": "calendar", "variant": "1x1"},
+    "j": {"type": "todo", "variant": "1x1"}
   }
 }

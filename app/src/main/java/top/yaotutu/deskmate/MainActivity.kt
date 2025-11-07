@@ -35,9 +35,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DeskmateTheme {
-                // 导航到展示页（原主页：Screen.Dashboard.route）
+                // 主页：DashboardScreen（自动加载设备配置）
                 val navController = rememberNavController()
-                NavGraph(navController = navController, startDestination = Screen.Showcase.route)
+                NavGraph(navController = navController, startDestination = Screen.Dashboard.route)
             }
         }
     }
