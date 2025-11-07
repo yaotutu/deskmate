@@ -16,6 +16,8 @@ import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.component.common.MetroBadge
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
+import top.yaotutu.deskmate.presentation.theme.MetroSpacing
+import top.yaotutu.deskmate.presentation.theme.MetroPadding
 
 /**
  * 邮件瓷砖 (可变尺寸，默认 2×2) - 使用 BaseTile 架构
@@ -53,7 +55,7 @@ fun MailTile(
             // 主内容
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(MetroSpacing.large())
             ) {
                 Icon(
                     imageVector = Icons.Default.Email,
@@ -84,7 +86,7 @@ fun MailTile(
                     count = unreadCount,
                     modifier = Modifier
                         .align(Alignment.TopEnd)
-                        .padding(4.dp)
+                        .padding(MetroPadding.small())
                 )
             }
         }

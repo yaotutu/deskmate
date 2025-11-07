@@ -16,6 +16,8 @@ import top.yaotutu.deskmate.presentation.component.base.AnimationType
 import top.yaotutu.deskmate.presentation.component.base.CounterContent
 import top.yaotutu.deskmate.presentation.component.base.FlipContent
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
+import top.yaotutu.deskmate.presentation.theme.MetroSpacing
+import top.yaotutu.deskmate.presentation.theme.MetroPadding
 
 /**
  * 2×2 标准方形瓷砖预设
@@ -73,7 +75,7 @@ object MediumTilePresets {
                         color = color,
                         lineHeight = titleSize
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(MetroSpacing.large()))
                     Text(
                         text = subtitle,
                         fontSize = subtitleSize,
@@ -96,7 +98,7 @@ object MediumTilePresets {
                         color = color,
                         lineHeight = titleSize
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(MetroSpacing.large()))
                     Text(
                         text = backSubtitle,
                         fontSize = subtitleSize,
@@ -129,7 +131,7 @@ object MediumTilePresets {
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.medium(), Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -174,7 +176,7 @@ object MediumTilePresets {
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.large(), Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -253,12 +255,12 @@ object MediumTilePresets {
                             fontSize = unitSize,
                             fontWeight = FontWeight.Thin,
                             color = color,
-                            modifier = Modifier.padding(bottom = 8.dp)
+                            modifier = Modifier.padding(bottom = MetroSpacing.large())
                         )
                     }
                 }
                 if (label.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(MetroSpacing.large()))
                     Text(
                         text = label,
                         fontSize = labelSize,
@@ -288,8 +290,8 @@ object MediumTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically)
+                .padding(MetroPadding.medium()),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.medium(), Alignment.CenterVertically)
         ) {
             items.take(2).forEach { item ->
                 Text(
@@ -322,7 +324,7 @@ object MediumTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(12.dp),
+                .padding(MetroPadding.small()),
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
             icons.chunked(2).take(2).forEach { row ->
@@ -364,8 +366,8 @@ object MediumTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .padding(MetroPadding.medium()),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.medium())
         ) {
             Text(
                 text = header,
@@ -410,7 +412,7 @@ object MediumTilePresets {
                 fontSize = textSize,
                 fontWeight = FontWeight.Light,
                 color = color,
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(MetroPadding.medium()),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
@@ -455,7 +457,7 @@ object MediumTilePresets {
                         color = color,
                         lineHeight = numberSize
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(MetroSpacing.small()))
                     Text(
                         text = label,
                         fontSize = labelSize,
@@ -478,7 +480,7 @@ object MediumTilePresets {
                         color = color,
                         lineHeight = numberSize
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(MetroSpacing.small()))
                     Text(
                         text = backLabel,
                         fontSize = labelSize,

@@ -19,6 +19,7 @@ import top.yaotutu.deskmate.presentation.component.base.FlipContent
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
+import top.yaotutu.deskmate.presentation.theme.MetroPadding
 
 /**
  * 翻转天气瓷砖 (2×2) - 西安专属
@@ -70,7 +71,7 @@ private fun WeatherFrontContent(weatherData: WeatherData) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(MetroPadding.medium()),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -110,7 +111,7 @@ private fun WeatherBackContent(weatherData: WeatherData) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(MetroPadding.medium()),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

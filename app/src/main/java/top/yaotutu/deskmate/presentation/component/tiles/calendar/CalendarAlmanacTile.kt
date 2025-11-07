@@ -14,6 +14,8 @@ import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.component.base.FlipContent
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
+import top.yaotutu.deskmate.presentation.theme.MetroSpacing
+import top.yaotutu.deskmate.presentation.theme.MetroPadding
 
 /**
  * 2×2 黄历瓷砖 - 紧凑的传统黄历显示
@@ -66,14 +68,14 @@ fun CalendarAlmanacTile(
                         color = Color.White,
                         lineHeight = MetroTypography.displayHuge()
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(MetroSpacing.small()))
                     Text(
                         text = monthName,
                         fontSize = MetroTypography.bodyLarge(),
                         fontWeight = FontWeight.Light,
                         color = Color.White.copy(alpha = 0.9f)
                     )
-                    Spacer(modifier = Modifier.height(2.dp))
+                    Spacer(modifier = Modifier.height(MetroSpacing.tiny()))
                     Text(
                         text = lunarInfo,
                         fontSize = MetroTypography.bodyMedium(),
@@ -87,7 +89,7 @@ fun CalendarAlmanacTile(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(12.dp),
+                        .padding(MetroPadding.small()),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.Start
                 ) {
@@ -98,14 +100,14 @@ fun CalendarAlmanacTile(
                         color = Color.White,
                         lineHeight = MetroTypography.bodyMedium()
                     )
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(MetroSpacing.medium()))
                     Text(
                         text = constellation,
                         fontSize = MetroTypography.bodySmall(),
                         fontWeight = FontWeight.Light,
                         color = Color.White.copy(alpha = 0.9f)
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(MetroSpacing.large()))
                     Text(
                         text = luck,
                         fontSize = MetroTypography.labelSmall(),

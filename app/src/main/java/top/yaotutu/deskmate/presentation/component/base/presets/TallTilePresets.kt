@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.SlideContent
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
+import top.yaotutu.deskmate.presentation.theme.MetroSpacing
+import top.yaotutu.deskmate.presentation.theme.MetroPadding
 
 /**
  * 4×2 高矩形瓷砖预设（4行×2列）
@@ -53,8 +55,8 @@ object TallTilePresets {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically)
+                            .padding(MetroPadding.medium()),
+                        verticalArrangement = Arrangement.spacedBy(MetroSpacing.medium(), Alignment.CenterVertically)
                     ) {
                         items.take(5).forEach { item ->
                             Text(
@@ -92,11 +94,11 @@ object TallTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
+                .padding(MetroPadding.medium()),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.extraLarge(), Alignment.CenterVertically)
         ) {
             items.take(4).forEach { (time, event) ->
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(MetroSpacing.small())) {
                     Text(
                         text = time,
                         fontSize = timeSize,
@@ -134,17 +136,17 @@ object TallTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically)
+                .padding(MetroPadding.medium()),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.extraLarge(), Alignment.CenterVertically)
         ) {
             steps.take(4).forEachIndexed { index, (step, completed) ->
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(MetroSpacing.medium()),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = if (completed) "✓" else "${index + 1}",
-                        fontSize = 20.sp,
+                        fontSize = MetroTypography.bodyLarge(),
                         fontWeight = FontWeight.Light,
                         color = if (completed) color else color.copy(alpha = 0.6f)
                     )
@@ -187,8 +189,8 @@ object TallTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
+                .padding(MetroPadding.medium()),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.medium(), Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -205,7 +207,7 @@ object TallTilePresets {
                 overflow = TextOverflow.Ellipsis
             )
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(MetroSpacing.large()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 details.take(3).forEach { detail ->
@@ -242,11 +244,11 @@ object TallTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
+                .padding(MetroPadding.medium()),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.extraLarge(), Alignment.CenterVertically)
         ) {
             messages.take(3).forEach { (sender, message) ->
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(MetroSpacing.small())) {
                     Text(
                         text = sender,
                         fontSize = senderSize,
@@ -288,8 +290,8 @@ object TallTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically)
+                .padding(MetroPadding.medium()),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.medium(), Alignment.CenterVertically)
         ) {
             forecasts.take(4).forEach { (date, icon, temp) ->
                 Row(

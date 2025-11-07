@@ -10,9 +10,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.BaseTile
+import top.yaotutu.deskmate.presentation.component.base.LocalTileBaseUnit
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
+import top.yaotutu.deskmate.presentation.theme.MetroSpacing
+import top.yaotutu.deskmate.presentation.theme.MetroPadding
 
 /**
  * 4×4 黄历瓷砖 - 完整的中国传统黄历显示
@@ -57,8 +60,8 @@ fun Calendar4x4Tile(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(MetroPadding.medium()),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.large())
         ) {
             // 标题：公历日期
             Text(
@@ -87,7 +90,7 @@ fun Calendar4x4Tile(
             InfoRow(label = "星座", value = constellation)
 
             // 宜忌（更紧凑的布局）
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(MetroSpacing.small()))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -98,7 +101,7 @@ fun Calendar4x4Tile(
                     fontSize = MetroTypography.labelSmall(),
                     fontWeight = FontWeight.Light,
                     color = Color.White.copy(alpha = 0.7f),
-                    modifier = Modifier.width(32.dp)
+                    modifier = Modifier.width(LocalTileBaseUnit.current * 0.12f)  // 标签宽度 (约12%)
                 )
                 Text(
                     text = dayLucky,
@@ -119,7 +122,7 @@ fun Calendar4x4Tile(
                     fontSize = MetroTypography.labelSmall(),
                     fontWeight = FontWeight.Light,
                     color = Color.White.copy(alpha = 0.7f),
-                    modifier = Modifier.width(32.dp)
+                    modifier = Modifier.width(LocalTileBaseUnit.current * 0.12f)  // 标签宽度 (约12%)
                 )
                 Text(
                     text = dayAvoid,
@@ -153,7 +156,7 @@ private fun InfoRow(
             fontSize = MetroTypography.labelSmall(),
             fontWeight = FontWeight.Light,
             color = Color.White.copy(alpha = 0.7f),
-            modifier = Modifier.width(48.dp)
+            modifier = Modifier.width(LocalTileBaseUnit.current * 0.18f)  // 标签宽度 (约18%)
         )
         Text(
             text = value,

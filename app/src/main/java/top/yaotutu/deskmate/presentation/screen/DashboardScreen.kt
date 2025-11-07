@@ -83,8 +83,7 @@ fun DashboardScreen(
 
                 TileGridContainer(
                     modifier = Modifier.fillMaxSize(),
-                    isTablet = isTablet,  // ✅ 传递设备类型
-                    enableScale = false   // ❌ 禁用容器级缩放，使用实际 baseCellSize
+                    isTablet = isTablet  // ✅ 传递设备类型
                 ) { baseCellSize, fixedGap, columns, gridRows ->
                     ProvideTileGrid(
                         baseCellSize = baseCellSize,

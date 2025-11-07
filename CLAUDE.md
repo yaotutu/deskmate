@@ -22,6 +22,7 @@ Deskmate 是一个基于 Kotlin + Jetpack Compose 的现代化 Android 桌面小
 - 🏷️ **直观的尺寸命名** - 使用 1x1、2x2 等直观命名，替代语义化命名 (2025-11-01 重构)
 - 🎯 **MetroTypography 设计令牌** - 响应式字号系统，自动适配不同密度屏幕 (2025-01-05 重构)
 - 🔍 **容器级全局缩放系统** - 类似前端 zoom，所有元素等比缩放，零代码侵入 (2025-01-05 新增)
+- 📐 **响应式内容适配系统** - 基于 baseCellSize 的固定比例缩放，所有间距/内边距/图标自适应 (2025-11-07 新增)
 
 ### 🔄 重构历史
 
@@ -43,6 +44,18 @@ Deskmate 是一个基于 Kotlin + Jetpack Compose 的现代化 Android 桌面小
 - ✅ 零代码侵入，无需修改任何瓷砖组件（50+ 文件）
 - ✅ 创建 `ScaleTestScreen` 测试页面，支持动态调整缩放比例
 - ✅ 完美解决不同屏幕尺寸下的视觉一致性问题
+
+**2025-11-07 响应式内容适配系统** ⭐ 最新
+- ✅ 创建 `LocalTileBaseUnit` (基于 baseCellSize)，作为所有内容的度量基准
+- ✅ 创建 `MetroSpacing.kt` 响应式间距系统（5个级别：tiny, small, medium, large, extraLarge）
+- ✅ 创建 `MetroPadding.kt` 响应式内边距系统（4个级别 + auto 自动计算）
+- ✅ 创建 `MetroIconSize.kt` 响应式图标尺寸系统（4个级别）
+- ✅ 重构 6 个预设文件（38种预设），替换 65 个硬编码间距/内边距值
+- ✅ 重构 7 个硬编码瓷砖文件，替换 22 个硬编码值
+- ✅ 修复 TileRegistryInit.kt 中 1×2 瓷砖的 supportedSizes 定义错误
+- ✅ 创建 ResponsiveTestScreen 测试页面，验证所有预设的响应式效果
+- ✅ **核心理念**：使用 1×1 瓷砖尺寸作为基础单位，所有内容按固定比例缩放
+- ✅ **效果**：不同屏幕尺寸下，瓷砖内容保持相同的视觉比例和密度
 
 **2025-01-05 字号系统重构**
 - ✅ 创建 `MetroTypography.kt` 设计令牌系统
@@ -259,7 +272,8 @@ app/src/main/java/top/yaotutu/deskmate/
 │   │   ├── InteractionDemoScreen.kt # 交互演示页面
 │   │   ├── AnimationDemoScreen.kt   # 动画演示页面
 │   │   ├── PresetsDemoScreen.kt     # 预设演示页面
-│   │   └── ScaleTestScreen.kt       # 缩放测试页面 ⭐ 新增
+│   │   ├── ScaleTestScreen.kt       # 缩放测试页面
+│   │   └── ResponsiveTestScreen.kt  # 响应式系统测试页面 ⭐ 新增
 │   ├── theme/                       # Material3 主题配置
 │   │   ├── Color.kt                 # 基础颜色定义
 │   │   ├── MetroColors.kt           # Metro 配色方案（高饱和度）
@@ -268,7 +282,10 @@ app/src/main/java/top/yaotutu/deskmate/
 │   │   ├── MetroTheme.kt            # Metro 主题系统
 │   │   ├── MetroEasing.kt           # Metro 缓动函数
 │   │   ├── MetroTypography.kt       # 响应式字号系统
-│   │   └── MetroScaleSystem.kt      # 容器级全局缩放系统 ⭐ 新增
+│   │   ├── MetroSpacing.kt          # 响应式间距系统 ⭐ 新增
+│   │   ├── MetroPadding.kt          # 响应式内边距系统 ⭐ 新增
+│   │   ├── MetroIconSize.kt         # 响应式图标尺寸系统 ⭐ 新增
+│   │   └── MetroScaleSystem.kt      # 容器级全局缩放系统
 │   └── viewmodel/                   # ViewModel 层
 │       └── DashboardViewModel.kt    # UI 状态管理
 └── MainActivity.kt                   # 应用入口
@@ -792,6 +809,62 @@ class App : Application() {
 - ❌ 不要重复编写已有的布局代码（检查预设系统是否有对应模板）
 - ❌ 不要使用语义化 variant ID（如 "simple"），使用尺寸格式（如 "1x1"）
 - ❌ 不要创建不必要的中间层目录（如 ui/）
+
+**响应式系统使用原则** ⭐ 重要
+- ✅ **使用 MetroSpacing** - 所有 `Spacer` 和 `Arrangement.spacedBy` 必须使用 MetroSpacing
+- ✅ **使用 MetroPadding** - 所有 `.padding()` 必须使用 MetroPadding（优先使用 `auto()`）
+- ✅ **使用 MetroIconSize** - 所有图标尺寸必须使用 MetroIconSize
+- ✅ **使用 MetroTypography** - 所有字号必须使用 MetroTypography（已强制要求）
+- ✅ **使用 LocalTileBaseUnit** - 自定义宽度/高度使用 `LocalTileBaseUnit.current * ratio`
+- ✅ **固定比例原则** - 所有间距/内边距/图标尺寸使用固定比例（不随瓷砖尺寸变化）
+
+**禁止硬编码**
+- ❌ 禁止使用 `8.dp`、`16.dp` 等硬编码间距
+- ❌ 禁止使用 `12.dp`、`16.dp` 等硬编码内边距
+- ❌ 禁止使用 `24.dp`、`48.dp` 等硬编码图标尺寸
+- ❌ 禁止使用 `14.sp`、`18.sp` 等硬编码字号
+
+```kotlin
+// ✅ 正确：使用响应式系统
+import top.yaotutu.deskmate.presentation.theme.MetroSpacing
+import top.yaotutu.deskmate.presentation.theme.MetroPadding
+import top.yaotutu.deskmate.presentation.theme.MetroIconSize
+import top.yaotutu.deskmate.presentation.component.base.LocalTileBaseUnit
+
+Column(
+    modifier = Modifier
+        .fillMaxSize()
+        .padding(MetroPadding.medium()),  // ✓ 响应式内边距
+    verticalArrangement = Arrangement.spacedBy(MetroSpacing.large())  // ✓ 响应式间距
+) {
+    Icon(
+        modifier = Modifier.size(MetroIconSize.large()),  // ✓ 响应式图标
+        // ...
+    )
+    Text(
+        text = "标题",
+        fontSize = MetroTypography.bodyLarge()  // ✓ 响应式字号
+    )
+    Spacer(modifier = Modifier.height(MetroSpacing.medium()))  // ✓ 响应式间距
+}
+
+// ❌ 错误：硬编码尺寸
+Column(
+    modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp),  // ✗ 硬编码
+    verticalArrangement = Arrangement.spacedBy(8.dp)  // ✗ 硬编码
+) {
+    Icon(
+        modifier = Modifier.size(48.dp),  // ✗ 硬编码
+        // ...
+    )
+    Text(
+        text = "标题",
+        fontSize = 18.sp  // ✗ 硬编码
+    )
+}
+```
 
 ### 2. 状态管理原则
 

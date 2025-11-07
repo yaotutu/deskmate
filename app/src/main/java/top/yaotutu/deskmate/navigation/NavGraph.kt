@@ -6,6 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import top.yaotutu.deskmate.presentation.screen.AnimationDemoScreen
 import top.yaotutu.deskmate.presentation.screen.DashboardScreen
+import top.yaotutu.deskmate.presentation.screen.ResponsiveTestScreen
+import top.yaotutu.deskmate.presentation.screen.ShowcaseScreen
 // import top.yaotutu.deskmate.presentation.screen.BaseTileTestScreen
 // import top.yaotutu.deskmate.presentation.screen.PresetsDemoScreen
 // import top.yaotutu.deskmate.presentation.screen.ScaleTestScreen
@@ -34,6 +36,16 @@ fun NavGraph(
         // 动画演示页面
         composable(Screen.AnimationDemo.route) {
             AnimationDemoScreen()
+        }
+
+        // 响应式系统测试页面
+        composable(Screen.ResponsiveTest.route) {
+            ResponsiveTestScreen()
+        }
+
+        // 桌面展示页面 ⭐ 新增
+        composable(Screen.Showcase.route) {
+            ShowcaseScreen()
         }
 
         // 预设系统演示页面 - 暂时禁用（需要适配新 API）

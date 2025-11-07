@@ -18,6 +18,8 @@ import top.yaotutu.deskmate.presentation.component.base.Tile
 import top.yaotutu.deskmate.presentation.component.base.TileGrid
 import top.yaotutu.deskmate.presentation.theme.MetroColors
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
+import top.yaotutu.deskmate.presentation.theme.MetroSpacing
+import top.yaotutu.deskmate.presentation.theme.MetroPadding
 
 /**
  * 错误类型枚举
@@ -84,7 +86,7 @@ fun ErrorTile(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(12.dp),
+                    .padding(MetroPadding.small()),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -96,7 +98,7 @@ fun ErrorTile(
                     modifier = Modifier.size(32.dp)
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(MetroSpacing.large()))
 
                 // 主要错误信息
                 Text(
@@ -109,7 +111,7 @@ fun ErrorTile(
 
                 // 详细信息
                 if (details.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(MetroSpacing.large()))
 
                     details.forEach { (key, value) ->
                         Row(

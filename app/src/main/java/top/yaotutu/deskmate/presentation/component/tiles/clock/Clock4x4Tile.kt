@@ -14,6 +14,7 @@ import top.yaotutu.deskmate.presentation.component.base.FlipContent
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
+import top.yaotutu.deskmate.presentation.theme.MetroSpacing
 
 /**
  * 时钟瓷砖 4×4 - 大型版
@@ -67,7 +68,7 @@ fun Clock4x4Tile(
                         lineHeight = MetroTypography.displayHuge()
                     )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(MetroSpacing.large()))
 
                     // 星期
                     Text(

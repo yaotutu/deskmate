@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.RotateContent
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
+import top.yaotutu.deskmate.presentation.theme.MetroSpacing
+import top.yaotutu.deskmate.presentation.theme.MetroPadding
 
 /**
  * 4×4 大方形瓷砖预设
@@ -59,8 +61,8 @@ object LargeTilePresets {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(20.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                    .padding(MetroPadding.large()),
+                verticalArrangement = Arrangement.spacedBy(MetroSpacing.extraLarge())
             ) {
                 Text(
                     text = title,
@@ -69,7 +71,7 @@ object LargeTilePresets {
                     color = color
                 )
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    verticalArrangement = Arrangement.spacedBy(MetroSpacing.medium())
                 ) {
                     metrics.take(6).chunked(2).forEach { rowMetrics ->
                         Row(
@@ -143,7 +145,7 @@ object LargeTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp),
+                .padding(MetroPadding.large()),
             verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -154,7 +156,7 @@ object LargeTilePresets {
             )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(MetroSpacing.large())
             ) {
                 Text(
                     text = title,
@@ -170,7 +172,7 @@ object LargeTilePresets {
                 )
             }
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(MetroSpacing.large()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 details.take(5).forEach { detail ->
@@ -211,8 +213,8 @@ object LargeTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .padding(MetroPadding.medium()),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.medium())
         ) {
             Text(
                 text = month,
@@ -222,7 +224,7 @@ object LargeTilePresets {
                 modifier = Modifier.fillMaxWidth()
             )
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(MetroSpacing.large())
             ) {
                 days.chunked(7).take(5).forEach { week ->
                     Row(
@@ -261,7 +263,7 @@ object LargeTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(12.dp),
+                .padding(MetroPadding.small()),
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
             photos.chunked(4).take(4).forEach { row ->
@@ -305,8 +307,8 @@ object LargeTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .padding(MetroPadding.medium()),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.medium())
         ) {
             Text(
                 text = title,
@@ -315,10 +317,10 @@ object LargeTilePresets {
                 color = color
             )
             Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(MetroSpacing.medium())
             ) {
                 items.take(4).forEach { (itemTitle, summary) ->
-                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Column(verticalArrangement = Arrangement.spacedBy(MetroSpacing.small())) {
                         Text(
                             text = itemTitle,
                             fontSize = itemTitleSize,
@@ -365,8 +367,8 @@ object LargeTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(MetroPadding.large()),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.extraLarge())
         ) {
             Text(
                 text = header,
@@ -375,10 +377,10 @@ object LargeTilePresets {
                 color = color
             )
             Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(MetroSpacing.medium())
             ) {
                 infoItems.take(6).forEach { (label, value) ->
-                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Column(verticalArrangement = Arrangement.spacedBy(MetroSpacing.small())) {
                         Text(
                             text = label,
                             fontSize = labelSize,
@@ -425,7 +427,7 @@ object LargeTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp),
+                .padding(MetroPadding.large()),
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -477,7 +479,7 @@ object LargeTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp),
+                .padding(MetroPadding.large()),
             verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -493,7 +495,7 @@ object LargeTilePresets {
                 color = color
             )
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(MetroSpacing.large()),
                 horizontalAlignment = Alignment.Start
             ) {
                 features.take(5).forEach { feature ->

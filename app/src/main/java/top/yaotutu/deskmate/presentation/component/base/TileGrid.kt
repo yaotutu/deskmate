@@ -3,17 +3,12 @@ package top.yaotutu.deskmate.presentation.component.base
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.TransformOrigin
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import top.yaotutu.deskmate.presentation.theme.MetroScaleSystem
-import top.yaotutu.deskmate.presentation.theme.ProvideScaleRatio
 
 /**
  * 动态自适应网格系统 - 基于屏幕尺寸的瓷砖布局
@@ -165,22 +160,19 @@ object TileGrid {
  * - 基于设备类型确定固定行数（平板8行，手机4行）
  * - baseCellSize = min(width, height) / rows（不预留间距）
  * - columns = floor(width / baseCellSize)
- * - 支持容器级全局缩放（类似前端 zoom）
  *
  * 注：使用 BoxWithConstraints 获取可用尺寸，已经减去了外层容器的 padding
  *
- * 最佳实践：固定间距（8dp）+ 动态瓷砖尺寸 + 容器级缩放
+ * 最佳实践：固定间距（8dp）+ 动态瓷砖尺寸
  *
  * @param modifier 修饰符
  * @param isTablet 是否为平板设备
- * @param enableScale 是否启用容器级缩放，默认为 true
  * @param content 接收网格参数的内容 lambda (baseCellSize, fixedGap, columns, gridRows)
  */
 @Composable
 fun TileGridContainer(
     modifier: Modifier = Modifier,
     isTablet: Boolean,
-    enableScale: Boolean = true,
     content: @Composable (baseCellSize: Dp, fixedGap: Dp, columns: Int, gridRows: Int) -> Unit
 ) {
     BoxWithConstraints(modifier = modifier) {
@@ -194,55 +186,21 @@ fun TileGridContainer(
         // 步骤2: 获取固定行数
         val gridRows = if (isTablet) TileGrid.TABLET_GRID_ROWS else TileGrid.PHONE_GRID_ROWS
 
-        // 步骤3-7: 根据是否启用缩放，选择不同的布局策略
-        if (enableScale) {
-            // ===== 缩放模式：使用基准尺寸 + 容器级缩放 =====
-            val scaleRatio = MetroScaleSystem.calculateScaleRatio(currentBaseCellSize, isTablet)
-            val baseBaseCellSize = Dp(MetroScaleSystem.getBaseCellSize(isTablet))
-            val baseColumns = TileGrid.calculateColumns(screenWidth / scaleRatio, baseBaseCellSize)
-            val fixedGap = TileGrid.getFixedGap()
-            val scaledWidth = MetroScaleSystem.calculateScaledSize(screenWidth, scaleRatio)
-            val scaledHeight = MetroScaleSystem.calculateScaledSize(screenHeight, scaleRatio)
+        // 步骤3: 计算实际列数
+        val actualColumns = TileGrid.calculateColumns(screenWidth, currentBaseCellSize)
+        val fixedGap = TileGrid.getFixedGap()
 
-            android.util.Log.d("TileGridContainer", "=== 网格系统信息 (缩放模式) ===")
-            android.util.Log.d("TileGridContainer", "设备类型: ${if (isTablet) "平板" else "手机"}")
-            android.util.Log.d("TileGridContainer", "屏幕: ${screenWidth} × ${screenHeight}")
-            android.util.Log.d("TileGridContainer", "网格: $gridRows 行 × $baseColumns 列")
-            android.util.Log.d("TileGridContainer", "current baseCellSize: $currentBaseCellSize")
-            android.util.Log.d("TileGridContainer", "base baseCellSize: $baseBaseCellSize")
-            android.util.Log.d("TileGridContainer", "scaleRatio: $scaleRatio")
+        // 调试日志
+        android.util.Log.d("TileGridContainer", "=== 网格系统信息 ===")
+        android.util.Log.d("TileGridContainer", "设备类型: ${if (isTablet) "平板" else "手机"}")
+        android.util.Log.d("TileGridContainer", "屏幕: ${screenWidth} × ${screenHeight}")
+        android.util.Log.d("TileGridContainer", "网格: $gridRows 行 × $actualColumns 列")
+        android.util.Log.d("TileGridContainer", "baseCellSize: $currentBaseCellSize")
+        android.util.Log.d("TileGridContainer", "fixedGap: $fixedGap")
 
-            ProvideScaleRatio(scaleRatio) {
-                Box(
-                    modifier = Modifier
-                        .size(scaledWidth, scaledHeight)
-                        .graphicsLayer {
-                            this.scaleX = scaleRatio
-                            this.scaleY = scaleRatio
-                            this.transformOrigin = TransformOrigin(0f, 0f)
-                        }
-                ) {
-                    content(baseBaseCellSize, fixedGap, baseColumns, gridRows)
-                }
-            }
-        } else {
-            // ===== 直接模式：使用实际计算的 baseCellSize =====
-            val actualColumns = TileGrid.calculateColumns(screenWidth, currentBaseCellSize)
-            val fixedGap = TileGrid.getFixedGap()
-
-            android.util.Log.d("TileGridContainer", "=== 网格系统信息 (直接模式) ===")
-            android.util.Log.d("TileGridContainer", "设备类型: ${if (isTablet) "平板" else "手机"}")
-            android.util.Log.d("TileGridContainer", "屏幕: ${screenWidth} × ${screenHeight}")
-            android.util.Log.d("TileGridContainer", "网格: $gridRows 行 × $actualColumns 列")
-            android.util.Log.d("TileGridContainer", "baseCellSize: $currentBaseCellSize")
-            android.util.Log.d("TileGridContainer", "fixedGap: $fixedGap")
-
-            // 不应用缩放，直接使用 fillMaxSize
-            ProvideScaleRatio(1f) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    content(currentBaseCellSize, fixedGap, actualColumns, gridRows)
-                }
-            }
+        // 渲染内容
+        Box(modifier = Modifier.fillMaxSize()) {
+            content(currentBaseCellSize, fixedGap, actualColumns, gridRows)
         }
     }
 }
@@ -260,12 +218,31 @@ val LocalDynamicGap = compositionLocalOf<Dp> { error("DynamicGap not provided") 
 val LocalColumns = compositionLocalOf<Int> { error("Columns not provided") }
 
 /**
+ * 瓷砖基准单元尺寸（1×1 瓷砖的宽高）⭐ 2025-01-07 新增
+ *
+ * 这是整个内容区域响应式适配系统的基础单位，所有内容尺寸都基于此计算：
+ * - 字号：通过 MetroTypography 基于此计算
+ * - 间距：通过 MetroSpacing 基于此计算
+ * - 图标：通过 MetroIconSize 基于此计算
+ * - Padding：TileCard 基于此自动计算
+ *
+ * 等价于 LocalBaseCellSize，但语义更清晰（强调"基准单元"概念）。
+ *
+ * ## 使用示例
+ * ```kotlin
+ * val baseUnit = LocalTileBaseUnit.current
+ * val spacing = baseUnit * 0.06f  // 间距 = 基准单元的 6%
+ * ```
+ */
+val LocalTileBaseUnit = compositionLocalOf<Dp> { error("TileBaseUnit not provided") }
+
+/**
  * 提供网格参数的容器
  *
  * 使用 CompositionLocalProvider 向子组件提供网格布局参数。
- * 子组件可以通过 LocalBaseCellSize.current 等方式访问这些参数。
+ * 子组件可以通过 LocalBaseCellSize.current 或 LocalTileBaseUnit.current 访问这些参数。
  *
- * @param baseCellSize 基础格子尺寸（正方形边长）
+ * @param baseCellSize 基础格子尺寸（正方形边长，等价于 1×1 瓷砖尺寸）
  * @param dynamicGap 动态间距
  * @param columns 实际列数
  * @param content 子组件
@@ -278,7 +255,8 @@ fun ProvideTileGrid(
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
-        LocalBaseCellSize provides baseCellSize,
+        LocalBaseCellSize provides baseCellSize,  // 保持向后兼容
+        LocalTileBaseUnit provides baseCellSize,  // 新的语义化名称 ⭐
         LocalDynamicGap provides dynamicGap,
         LocalColumns provides columns
     ) {

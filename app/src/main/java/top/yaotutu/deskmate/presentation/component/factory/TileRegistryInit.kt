@@ -55,8 +55,8 @@ private fun registerClockVariants() {
         TileVariantSpec(
             type = "clock",
             variant = "1x2",
-            supportedSizes = listOf(1 to 2),
-            defaultSize = 1 to 2,
+            supportedSizes = listOf(2 to 1),  // 1×2 = 1行2列 = (columns=2, rows=1)
+            defaultSize = 2 to 1,  // 1×2 = (columns=2, rows=1)
             view = { _, uiState, onClick ->
                 Clock1x2Tile(
                     time = uiState.currentTime,
@@ -326,8 +326,8 @@ private fun registerPresetsDemoVariants() {
         TileVariantSpec(
             type = "demo_progress",
             variant = "progress",
-            supportedSizes = listOf(1 to 2),
-            defaultSize = 1 to 2,
+            supportedSizes = listOf(2 to 1),  // 1×2 = 1行2列 = (columns=2, rows=1)
+            defaultSize = 2 to 1,  // 1×2 = (columns=2, rows=1)
             view = { _, _, onClick ->
                 BaseTile(
                     spec = TileSpec(1, 2, MetroColors.Green),
@@ -768,8 +768,8 @@ fun registerWeatherVariants() {
         TileVariantSpec(
             type = "weather",
             variant = "1x2",
-            supportedSizes = listOf(1 to 2),
-            defaultSize = 1 to 2,
+            supportedSizes = listOf(2 to 1),  // 1×2 = 1行2列 = (columns=2, rows=1)
+            defaultSize = 2 to 1,  // 1×2 = (columns=2, rows=1)
             view = { _, uiState, onClick ->
                 Weather1x2Tile(
                     temperature = uiState.weatherData.temperature,
@@ -910,8 +910,8 @@ fun registerCalendarVariants() {
         TileVariantSpec(
             type = "calendar",
             variant = "1x2",
-            supportedSizes = listOf(1 to 2),
-            defaultSize = 1 to 2,
+            supportedSizes = listOf(2 to 1),  // 1×2 = 1行2列 = (columns=2, rows=1)
+            defaultSize = 2 to 1,  // 1×2 = (columns=2, rows=1)
             view = { _, uiState, onClick ->
                 Calendar1x2Tile(
                     day = uiState.currentDay.toString(),
@@ -1075,8 +1075,8 @@ fun registerTodoVariants() {
         TileVariantSpec(
             type = "todo",
             variant = "1x2",
-            supportedSizes = listOf(1 to 2),
-            defaultSize = 1 to 2,
+            supportedSizes = listOf(2 to 1),  // 1×2 = 1行2列 = (columns=2, rows=1)
+            defaultSize = 2 to 1,  // 1×2 = (columns=2, rows=1)
             view = { config, uiState, onClick ->
                 TodoCompactTile(
                     label = "今日任务",
@@ -1189,8 +1189,8 @@ fun registerNewsVariants() {
         TileVariantSpec(
             type = "news",
             variant = "1x2",
-            supportedSizes = listOf(1 to 2),
-            defaultSize = 1 to 2,
+            supportedSizes = listOf(2 to 1),  // 1×2 = 1行2列 = (columns=2, rows=1)
+            defaultSize = 2 to 1,  // 1×2 = (columns=2, rows=1)
             view = { _, _, onClick ->
                 News1x2Tile(
                     title = "科技突破：AI技术新进展",

@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.SlideContent
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
+import top.yaotutu.deskmate.presentation.theme.MetroSpacing
+import top.yaotutu.deskmate.presentation.theme.MetroPadding
 
 /**
  * 2×4 宽矩形瓷砖预设（2行×4列）
@@ -101,8 +103,8 @@ object WideTilePresets {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
+                .padding(MetroPadding.medium()),
+            horizontalArrangement = Arrangement.spacedBy(MetroSpacing.extraLarge()),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -111,7 +113,7 @@ object WideTilePresets {
                 color = color
             )
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(MetroSpacing.large())
             ) {
                 Text(
                     text = title,
@@ -170,7 +172,7 @@ object WideTilePresets {
                                 fontSize = labelSize,
                                 fontWeight = FontWeight.Light,
                                 color = color,
-                                modifier = Modifier.padding(bottom = 4.dp)
+                                modifier = Modifier.padding(bottom = MetroSpacing.small())
                             )
                         }
                     }
@@ -205,14 +207,14 @@ object WideTilePresets {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(MetroPadding.medium()),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
             items.take(3).forEach { (time, event) ->
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    verticalArrangement = Arrangement.spacedBy(MetroSpacing.small())
                 ) {
                     Text(
                         text = time,
@@ -255,8 +257,8 @@ object WideTilePresets {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(MetroPadding.medium()),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.large())
         ) {
             Text(
                 text = title,
@@ -278,7 +280,7 @@ object WideTilePresets {
                         )
                         Text(
                             text = label,
-                            fontSize = 12.sp,
+                            fontSize = MetroTypography.labelSmall(),
                             fontWeight = FontWeight.Light,
                             color = color.copy(alpha = 0.8f)
                         )
@@ -321,8 +323,8 @@ object WideTilePresets {
                     Row(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            .padding(MetroPadding.medium()),
+                        horizontalArrangement = Arrangement.spacedBy(MetroSpacing.extraLarge()),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
@@ -332,7 +334,7 @@ object WideTilePresets {
                         )
                         Column(
                             modifier = Modifier.weight(1f),
-                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                            verticalArrangement = Arrangement.spacedBy(MetroSpacing.small())
                         ) {
                             Text(
                                 text = title,
@@ -353,7 +355,7 @@ object WideTilePresets {
                             if (duration.isNotEmpty()) {
                                 Text(
                                     text = duration,
-                                    fontSize = 12.sp,
+                                    fontSize = MetroTypography.labelSmall(),
                                     fontWeight = FontWeight.ExtraLight,
                                     color = color.copy(alpha = 0.7f)
                                 )

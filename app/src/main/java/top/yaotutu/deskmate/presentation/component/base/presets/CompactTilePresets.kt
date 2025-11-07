@@ -12,6 +12,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.FadeContent
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
+import top.yaotutu.deskmate.presentation.theme.MetroSpacing
+import top.yaotutu.deskmate.presentation.theme.MetroPadding
 
 /**
  * 1×2 紧凑横向瓷砖预设（1行×2列）
@@ -89,8 +91,8 @@ object CompactTilePresets {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 12.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
+                .padding(horizontal = MetroPadding.small()),
+            horizontalArrangement = Arrangement.spacedBy(MetroSpacing.medium(), Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -134,7 +136,7 @@ object CompactTilePresets {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(horizontal = 16.dp),
+                            .padding(horizontal = MetroPadding.small()),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.Start
                     ) {
@@ -144,7 +146,7 @@ object CompactTilePresets {
                             fontWeight = FontWeight.Light,
                             color = color.copy(alpha = 0.8f)
                         )
-                        Spacer(modifier = Modifier.height(4.dp))
+                        Spacer(modifier = Modifier.height(MetroSpacing.small()))
                         Text(
                             text = progress,
                             fontSize = progressSize,
@@ -249,8 +251,8 @@ object CompactTilePresets {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
+                .padding(horizontal = MetroPadding.small()),
+            horizontalArrangement = Arrangement.spacedBy(MetroSpacing.medium(), Alignment.Start),
             verticalAlignment = Alignment.CenterVertically
         ) {
             icon?.let {

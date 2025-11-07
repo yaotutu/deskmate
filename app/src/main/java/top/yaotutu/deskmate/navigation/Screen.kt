@@ -9,6 +9,8 @@ sealed class Screen(val route: String) {
     data object PresetsDemo : Screen("presets_demo")
     data object ScaleTest : Screen("scale_test")
     data object BaseTileTest : Screen("base_tile_test")
+    data object ResponsiveTest : Screen("responsive_test")
+    data object Showcase : Screen("showcase")
 
     // 示例：带参数的路由
     // data object Detail : Screen("detail/{itemId}") {
