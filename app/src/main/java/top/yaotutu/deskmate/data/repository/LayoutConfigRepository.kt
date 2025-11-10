@@ -26,8 +26,7 @@ class LayoutConfigRepository(private val context: Context) {
     }
 
     companion object {
-        const val PHONE_LAYOUT_FILE = "layout_phone.json"
-        const val TABLET_LAYOUT_FILE = "layout_tablet.json"
+        const val UNIFIED_LAYOUT_FILE = "layout_unified.json"
 
         /**
          * 平板判断标准：最小宽度 >= 600dp
@@ -53,20 +52,17 @@ class LayoutConfigRepository(private val context: Context) {
     /**
      * 根据设备类型自动加载对应的布局配置
      *
-     * - 平板（sw >= 600dp）: 加载 layout_tablet.json (rows=4)
-     * - 手机（sw < 600dp）: 加载 layout_phone.json (rows=2)
+     * ⭐ 2025-01-08 架构更新：统一布局策略
+     * - 平板（sw >= 600dp）: 加载 layout_unified.json，显示全部 8 行
+     * - 手机（sw < 600dp）: 加载 layout_unified.json，仅显示前 4 行
+     * - 无需设备特定配置文件，DashboardScreen 根据设备类型控制可见行数
      *
      * @return ConfigLoadResult.Success 或 ConfigLoadResult.Error
      */
     fun loadLayoutConfigForDevice(): ConfigLoadResult {
-        val fileName = if (isTablet()) {
-            Log.i("LayoutConfig", "检测到平板设备，加载平板布局（rows=4）")
-            TABLET_LAYOUT_FILE
-        } else {
-            Log.i("LayoutConfig", "检测到手机设备，加载手机布局（rows=2）")
-            PHONE_LAYOUT_FILE
-        }
-        return loadLayoutConfigWithResult(fileName)
+        val deviceType = if (isTablet()) "平板（显示全部 8 行）" else "手机（显示前 4 行）"
+        Log.i("LayoutConfig", "检测到 $deviceType，加载统一布局配置")
+        return loadLayoutConfigWithResult(UNIFIED_LAYOUT_FILE)
     }
 
     /**

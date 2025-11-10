@@ -38,24 +38,28 @@ app/src/main/java/top/yaotutu/deskmate/
 │   ├── repository/       # 数据仓库
 │   └── model/            # 数据模型
 ├── presentation/          # 表现层
-│   ├── ui/
-│   │   ├── screen/       # 页面
-│   │   ├── component/    # 可复用组件
-│   │   └── theme/        # 主题配置
+│   ├── component/
+│   │   ├── base/         # 基础组件 (BaseTile, TileGrid, TileSpec)
+│   │   ├── factory/      # 工厂层 (TileFactory, TileRegistryInit)
+│   │   └── tiles/        # 业务瓷砖 (clock/, weather/, calendar/, todo/, news/)
+│   ├── screen/           # 页面 (DashboardScreen)
+│   ├── theme/            # 响应式设计系统 (MetroTypography, MetroSpacing, etc.)
 │   └── viewmodel/        # ViewModel
 ├── navigation/            # 导航配置
 └── utils/                 # 工具类
 ```
 
+## 支持的瓷砖尺寸
 
-| variant 值  | 对应组件              | 尺寸  | 说明   |
-  |------------|-------------------|-----|------|
-| "simple"   | ClockSimpleTile   | 1×1 | 简洁时钟 |
-| "standard" | ClockStandardTile | 2×2 | 标准时钟 |
-| "detailed" | ClockDetailedTile | 4×2 | 详细时钟 |
-| "large"    | ClockLargeTile    | 4×4 | 超大时钟 |
-| "tall"     | ClockTallTile     | 2×4 | 垂直时钟 |
-| "compact"  | ClockCompactTile  | 2×1 | 紧凑时钟 |
+项目支持 **5 种标准尺寸**（变体命名规则：AxB = A行×B列）：
+
+| variant 值 | 尺寸  | 说明       |
+|-----------|------|----------|
+| "1x1"     | 1×1  | 简约版    |
+| "2x2"     | 2×2  | 标准版    |
+| "2x4"     | 2×4  | 宽版      |
+| "4x2"     | 4×2  | 高版      |
+| "4x4"     | 4×4  | 大型版    |
 
 
 ## 开始使用

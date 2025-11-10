@@ -9,8 +9,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.RotateContent
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
 import top.yaotutu.deskmate.presentation.theme.MetroSpacing
@@ -93,10 +91,10 @@ object LargeTilePresets {
                                         if (unit.isNotEmpty()) {
                                             Text(
                                                 text = unit,
-                                                fontSize = 16.sp,
+                                                fontSize = MetroTypography.bodyMedium(),
                                                 fontWeight = FontWeight.Light,
                                                 color = color,
-                                                modifier = Modifier.padding(bottom = 4.dp)
+                                                modifier = Modifier.padding(bottom = MetroSpacing.tiny())
                                             )
                                         }
                                     }
@@ -146,7 +144,7 @@ object LargeTilePresets {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(MetroPadding.large()),
-            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.large(), Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -428,7 +426,7 @@ object LargeTilePresets {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(MetroPadding.large()),
-            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.extraLarge(), Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -480,7 +478,7 @@ object LargeTilePresets {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(MetroPadding.large()),
-            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.large(), Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(

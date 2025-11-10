@@ -7,12 +7,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
+import top.yaotutu.deskmate.presentation.theme.MetroSpacing
 
 /**
  * 时钟瓷砖 4×2 - 高版
@@ -50,7 +49,7 @@ fun Clock4x2Tile(
         // 垂直布局，从上到下排列
         Column(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(MetroSpacing.large(), Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // 时间

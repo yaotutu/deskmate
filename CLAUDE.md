@@ -43,8 +43,7 @@ BaseTile + TileSpec (基础组件)
 ```
 app/src/main/
 ├── assets/
-│   ├── layout_tablet.json    # 平板布局配置 (8行×14列)
-│   └── layout_phone.json     # 手机布局配置 (4行×10列)
+│   └── layout_unified.json  # 统一布局配置 (8行×18列，平板显示全部，手机显示前4行)
 ├── java/top/yaotutu/deskmate/
 │   ├── data/
 │   │   ├── model/           # 数据模型 (LayoutConfig, TileConfig, TileVariantSpec)
@@ -66,7 +65,7 @@ app/src/main/
 ### 1. 架构使用原则
 
 **配置驱动开发**
-- ✅ **页面布局调整原则** - 后期调整页面展示布局时，只需修改 JSON 配置文件（layout_tablet.json、layout_phone.json），**不应修改 Kotlin 代码**（DashboardScreen.kt 等）
+- ✅ **页面布局调整原则** - 后期调整页面展示布局时，只需修改 JSON 配置文件（layout_unified.json），**不应修改 Kotlin 代码**（DashboardScreen.kt 等）
 - ✅ **使用工厂模式** - 通过 TileFactory 创建瓷砖，而不是直接实例化组件
 - ✅ **注册变体** - 在 TileRegistryInit 中注册所有变体
 - ✅ **使用预设样式** - 优先使用 `XxxTilePresets` 中的预设布局，减少重复代码
@@ -139,70 +138,72 @@ Column(
 
 ## 配置文件说明
 
-### layout_tablet.json（平板布局）
-- 8 行 × 14 列
-- 支持横向滚动
-- 46 个瓷砖
-
-### layout_phone.json（手机布局）
-- 4 行 × 10 列
-- 支持横向滚动
-- 16 个瓷砖
+### layout_unified.json（统一布局）
+- **布局网格**: 8 行 × 18 列
+- **平板显示**: 显示全部 8 行（rows 0-7）
+- **手机显示**: 仅显示前 4 行（rows 0-3）
+- **横向滚动**: 两种设备均支持横向滚动查看所有 18 列
+- **无特殊处理**: 手机端没有单独的布局文件，直接展示统一布局的上半部分
 
 ### 配置格式示例
 
 ```json
 {
-  "comment": "平板布局 - 8行×14列",
+  "comment": "统一布局 - 8行×18列（手机显示前4行，平板显示全8行）",
   "areas": [
-    "C C W W A B P P Q Q R S a b",
-    "C C W W D E P P Q Q T U c d",
+    "C1 C1 C1 C1 W1 W1 W1 W1 N1 N1 N1 N1 A1 A1 T1 T1 T1 T1",
+    "C1 C1 C1 C1 W1 W1 W1 W1 N1 N1 N1 N1 A1 A1 T1 T1 T1 T1",
     ...
   ],
   "tiles": {
-    "C": {"type": "clock", "variant": "2x2"},
-    "W": {"type": "weather", "variant": "2x2"},
-    "A": {"type": "calendar", "variant": "1x1"}
+    "C1": {"type": "clock", "variant": "4x4"},
+    "W1": {"type": "weather", "variant": "2x4"},
+    "A1": {"type": "calendar", "variant": "1x1"}
   }
 }
 ```
 
 ## 可用的瓷砖变体
 
-所有业务瓷砖类型支持完整的 6 个尺寸变体：
+⭐ **重要说明：变体命名规则为 AxB = A行×B列（第一个数字是行数）**
 
-| 类型 | 1×1 | 1×2 | 2×2 | 4×2 | 2×4 | 4×4 |
-|------|-----|-----|-----|-----|-----|-----|
-| Clock | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Weather | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Calendar | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Todo | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| News | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+所有业务瓷砖类型支持以下 **5 种标准尺寸**：
+
+| 类型 | 1×1 | 2×2 | 2×4 | 4×2 | 4×4 |
+|------|-----|-----|-----|-----|-----|
+| Clock | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Weather | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Calendar | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Todo | ✅ | ✅ | ✅ | ✅ | ✅ |
+| News | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 **设计理念**：
 - **1×1（简约版）**：图标展示，快速识别
-- **1×2（紧凑版）**：核心信息，空间高效
 - **2×2（标准版）**：平衡显示，常用尺寸
+- **2×4（宽版）**：横向扩展，丰富信息
 - **4×2（高版）**：垂直列表，多项展示
-- **2×4（详细版）**：横向扩展，丰富信息
 - **4×4（大型版）**：仪表盘视图，全面分析
 
 ## 添加新瓷砖变体流程
 
 ### Step 1: 创建瓷砖文件
 ```kotlin
-// presentation/component/tiles/clock/Clock3x3Tile.kt
+// presentation/component/tiles/clock/Clock2x2Tile.kt
 @Composable
-fun Clock3x3Tile(
+fun Clock2x2Tile(
     time: String,
     date: String,
     modifier: Modifier = Modifier
 ) {
     BaseTile(
-        spec = TileSpec(3, 3, MetroColors.Blue, AnimationType.FLIP),
+        spec = TileSpec.medium(MetroColors.Blue),  // 使用预设 spec
         modifier = modifier
     ) {
-        // 自定义布局
+        // 自定义布局或使用 Preset
+        MediumTilePresets.TitleSubtitle(
+            title = time,
+            subtitle = date
+        )
     }
 }
 ```
@@ -213,11 +214,11 @@ fun Clock3x3Tile(
 TileRegistry.register(
     TileVariantSpec(
         type = "clock",
-        variant = "3x3",  // ⭐ 使用尺寸格式
-        supportedSizes = listOf(3 to 3),
-        defaultSize = 3 to 3
+        variant = "2x2",  // ⭐ 使用标准尺寸格式（2行×2列）
+        supportedSizes = listOf(2 to 2),  // ⭐ 格式：(rows, columns)
+        defaultSize = 2 to 2
     ) { config, uiState ->
-        Clock3x3Tile(
+        Clock2x2Tile(
             time = uiState.currentTime,
             date = uiState.currentDate
         )
@@ -228,16 +229,16 @@ TileRegistry.register(
 ### Step 3: 在配置中使用
 ```json
 {
-  "tiles": [
-    { "type": "clock", "variant": "3x3", "columns": 3, "rows": 3 }
-  ]
+  "tiles": {
+    "C": {"type": "clock", "variant": "2x2"}
+  }
 }
 ```
 
 ## 常见问题
 
 ### Q: 如何调整页面布局？
-**A**: 只需修改 `assets/layout_tablet.json` 或 `assets/layout_phone.json`，不要修改 Kotlin 代码。
+**A**: 只需修改 `assets/layout_unified.json`，不要修改 Kotlin 代码。平板会显示全部 8 行，手机会自动显示前 4 行。
 
 ### Q: 瓷砖显示为错误提示（ErrorTile）？
 **A**: 检查以下几点：
