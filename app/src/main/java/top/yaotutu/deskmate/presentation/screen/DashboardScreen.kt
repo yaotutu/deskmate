@@ -41,15 +41,10 @@ fun DashboardScreen(
     // 检测设备类型（2025-01-06 重构）
     val isTablet = remember { repository.isTablet() }
 
-    // 加载布局配置（根据设备类型自动选择）
+    // 加载布局配置（统一配置文件）
     val configResult = remember {
-        // 📱 自动加载设备对应的配置文件
-        val configFileName = if (isTablet) {
-            "layout_tablet.json"  // 平板：8行×14列（支持横向滚动）
-        } else {
-            "layout_phone.json"   // 手机：4行×10列（支持横向滚动）
-        }
-        repository.loadLayoutConfigWithResult(configFileName)
+        // ⭐ 统一使用 layout_unified.json，通过区域过滤实现不同设备显示
+        repository.loadLayoutConfigWithResult("layout_unified.json")
     }
 
     // 提取实际使用的配置
@@ -89,11 +84,15 @@ fun DashboardScreen(
                         modifier = Modifier.height(screenHeight),  // ✅ 使用屏幕高度
                         isTablet = isTablet  // ✅ 传递设备类型
                     ) { baseCellSize, fixedGap, columns, gridRows ->
-                        // ⭐ 根据设备类型设置实际列数和行数（支持横向滚动）
-                        val totalColumns = if (isTablet) 14 else 10
-                        val totalRows = if (isTablet) 8 else 4
+                        // ⭐ 使用配置文件的实际行列数（修复硬编码）
+                        val totalColumns = layoutConfig.columns
+                        val totalRows = layoutConfig.rows
                         val contentWidth = baseCellSize * totalColumns + fixedGap * (totalColumns - 1)
                         val contentHeight = baseCellSize * totalRows + fixedGap * (totalRows - 1)
+
+                        // ⭐ 根据设备类型设置可见区域
+                        val visibleRows = if (isTablet) 0..7 else 0..3
+                        val visibleColumns = 0..17  // 所有设备都显示全部18列，支持横向滚动
 
                         ProvideTileGrid(
                             baseCellSize = baseCellSize,
@@ -104,6 +103,8 @@ fun DashboardScreen(
                                 config = layoutConfig,
                                 baseCellSize = baseCellSize,
                                 dynamicGap = fixedGap,
+                                visibleRows = visibleRows,         // ⭐ 传递可见行范围
+                                visibleColumns = visibleColumns,   // ⭐ 传递可见列范围
                                 modifier = Modifier
                                     .width(contentWidth)
                                     .height(contentHeight)  // ✅ 设置正确的高度，防止底部被截断

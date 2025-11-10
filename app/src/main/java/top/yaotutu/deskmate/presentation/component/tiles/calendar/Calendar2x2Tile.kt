@@ -12,8 +12,8 @@ import top.yaotutu.deskmate.presentation.theme.MetroTileColors
  * 标准日历瓷砖 (2×2) - 使用 BaseTile 架构
  *
  * 特性：
- * - 支持自动 FLIP 动画（通过 TileSpec）
- * - 显示日期和农历信息
+ * - 大数字日期显示，更加醒目
+ * - 支持翻转动画切换月份和农历
  * - 适合主屏幕日历展示
  *
  * @param dayNumber 日期数字（如 "17"）
@@ -37,10 +37,10 @@ fun Calendar2x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        MediumTilePresets.IconTitleSubtitle(
-            icon = "📅",
-            title = "$dayNumber 日",
-            subtitle = lunarDayName.ifEmpty { monthName }
+        MediumTilePresets.LargeNumber(
+            number = dayNumber,
+            label = monthName,
+            backLabel = lunarDayName.ifEmpty { monthName }
         )
     }
 }

@@ -66,11 +66,11 @@ import top.yaotutu.deskmate.presentation.component.base.LocalTileBaseUnit
  * val customPadding = MetroPadding.custom(ratio = 0.07f)  // 7% 的自定义 padding
  * ```
  *
- * ## 比例系数表
+ * ## 比例系数表（⭐ 2025-01-07 优化）
  *
  * | 瓷砖大小 | 总格子数 | 比例 | 典型值（baseCellSize=70dp） |
  * |---------|---------|------|---------------------------|
- * | 小（1×1, 1×2） | ≤2 | 6% | 4.2dp |
+ * | 小（1×1, 1×2） | ≤2 | 8% | 5.6dp | ⭐ 提升 |
  * | 中（2×2, 4×2, 2×4） | ≤8 | 8% | 5.6dp |
  * | 大（4×4） | >8 | 10% | 7.0dp |
  *
@@ -106,9 +106,9 @@ object MetroPadding {
         val totalCells = columns * rows
 
         return when {
-            totalCells <= 2 -> baseUnit * 0.06f  // 小瓷砖：6%
-            totalCells <= 8 -> baseUnit * 0.08f  // 中等瓷砖：8%
-            else -> baseUnit * 0.10f             // 大瓷砖：10%
+            totalCells <= 2 -> baseUnit * 0.12f  // ⭐ 小瓷砖：6% → 12%（超大优化）
+            totalCells <= 8 -> baseUnit * 0.12f  // ⭐ 中等瓷砖：8% → 12%（超大优化）
+            else -> baseUnit * 0.15f             // ⭐ 大瓷砖：10% → 15%（超大优化）
         }
     }
 
@@ -134,11 +134,11 @@ object MetroPadding {
     /**
      * 小瓷砖内边距（1×1, 1×2）
      *
-     * 比例：基准单元的 6%
+     * ⭐ 2025-01-07 大幅优化：6% → 10%（显著提升视觉舒适度）
      *
      * 典型值：
-     * - baseCellSize = 70dp → 4.2dp
-     * - baseCellSize = 100dp → 6.0dp
+     * - baseCellSize = 70dp → 7.0dp
+     * - baseCellSize = 100dp → 10.0dp
      *
      * 使用场景：
      * - 1×1 小方块瓷砖
@@ -147,7 +147,7 @@ object MetroPadding {
     @Composable
     fun small(): Dp {
         val baseUnit = LocalTileBaseUnit.current
-        return baseUnit * 0.06f
+        return baseUnit * 0.10f
     }
 
     /**

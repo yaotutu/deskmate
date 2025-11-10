@@ -66,12 +66,16 @@ object TileGrid {
         // 根据设备类型确定固定行数
         val gridRows = if (isTablet) TABLET_GRID_ROWS else PHONE_GRID_ROWS
 
-        // ⭐ 修复：预留间距后计算 baseCellSize
-        // 公式：baseCellSize = (screenHeight - (rows-1) * gap) / rows
-        val totalGapHeight = (gridRows - 1) * FIXED_GAP
-        val availableHeight = screenHeight.value - totalGapHeight
+        // ⭐ 关键修复：使用屏幕最小尺寸计算 baseCellSize
+        // 这样确保无论横屏还是竖屏，baseCellSize 都基于较小的屏幕维度
+        val baseScreenSize = minOf(screenWidth, screenHeight)
 
-        return (availableHeight / gridRows).dp
+        // 预留间距后计算可用尺寸
+        val totalGapSize = (gridRows - 1) * FIXED_GAP
+        val availableSize = baseScreenSize.value - totalGapSize
+
+        // 计算 baseCellSize
+        return (availableSize / gridRows).dp
     }
 
     /**

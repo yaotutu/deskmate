@@ -11,17 +11,19 @@ import top.yaotutu.deskmate.presentation.viewmodel.DashboardUiState
  * - 默认尺寸
  * - 对应的视图组件
  *
+ * ⭐ 2025-01-08 重大修复：统一使用 (行, 列) 格式
+ *
  * @property type 瓷砖类型（如 "clock", "weather"）
- * @property variant 变体名称（如 "simple", "detailed"）
- * @property supportedSizes 支持的尺寸列表 [(columns, rows), ...]
- * @property defaultSize 默认尺寸 (columns, rows)
+ * @property variant 变体名称（如 "4x2" 表示 4行2列）
+ * @property supportedSizes 支持的尺寸列表 [(rows, columns), ...]
+ * @property defaultSize 默认尺寸 (rows, columns)
  * @property view 视图组件
  */
 data class TileVariantSpec(
     val type: String,
     val variant: String,
-    val supportedSizes: List<Pair<Int, Int>>,
-    val defaultSize: Pair<Int, Int>,
+    val supportedSizes: List<Pair<Int, Int>>,  // ⭐ 格式：(rows, columns)
+    val defaultSize: Pair<Int, Int>,            // ⭐ 格式：(rows, columns)
     val view: @Composable (TileConfig, DashboardUiState, () -> Unit) -> Unit
 )
 
@@ -54,21 +56,27 @@ object TileRegistry {
     /**
      * 检查指定尺寸是否被变体支持
      *
+     * ⭐ 2025-01-08 修复：统一使用 (行, 列) 格式
+     *
+     * @param rows 行数
+     * @param columns 列数
      * @return true 如果支持，false 如果不支持或变体不存在
      */
-    fun isSizeSupported(type: String, variant: String, columns: Int, rows: Int): Boolean {
+    fun isSizeSupported(type: String, variant: String, rows: Int, columns: Int): Boolean {
         val spec = get(type, variant) ?: return false
-        return spec.supportedSizes.contains(columns to rows)
+        return spec.supportedSizes.contains(rows to columns)  // ⭐ (行, 列)
     }
 
     /**
      * 获取变体支持的尺寸列表字符串（用于错误提示）
      *
-     * @return 格式化的字符串，如 "1×1, 2×2"，如果变体不存在返回 "未知"
+     * ⭐ 2025-01-08 修复：显示格式为 "行×列"
+     *
+     * @return 格式化的字符串，如 "4×2, 2×4"（4行2列，2行4列），如果变体不存在返回 "未知"
      */
     fun getSupportedSizesString(type: String, variant: String): String {
         val spec = get(type, variant) ?: return "未知"
-        return spec.supportedSizes.joinToString(", ") { "${it.first}×${it.second}" }
+        return spec.supportedSizes.joinToString(", ") { "${it.first}×${it.second}" }  // ⭐ 行×列
     }
 
     /**

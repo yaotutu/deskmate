@@ -41,7 +41,7 @@ object TileFactory {
         onClick: () -> Unit = {},
         modifier: Modifier = Modifier
     ) {
-        Log.d("TileFactory", "创建瓷砖: ${config.type}:${config.variant} (${config.columns}×${config.rows})")
+        Log.d("TileFactory", "创建瓷砖: ${config.type}:${config.variant} (${config.rows}×${config.columns})")  // ⭐ 修复：行×列
 
         // 使用 StaggerEnterAnimation 实现错峰入场动画
         StaggerEnterAnimation(index = index) {
@@ -91,16 +91,16 @@ object TileFactory {
                 )
             }
 
-            !spec.supportedSizes.contains(config.columns to config.rows) -> {
+            !spec.supportedSizes.contains(config.rows to config.columns) -> {  // ⭐ 修复：(行, 列)
                 // 尺寸不匹配
-                Log.e("TileFactory", "尺寸不匹配: ${config.type}:${config.variant} 需要${spec.supportedSizes}, 配置${config.columns}×${config.rows}")
+                Log.e("TileFactory", "尺寸不匹配: ${config.type}:${config.variant} 需要${spec.supportedSizes}, 配置${config.rows}×${config.columns}")
                 ErrorTile(
                     columns = config.columns,
                     rows = config.rows,
                     errorType = TileErrorType.SIZE_MISMATCH,
                     message = "尺寸不匹配：${config.type}:${config.variant}",
                     details = mapOf(
-                        "当前配置" to "${config.columns}×${config.rows}",
+                        "当前配置" to "${config.rows}×${config.columns}",  // ⭐ 修复：行×列
                         "支持的尺寸" to TileRegistry.getSupportedSizesString(config.type, config.variant)
                     )
                 )

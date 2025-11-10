@@ -44,6 +44,8 @@ fun GridAreaLayout(
     modifier: Modifier = Modifier,
     screenWidth: Dp? = null,   // ⭐ 新增：实际屏幕宽度
     screenHeight: Dp? = null,  // ⭐ 新增：实际屏幕高度
+    visibleRows: IntRange = 0..Int.MAX_VALUE,      // ⭐ 新增：可见行范围
+    visibleColumns: IntRange = 0..Int.MAX_VALUE,   // ⭐ 新增：可见列范围
     tileContent: @Composable (TileConfig, Int) -> Unit
 ) {
     val TAG = "GridAreaLayout"
@@ -75,10 +77,20 @@ fun GridAreaLayout(
             Log.d(TAG, "GridAreaLayout 屏幕: $screenWidth × $screenHeight")
             Log.d(TAG, "GridAreaLayout 原始 baseCellSize=$baseCellSize, 调整后=$adjustedBaseCellSize")
             Log.d(TAG, "GridAreaLayout gap=$dynamicGap")
+            Log.d(TAG, "GridAreaLayout 可见区域: 行 $visibleRows, 列 $visibleColumns")
 
-            // 渲染瓷砖 - 使用调整后的 baseCellSize
+            // ⭐ 过滤可见瓷砖：只渲染完全在可见区域内的瓷砖
+            val filteredPositions = parseResult.positions.filter { pos ->
+                val isRowVisible = pos.y in visibleRows && (pos.y + pos.height - 1) in visibleRows
+                val isColumnVisible = pos.x in visibleColumns && (pos.x + pos.width - 1) in visibleColumns
+                isRowVisible && isColumnVisible
+            }
+
+            Log.d(TAG, "GridAreaLayout 总瓷砖数: ${parseResult.positions.size}, 可见瓷砖数: ${filteredPositions.size}")
+
+            // 渲染瓷砖 - 使用调整后的 baseCellSize 和过滤后的瓷砖列表
             Box(modifier = modifier.fillMaxSize()) {
-                parseResult.positions.forEachIndexed { index, areaPosition ->
+                filteredPositions.forEachIndexed { index, areaPosition ->
                     RenderTile(
                         areaPosition = areaPosition,
                         baseCellSize = adjustedBaseCellSize,

@@ -53,15 +53,15 @@ import top.yaotutu.deskmate.presentation.component.base.LocalTileBaseUnit
  * val customSpacing = baseUnit * 0.07f  // 7% 的自定义间距
  * ```
  *
- * ## 比例系数表
+ * ## 比例系数表（⭐ 2025-01-07 优化）
  *
  * | 级别 | 比例 | 典型值（baseCellSize=70dp） | 用途 |
  * |------|------|---------------------------|------|
  * | extraLarge | 10% | 7.0dp | 大瓷砖主要内容块之间 |
  * | large | 8% | 5.6dp | 中等瓷砖主要内容块之间 |
- * | medium | 6% | 4.2dp | 标准内容间距（最常用） |
- * | small | 4% | 2.8dp | 紧密相关的内容 |
- * | tiny | 2% | 1.4dp | 同一组内的元素 |
+ * | medium | 8% | 5.6dp | 标准内容间距（最常用）⭐ 提升 |
+ * | small | 6% | 4.2dp | 紧密相关的内容 ⭐ 提升 |
+ * | tiny | 4% | 2.8dp | 同一组内的元素 ⭐ 提升 |
  *
  * @since 2025-01-07
  * @author Deskmate Team
@@ -110,11 +110,11 @@ object MetroSpacing {
     /**
      * 中间距 - 标准内容间距（最常用）⭐
      *
-     * 比例：基准单元的 6%
+     * ⭐ 2025-01-07 超大优化：6% → 12%（超大提升视觉层次）
      *
      * 典型值：
-     * - baseCellSize = 70dp → 4.2dp
-     * - baseCellSize = 100dp → 6.0dp
+     * - baseCellSize = 67dp → 8.0dp
+     * - baseCellSize = 100dp → 12.0dp
      *
      * 使用场景：
      * - 大多数文本行之间的间距
@@ -126,17 +126,17 @@ object MetroSpacing {
     @Composable
     fun medium(): Dp {
         val baseUnit = LocalTileBaseUnit.current
-        return baseUnit * 0.06f
+        return baseUnit * 0.12f
     }
 
     /**
      * 小间距 - 用于紧密相关的内容
      *
-     * 比例：基准单元的 4%
+     * ⭐ 2025-01-07 超大优化：4% → 10%（超大提升视觉层次）
      *
      * 典型值：
-     * - baseCellSize = 70dp → 2.8dp
-     * - baseCellSize = 100dp → 4.0dp
+     * - baseCellSize = 67dp → 6.7dp
+     * - baseCellSize = 100dp → 10.0dp
      *
      * 使用场景：
      * - 标签与值之间（"温度: 22°C"）
@@ -146,17 +146,17 @@ object MetroSpacing {
     @Composable
     fun small(): Dp {
         val baseUnit = LocalTileBaseUnit.current
-        return baseUnit * 0.04f
+        return baseUnit * 0.10f
     }
 
     /**
      * 微小间距 - 用于同一组内的元素
      *
-     * 比例：基准单元的 2%
+     * ⭐ 2025-01-07 超大优化：2% → 8%（避免过于紧凑）
      *
      * 典型值：
-     * - baseCellSize = 70dp → 1.4dp
-     * - baseCellSize = 100dp → 2.0dp
+     * - baseCellSize = 67dp → 5.4dp
+     * - baseCellSize = 100dp → 8.0dp
      *
      * 使用场景：
      * - 非常紧密的元素排列
@@ -166,6 +166,6 @@ object MetroSpacing {
     @Composable
     fun tiny(): Dp {
         val baseUnit = LocalTileBaseUnit.current
-        return baseUnit * 0.02f
+        return baseUnit * 0.08f
     }
 }

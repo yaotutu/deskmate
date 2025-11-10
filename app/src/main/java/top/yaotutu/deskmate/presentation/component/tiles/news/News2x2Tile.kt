@@ -12,8 +12,8 @@ import top.yaotutu.deskmate.presentation.theme.MetroTileColors
  * 标准新闻瓷砖 (2×2)
  *
  * 特性：
- * - 显示新闻图标、标题和摘要
- * - 使用 IconTitleSubtitle 预设
+ * - 头部显示新闻标题，主体显示摘要
+ * - 使用 HeaderBody 预设获得更好的文字层次
  * - 适合展示单条新闻要点
  *
  * @param icon 新闻图标（如 "📰"）
@@ -37,10 +37,9 @@ fun News2x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        MediumTilePresets.IconTitleSubtitle(
-            icon = icon,
-            title = title,
-            subtitle = summary
+        MediumTilePresets.HeaderBody(
+            header = title,
+            body = summary
         )
     }
 }

@@ -13,9 +13,9 @@ import top.yaotutu.deskmate.presentation.theme.MetroTileColors
  * 标准天气瓷砖 (2×2)
  *
  * 特性：
- * - 显示完整天气信息（温度、状况、图标）
- * - 使用 Metro 标准尺寸
- * - 适合主屏幕展示
+ * - 大数字温度显示，更加醒目
+ * - 支持数字滚动动画
+ * - 显示位置或天气状况
  *
  * @param temperature 当前温度（如 22）
  * @param condition 天气状况（如 "晴朗"）
@@ -40,10 +40,10 @@ fun Weather2x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        MediumTilePresets.IconTitleSubtitle(
-            icon = WeatherIconMapper.getEmoji(iconCode),
-            title = "${temperature}°C",
-            subtitle = location.ifEmpty { condition }
+        MediumTilePresets.Counter(
+            value = temperature.toString(),
+            unit = "°C",
+            label = location.ifEmpty { condition }
         )
     }
 }
