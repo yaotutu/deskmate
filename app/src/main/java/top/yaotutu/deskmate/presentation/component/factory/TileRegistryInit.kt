@@ -313,7 +313,9 @@ private fun registerPresetsDemoVariants() {
                     spec = TileSpec.small(MetroColors.Cyan),
                     onClick = onClick
                 ) {
-                    SmallTilePresets.IconOnly(icon = "📱")
+                    with(SmallTilePresets) {
+                        IconOnly(icon = "📱")
+                    }
                 }
             }
         )
@@ -333,10 +335,12 @@ private fun registerPresetsDemoVariants() {
                     spec = TileSpec(1, 2, MetroColors.Green),
                     onClick = onClick
                 ) {
-                    CompactTilePresets.ProgressBar(
-                        label = "下载中",
-                        progress = "75%"
-                    )
+                    with(CompactTilePresets) {
+                        ProgressBar(
+                            label = "下载中",
+                            progress = "75%"
+                        )
+                    }
                 }
             }
         )
@@ -356,12 +360,14 @@ private fun registerPresetsDemoVariants() {
                     spec = TileSpec.square(MetroTileColors.Weather),
                     onClick = onClick
                 ) {
-                    MediumTilePresets.Counter(
-                        value = uiState.temperature.toString(),
-                        unit = "°",
-                        label = "温度"
-                        // 自动获得 COUNTER 动画！
-                    )
+                    with(MediumTilePresets) {
+                        Counter(
+                            value = uiState.temperature.toString(),
+                            unit = "°",
+                            label = "温度"
+                            // 自动获得 COUNTER 动画！
+                        )
+                    }
                 }
             }
         )
@@ -379,11 +385,13 @@ private fun registerPresetsDemoVariants() {
                     spec = TileSpec.square(MetroColors.Lime),
                     onClick = onClick
                 ) {
-                    MediumTilePresets.Counter(
-                        value = "8,456",
-                        label = "步数"
-                        // 自动获得 COUNTER 动画！
-                    )
+                    with(MediumTilePresets) {
+                        Counter(
+                            value = "8456",
+                            label = "步数"
+                            // 自动获得 COUNTER 动画！
+                        )
+                    }
                 }
             }
         )
@@ -572,12 +580,14 @@ private fun registerPresetsDemoVariants() {
                     spec = TileSpec.wideMedium(MetroTileColors.Music),
                     onClick = onClick
                 ) {
-                    WideTilePresets.MediaPlayer(
-                        icon = "▶",
-                        title = "晴天",
-                        artist = "周杰伦",
-                        duration = "4:29"
-                    )
+                    with(WideTilePresets) {
+                        MediaPlayer(
+                            icon = "▶",
+                            title = "晴天",
+                            artist = "周杰伦",
+                            duration = "4:29"
+                        )
+                    }
                 }
             }
         )
@@ -645,15 +655,17 @@ private fun registerPresetsDemoVariants() {
                     spec = TileSpec.tall(MetroTileColors.Todo),
                     onClick = onClick
                 ) {
-                    TallTilePresets.VerticalList(
-                        items = listOf(
-                            "完成项目文档",
-                            "代码评审",
-                            "团队会议",
-                            "更新测试用例",
-                            "优化性能"
+                    with(TallTilePresets) {
+                        VerticalList(
+                            items = listOf(
+                                "完成项目文档",
+                                "代码评审",
+                                "团队会议",
+                                "更新测试用例",
+                                "优化性能"
+                            )
                         )
-                    )
+                    }
                 }
             }
         )
@@ -698,17 +710,19 @@ private fun registerPresetsDemoVariants() {
                     spec = TileSpec.large(MetroColors.DarkBlue),
                     onClick = onClick
                 ) {
-                    LargeTilePresets.Dashboard(
-                        title = "系统监控",
-                        metrics = listOf(
-                            Triple("CPU", "45", "%"),
-                            Triple("内存", "68", "%"),
-                            Triple("磁盘", "82", "%"),
-                            Triple("网络", "12", "MB/s"),
-                            Triple("温度", "56", "°C"),
-                            Triple("电量", "85", "%")
+                    with(LargeTilePresets) {
+                        Dashboard(
+                            title = "系统监控",
+                            metrics = listOf(
+                                Triple("CPU", "45", "%"),
+                                Triple("内存", "68", "%"),
+                                Triple("磁盘", "82", "%"),
+                                Triple("网络", "12", "MB/s"),
+                                Triple("温度", "56", "°C"),
+                                Triple("电量", "85", "%")
+                            )
                         )
-                    )
+                    }
                 }
             }
         )

@@ -33,6 +33,8 @@ fun Calendar4x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        WideTilePresets.Timeline(items = timeline)
+        with(WideTilePresets) {
+            Timeline(items = timeline)
+        }
     }
 }

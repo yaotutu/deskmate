@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
-import top.yaotutu.deskmate.presentation.component.base.SlideContent
+import top.yaotutu.deskmate.presentation.component.base.AnimationScope
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
 import top.yaotutu.deskmate.presentation.theme.MetroSpacing
 import top.yaotutu.deskmate.presentation.theme.MetroPadding
@@ -41,13 +41,13 @@ object TallTilePresets {
      * @param color 颜色（默认白色）
      */
     @Composable
-    fun VerticalList(
+    fun AnimationScope.VerticalList(
         items: List<String>,
         itemSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
-        // 固定使用 SLIDE 动画
-        SlideContent(
+        // 使用 AnimationScope 的 slide DSL
+        slide(
             contents = listOf(
                 {
                     Column(

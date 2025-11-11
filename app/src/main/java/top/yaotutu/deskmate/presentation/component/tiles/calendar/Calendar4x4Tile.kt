@@ -57,12 +57,13 @@ fun Calendar4x4Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(MetroPadding.medium()),
-            verticalArrangement = Arrangement.spacedBy(MetroSpacing.large())
-        ) {
+        single {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(MetroPadding.medium()),
+                verticalArrangement = Arrangement.spacedBy(MetroSpacing.large())
+            ) {
             // 标题：公历日期
             Text(
                 text = solarDate,
@@ -133,6 +134,7 @@ fun Calendar4x4Tile(
                     modifier = Modifier.weight(1f)
                 )
             }
+        }
         }
     }
 }

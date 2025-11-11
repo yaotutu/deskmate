@@ -46,17 +46,19 @@ fun Weather4x2Tile(
             date to "$icon ${forecast.maxTemp}°/${forecast.minTemp}°"
         }
 
-        if (timelineItems.isNotEmpty()) {
-            WideTilePresets.Timeline(
-                items = timelineItems
-            )
-        } else {
-            // 无预报数据时显示当前天气
-            WideTilePresets.IconTextSide(
-                icon = "🌤️",
-                title = currentCondition,
-                subtitle = "${currentTemp}°C"
-            )
+        with(WideTilePresets) {
+            if (timelineItems.isNotEmpty()) {
+                Timeline(
+                    items = timelineItems
+                )
+            } else {
+                // 无预报数据时显示当前天气
+                IconTextSide(
+                    icon = "🌤️",
+                    title = currentCondition,
+                    subtitle = "${currentTemp}°C"
+                )
+            }
         }
     }
 }

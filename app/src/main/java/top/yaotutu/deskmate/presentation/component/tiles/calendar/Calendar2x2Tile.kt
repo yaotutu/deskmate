@@ -37,10 +37,12 @@ fun Calendar2x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        MediumTilePresets.LargeNumber(
-            number = dayNumber,
-            label = monthName,
-            backLabel = lunarDayName.ifEmpty { monthName }
-        )
+        with(MediumTilePresets) {
+            LargeNumber(
+                number = dayNumber,
+                label = monthName,
+                backLabel = lunarDayName.ifEmpty { monthName }
+            )
+        }
     }
 }

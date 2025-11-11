@@ -33,6 +33,8 @@ fun Calendar2x4Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        TallTilePresets.VerticalList(items = events)
+        with(TallTilePresets) {
+            VerticalList(items = events)
+        }
     }
 }

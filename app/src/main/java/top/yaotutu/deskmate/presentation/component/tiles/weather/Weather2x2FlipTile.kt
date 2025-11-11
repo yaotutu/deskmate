@@ -15,7 +15,6 @@ import top.yaotutu.deskmate.presentation.component.common.QWeatherIcon
 import top.yaotutu.deskmate.presentation.component.common.WeatherMetricIcon
 import top.yaotutu.deskmate.presentation.component.common.WeatherMetricType
 import top.yaotutu.deskmate.presentation.component.base.BaseTile
-import top.yaotutu.deskmate.presentation.component.base.FlipContent
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
@@ -49,7 +48,7 @@ fun Weather2x2FlipTile(
         onClick = onClick,
         modifier = modifier
     ) {
-        FlipContent(  // ⭐ 使用FlipContent而不是FlipTileAnimation
+        flip(  // ⭐ 使用flip DSL
             front = {
                 // 正面：当前天气概览
                 WeatherFrontContent(weatherData)

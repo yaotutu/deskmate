@@ -40,10 +40,12 @@ fun News4x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        WideTilePresets.IconTextSide(
-            icon = icon,
-            title = title,
-            subtitle = if (time.isNotEmpty()) "$summary · $time" else summary
-        )
+        with(WideTilePresets) {
+            IconTextSide(
+                icon = icon,
+                title = title,
+                subtitle = if (time.isNotEmpty()) "$summary · $time" else summary
+            )
+        }
     }
 }

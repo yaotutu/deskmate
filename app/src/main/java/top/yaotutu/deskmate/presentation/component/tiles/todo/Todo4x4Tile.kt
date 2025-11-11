@@ -33,9 +33,11 @@ fun Todo4x4Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        LargeTilePresets.Dashboard(
-            title = "任务统计",
-            metrics = metrics
-        )
+        with(LargeTilePresets) {
+            Dashboard(
+                title = "任务统计",
+                metrics = metrics
+            )
+        }
     }
 }

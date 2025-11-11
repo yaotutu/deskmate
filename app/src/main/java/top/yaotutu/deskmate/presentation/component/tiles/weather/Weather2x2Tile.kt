@@ -40,10 +40,12 @@ fun Weather2x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        MediumTilePresets.Counter(
-            value = temperature.toString(),
-            unit = "°C",
-            label = location.ifEmpty { condition }
-        )
+        with(MediumTilePresets) {
+            Counter(
+                value = temperature.toString(),
+                unit = "°C",
+                label = location.ifEmpty { condition }
+            )
+        }
     }
 }

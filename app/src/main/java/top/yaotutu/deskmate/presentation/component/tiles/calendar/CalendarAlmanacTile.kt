@@ -11,7 +11,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import top.yaotutu.deskmate.presentation.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
-import top.yaotutu.deskmate.presentation.component.base.FlipContent
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
 import top.yaotutu.deskmate.presentation.theme.MetroSpacing
@@ -53,7 +52,7 @@ fun CalendarAlmanacTile(
         onClick = onClick,
         modifier = modifier
     ) {
-        FlipContent(
+        flip(
             front = {
                 // 正面：日期 + 农历/节日
                 Column(

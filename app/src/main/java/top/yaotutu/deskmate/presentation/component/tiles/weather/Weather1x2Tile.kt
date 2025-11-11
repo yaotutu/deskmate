@@ -35,9 +35,11 @@ fun Weather1x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        CompactTilePresets.ProgressBar(
-            label = condition,
-            progress = "${temperature}°"
-        )
+        with(CompactTilePresets) {
+            ProgressBar(
+                label = condition,
+                progress = "${temperature}°"
+            )
+        }
     }
 }

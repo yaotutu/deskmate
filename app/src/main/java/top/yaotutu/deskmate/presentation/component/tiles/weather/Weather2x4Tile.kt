@@ -33,6 +33,8 @@ fun Weather2x4Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        TallTilePresets.WeatherForecast(forecasts = forecasts)
+        with(TallTilePresets) {
+            WeatherForecast(forecasts = forecasts)
+        }
     }
 }

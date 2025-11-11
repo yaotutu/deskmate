@@ -35,9 +35,11 @@ fun News1x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        CompactTilePresets.ProgressBar(
-            label = title,
-            progress = time
-        )
+        with(CompactTilePresets) {
+            ProgressBar(
+                label = title,
+                progress = time
+            )
+        }
     }
 }

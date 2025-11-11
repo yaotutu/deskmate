@@ -34,6 +34,8 @@ fun Clock1x1Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        SmallTilePresets.SingleLabel(text = time)
+        with(SmallTilePresets) {
+            SingleLabel(text = time)
+        }
     }
 }

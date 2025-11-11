@@ -57,7 +57,7 @@ fun AnimationDemoScreen() {
             // 使用场景说明
             UsageInfo("适用场景：时钟、日历、双面卡片")
             BaseTile(spec = TileSpec.square(MetroColors.Blue, AnimationType.FLIP)) {
-                FlipContent(
+                flip(
                     front = {
                         CenteredContent(emoji = "🕐", text = "10:12")
                     },
@@ -82,7 +82,7 @@ fun AnimationDemoScreen() {
             // 使用场景说明
             UsageInfo("适用场景：新闻列表、图片轮播")
             BaseTile(spec = TileSpec.wideMedium(MetroColors.Red, AnimationType.SLIDE)) {
-                SlideContent(
+                slide(
                     listOf(
                         { CenteredContent(emoji = "📰", text = "新闻1") },
                         { CenteredContent(emoji = "📰", text = "新闻2") },
@@ -97,7 +97,7 @@ fun AnimationDemoScreen() {
             // 使用场景说明
             UsageInfo("适用场景：天气预报、广告轮播")
             BaseTile(spec = TileSpec.square(MetroColors.Green, AnimationType.FADE)) {
-                FadeContent(
+                fade(
                     listOf(
                         { CenteredContent(emoji = "📸", text = "照片1") },
                         { CenteredContent(emoji = "📸", text = "照片2") },
@@ -112,7 +112,7 @@ fun AnimationDemoScreen() {
             // 使用场景说明
             UsageInfo("适用场景：通知预览、消息提示")
             BaseTile(spec = TileSpec.square(MetroColors.Blue, AnimationType.PEEK)) {
-                PeekContent(
+                peek(
                     mainContent = {
                         CenteredContent(emoji = "📧", text = "3 封新邮件")
                     },
@@ -136,7 +136,7 @@ fun AnimationDemoScreen() {
             // 使用场景说明
             UsageInfo("适用场景：长文本滚动、标题展示")
             BaseTile(spec = TileSpec.wideMedium(MetroColors.Red, AnimationType.MARQUEE)) {
-                MarqueeContent(
+                marquee(
                     direction = MarqueeDirection.HORIZONTAL,
                     speed = 40f
                 ) {
@@ -177,7 +177,7 @@ fun AnimationDemoScreen() {
             // 使用场景说明
             UsageInfo("适用场景：内容切换、页面过渡")
             BaseTile(spec = TileSpec.wideMedium(MetroColors.Red, AnimationType.WIPE)) {
-                WipeContent(
+                wipe(
                     contents = listOf(
                         { CenteredContent(emoji = "📰", text = "新闻A") },
                         { CenteredContent(emoji = "📰", text = "新闻B") },
@@ -227,7 +227,7 @@ fun AnimationDemoScreen() {
             // 使用场景说明
             UsageInfo("适用场景：温度、股票、计数器")
             BaseTile(spec = TileSpec.square(MetroColors.Orange, AnimationType.COUNTER)) {
-                CounterContent(
+                counter(
                     targetValue = 22
                 ) { value ->
                     CenteredContent(emoji = "🌡️", text = "$value°")

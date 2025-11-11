@@ -34,6 +34,8 @@ fun Todo2x4Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        TallTilePresets.VerticalList(items = items)
+        with(TallTilePresets) {
+            VerticalList(items = items)
+        }
     }
 }

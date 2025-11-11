@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import top.yaotutu.deskmate.presentation.component.base.BaseTile
-import top.yaotutu.deskmate.presentation.component.base.FlipContent
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
@@ -49,7 +48,7 @@ fun Clock4x4Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        FlipContent(
+        flip(
             front = {
                 // 正面：超大时间显示
                 Column(

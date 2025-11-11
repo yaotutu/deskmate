@@ -33,6 +33,8 @@ fun Weather1x1Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        SmallTilePresets.IconOnly(icon = icon)
+        with(SmallTilePresets) {
+            IconOnly(icon = icon)
+        }
     }
 }

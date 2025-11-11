@@ -22,7 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import top.yaotutu.deskmate.data.model.ConfigLoadResult
 import top.yaotutu.deskmate.data.repository.LayoutConfigRepository
 import top.yaotutu.deskmate.presentation.component.base.ProvideTileGrid
-import top.yaotutu.deskmate.presentation.component.base.TileGridContainer
+import top.yaotutu.deskmate.presentation.component.base.TileGrid
 import top.yaotutu.deskmate.presentation.component.common.ConfigErrorBanner
 import top.yaotutu.deskmate.presentation.component.factory.TileFactory
 import top.yaotutu.deskmate.presentation.component.layout.GridAreaLayout
@@ -69,7 +69,7 @@ fun DashboardScreen(
             }
 
             // Windows Phone 动态瓷砖布局 - 网格区域布局系统
-            // 2025-01-07 重构：支持横向滚动 + 配置驱动
+            // 2025-01-10 修复：避免 horizontalScroll 导致的 Infinity.dp 问题
             BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxSize()
@@ -77,46 +77,48 @@ fun DashboardScreen(
                     .padding(8.dp)
             ) {
                 val screenHeight = maxHeight
+                val screenWidth = maxWidth  // ✅ 捕获实际屏幕宽度
                 val scrollState = rememberScrollState()
 
+                // ✅ 直接计算布局参数，避免传递 Infinity.dp 到 TileGridContainer
+                val gridRows = if (isTablet) 8 else 4
+                val baseCellSize = TileGrid.calculateBaseCellSize(screenWidth, screenHeight, isTablet)
+                val fixedGap = TileGrid.getFixedGap()
+
+                // ⭐ 使用配置文件的实际行列数
+                val totalColumns = layoutConfig.columns
+                val totalRows = layoutConfig.rows
+                val contentWidth = baseCellSize * totalColumns + fixedGap * (totalColumns - 1)
+                val contentHeight = baseCellSize * totalRows + fixedGap * (totalRows - 1)
+
+                // ⭐ 根据设备类型设置可见区域
+                val visibleRows = if (isTablet) 0..7 else 0..3
+                val visibleColumns = 0..17  // 所有设备都显示全部18列，支持横向滚动
+
+                // ✅ 使用 horizontalScroll 支持横向滚动
                 Box(modifier = Modifier.horizontalScroll(scrollState)) {
-                    TileGridContainer(
-                        modifier = Modifier.height(screenHeight),  // ✅ 使用屏幕高度
-                        isTablet = isTablet  // ✅ 传递设备类型
-                    ) { baseCellSize, fixedGap, columns, gridRows ->
-                        // ⭐ 使用配置文件的实际行列数（修复硬编码）
-                        val totalColumns = layoutConfig.columns
-                        val totalRows = layoutConfig.rows
-                        val contentWidth = baseCellSize * totalColumns + fixedGap * (totalColumns - 1)
-                        val contentHeight = baseCellSize * totalRows + fixedGap * (totalRows - 1)
-
-                        // ⭐ 根据设备类型设置可见区域
-                        val visibleRows = if (isTablet) 0..7 else 0..3
-                        val visibleColumns = 0..17  // 所有设备都显示全部18列，支持横向滚动
-
-                        ProvideTileGrid(
+                    ProvideTileGrid(
+                        baseCellSize = baseCellSize,
+                        dynamicGap = fixedGap,
+                        columns = totalColumns
+                    ) {
+                        GridAreaLayout(
+                            config = layoutConfig,
                             baseCellSize = baseCellSize,
                             dynamicGap = fixedGap,
-                            columns = totalColumns
-                        ) {
-                            GridAreaLayout(
-                                config = layoutConfig,
-                                baseCellSize = baseCellSize,
-                                dynamicGap = fixedGap,
-                                visibleRows = visibleRows,         // ⭐ 传递可见行范围
-                                visibleColumns = visibleColumns,   // ⭐ 传递可见列范围
-                                modifier = Modifier
-                                    .width(contentWidth)
-                                    .height(contentHeight)  // ✅ 设置正确的高度，防止底部被截断
-                            ) { tileConfig, index ->
-                                // 使用瓷砖工厂创建真实瓷砖
-                                TileFactory.CreateTile(
-                                    config = tileConfig,
-                                    uiState = uiState,
-                                    index = index,
-                                    onClick = onTileClick
-                                )
-                            }
+                            visibleRows = visibleRows,         // ⭐ 传递可见行范围
+                            visibleColumns = visibleColumns,   // ⭐ 传递可见列范围
+                            modifier = Modifier
+                                .width(contentWidth)
+                                .height(contentHeight)
+                        ) { tileConfig, index ->
+                            // 使用瓷砖工厂创建真实瓷砖
+                            TileFactory.CreateTile(
+                                config = tileConfig,
+                                uiState = uiState,
+                                index = index,
+                                onClick = onTileClick
+                            )
                         }
                     }
                 }

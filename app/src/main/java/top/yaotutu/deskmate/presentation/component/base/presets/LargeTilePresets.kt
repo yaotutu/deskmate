@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
-import top.yaotutu.deskmate.presentation.component.base.RotateContent
+import top.yaotutu.deskmate.presentation.component.base.AnimationScope
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
 import top.yaotutu.deskmate.presentation.theme.MetroSpacing
 import top.yaotutu.deskmate.presentation.theme.MetroPadding
@@ -46,7 +46,7 @@ object LargeTilePresets {
      * @param color 颜色（默认白色）
      */
     @Composable
-    fun Dashboard(
+    fun AnimationScope.Dashboard(
         title: String,
         metrics: List<Triple<String, String, String>>,
         titleSize: TextUnit = MetroTypography.bodyLarge(),
@@ -54,8 +54,8 @@ object LargeTilePresets {
         labelSize: TextUnit = MetroTypography.bodySmall(),
         color: Color = Color.White
     ) {
-        // 固定使用 ROTATE 动画
-        RotateContent {
+        // ROTATE 动画由 BaseTile 自动处理，使用 single DSL
+        single {
             Column(
                 modifier = Modifier
                     .fillMaxSize()

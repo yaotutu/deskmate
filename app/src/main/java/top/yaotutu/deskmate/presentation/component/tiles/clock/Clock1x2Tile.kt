@@ -36,9 +36,11 @@ fun Clock1x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        CompactTilePresets.TimeDateCompact(
-            time = time,
-            date = date
-        )
+        with(CompactTilePresets) {
+            TimeDateCompact(
+                time = time,
+                date = date
+            )
+        }
     }
 }

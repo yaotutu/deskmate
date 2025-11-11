@@ -37,10 +37,12 @@ fun Clock2x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        MediumTilePresets.TitleSubtitle(
-            title = time,
-            subtitle = date,
-            backSubtitle = weekday
-        )
+        with(MediumTilePresets) {
+            TitleSubtitle(
+                title = time,
+                subtitle = date,
+                backSubtitle = weekday
+            )
+        }
     }
 }

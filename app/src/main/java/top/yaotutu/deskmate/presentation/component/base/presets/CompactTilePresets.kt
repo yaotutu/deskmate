@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
-import top.yaotutu.deskmate.presentation.component.base.FadeContent
+import top.yaotutu.deskmate.presentation.component.base.AnimationScope
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
 import top.yaotutu.deskmate.presentation.theme.MetroSpacing
 import top.yaotutu.deskmate.presentation.theme.MetroPadding
@@ -120,15 +120,15 @@ object CompactTilePresets {
      * @param color 颜色（默认白色）
      */
     @Composable
-    fun ProgressBar(
+    fun AnimationScope.ProgressBar(
         label: String,
         progress: String,
         labelSize: TextUnit = MetroTypography.bodySmall(),
         progressSize: TextUnit = MetroTypography.titleLarge(),
         color: Color = Color.White
     ) {
-        // 固定使用 FADE 动画
-        FadeContent(
+        // 使用 AnimationScope 的 fade DSL
+        fade(
             contents = listOf(
                 {
                     Column(

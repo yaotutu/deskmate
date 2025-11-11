@@ -255,3 +255,70 @@ TileRegistry.register(
 - **minSdk**: 24 (Android 7.0)
 - **targetSdk**: 36
 - **compileSdk**: 36
+
+---
+
+## ⭐ 2025-01-10 动画系统重大重构
+
+### 新的 AnimationScope DSL API
+
+所有动画现在统一通过 AnimationScope DSL 配置,实现了：
+- ✅ **API 一致性** - 简单动画和复杂动画使用相同模式
+- ✅ **零配置体验** - Preset 自动选择最佳动画
+- ✅ **类型安全** - 编译时检查动画配置
+- ✅ **代码简洁** - 消除 400+ 行样板代码
+
+### 使用示例
+
+```kotlin
+// 1. 简单内容
+BaseTile(spec = TileSpec.small(color)) {
+    single { Text("内容") }
+}
+
+// 2. 使用 Preset（推荐）
+BaseTile(spec = TileSpec.square(color)) {
+    with(MediumTilePresets) {
+        TitleSubtitle(title = "标题", subtitle = "副标题")
+    }
+}
+
+// 3. 翻转动画
+BaseTile(spec = TileSpec.square(color, AnimationType.FLIP)) {
+    flip(
+        front = { Text("正面") },
+        back = { Text("背面") }
+    )
+}
+
+// 4. 滑动动画
+BaseTile(spec = TileSpec.wideMedium(color, AnimationType.SLIDE)) {
+    slide(
+        { NewsItem("新闻1") },
+        { NewsItem("新闻2") },
+        { NewsItem("新闻3") }
+    )
+}
+```
+
+### 完整的 AnimationScope DSL 方法
+
+| DSL 方法 | 适用动画 | 说明 |
+|---------|---------|------|
+| `single { }` | PULSE, ROTATE, SHIMMER 等 | 单一内容 |
+| `flip(front, back)` | FLIP | 翻转动画 |
+| `slide(...)` | SLIDE | 滑动轮播 |
+| `fade(...)` | FADE | 淡入淡出 |
+| `counter(value) { }` | COUNTER | 数字滚动 |
+| `peek(main, peek)` | PEEK | 探出动画 |
+| `marquee { }` | MARQUEE | 跑马灯 |
+| `wipe(...)` | WIPE | 擦除切换 |
+
+### 迁移完成状态
+
+- ✅ 核心框架（AnimationScope.kt, BaseTile.kt）
+- ✅ Preset 系统（6个文件）
+- ✅ 业务瓷砖（38个文件）
+- ✅ TileRegistryInit.kt
+- ✅ 演示页面（AnimationDemoScreen.kt, AnimationDemoTiles.kt）
+- ✅ 编译验证通过

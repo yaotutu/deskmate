@@ -33,9 +33,11 @@ fun News4x4Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        LargeTilePresets.Dashboard(
-            title = "新闻分类",
-            metrics = metrics
-        )
+        with(LargeTilePresets) {
+            Dashboard(
+                title = "新闻分类",
+                metrics = metrics
+            )
+        }
     }
 }

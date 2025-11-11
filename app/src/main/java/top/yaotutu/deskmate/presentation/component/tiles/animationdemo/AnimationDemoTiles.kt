@@ -23,10 +23,6 @@ import kotlinx.coroutines.delay
 import top.yaotutu.deskmate.presentation.component.base.AnimationType
 import top.yaotutu.deskmate.presentation.component.base.BaseTile
 import top.yaotutu.deskmate.presentation.component.base.TileSpec
-import top.yaotutu.deskmate.presentation.component.base.FlipContent
-import top.yaotutu.deskmate.presentation.component.base.SlideContent
-import top.yaotutu.deskmate.presentation.component.base.FadeContent
-import top.yaotutu.deskmate.presentation.component.base.CounterContent
 import top.yaotutu.deskmate.presentation.theme.MetroTileColors
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
 
@@ -120,7 +116,7 @@ fun AnimationDemoFlip(
         onClick = onClick,
         modifier = modifier
     ) {
-        FlipContent(
+        flip(
             front = {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -226,7 +222,7 @@ fun AnimationDemoSlide(
         onClick = onClick,
         modifier = modifier
     ) {
-        SlideContent(
+        slide(
             listOf(
                 {
                     Box(
@@ -328,7 +324,7 @@ fun AnimationDemoFade(
         onClick = onClick,
         modifier = modifier
     ) {
-        FadeContent(
+        fade(
             listOf(
                 {
                     Column(
@@ -420,7 +416,7 @@ fun AnimationDemoCounter(
         onClick = onClick,
         modifier = modifier
     ) {
-        CounterContent(
+        counter(
             targetValue = counter,
             content = { value ->
                 Column(

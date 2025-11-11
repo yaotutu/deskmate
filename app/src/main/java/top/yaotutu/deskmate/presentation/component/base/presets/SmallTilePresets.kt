@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
-import top.yaotutu.deskmate.presentation.component.base.PulseContent
+import top.yaotutu.deskmate.presentation.component.base.AnimationScope
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
 import top.yaotutu.deskmate.presentation.theme.MetroSpacing
 
@@ -69,13 +69,13 @@ object SmallTilePresets {
      * @param color 图标颜色（默认白色）
      */
     @Composable
-    fun IconOnly(
+    fun AnimationScope.IconOnly(
         icon: String,
         iconSize: TextUnit = MetroTypography.displayMedium(),
         color: Color = Color.White
     ) {
-        // 固定使用 PULSE 动画
-        PulseContent {
+        // PULSE 动画由 BaseTile 自动处理，使用 single DSL
+        single {
             Text(
                 text = icon,
                 fontSize = iconSize,

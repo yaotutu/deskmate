@@ -45,36 +45,38 @@ fun Todo4x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        // 简化测试：直接填充整个容器
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(MetroPadding.medium()),
-            contentAlignment = Alignment.TopStart
-        ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(MetroSpacing.large())
+        single {
+            // 简化测试：直接填充整个容器
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(MetroPadding.medium()),
+                contentAlignment = Alignment.TopStart
             ) {
-                Text(
-                    text = "待办事项 (2×4 测试)",
-                    fontSize = MetroTypography.bodyLarge(),
-                    fontWeight = FontWeight.Light,
-                    color = Color.White
-                )
-                todoItems.take(5).forEach { item ->
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(MetroSpacing.large())
+                ) {
                     Text(
-                        text = "• ${item.title}",
-                        fontSize = MetroTypography.bodyMedium(),
+                        text = "待办事项 (2×4 测试)",
+                        fontSize = MetroTypography.bodyLarge(),
                         fontWeight = FontWeight.Light,
                         color = Color.White
                     )
+                    todoItems.take(5).forEach { item ->
+                        Text(
+                            text = "• ${item.title}",
+                            fontSize = MetroTypography.bodyMedium(),
+                            fontWeight = FontWeight.Light,
+                            color = Color.White
+                        )
+                    }
+                    Text(
+                        text = "共 ${todoItems.size} 项",
+                        fontSize = MetroTypography.bodySmall(),
+                        fontWeight = FontWeight.ExtraLight,
+                        color = Color.White.copy(alpha = 0.8f)
+                    )
                 }
-                Text(
-                    text = "共 ${todoItems.size} 项",
-                    fontSize = MetroTypography.bodySmall(),
-                    fontWeight = FontWeight.ExtraLight,
-                    color = Color.White.copy(alpha = 0.8f)
-                )
             }
         }
     }

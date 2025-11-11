@@ -37,9 +37,11 @@ fun News2x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        MediumTilePresets.HeaderBody(
-            header = title,
-            body = summary
-        )
+        with(MediumTilePresets) {
+            HeaderBody(
+                header = title,
+                body = summary
+            )
+        }
     }
 }

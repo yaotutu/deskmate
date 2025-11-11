@@ -9,10 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
-import top.yaotutu.deskmate.presentation.component.base.BaseTile
-import top.yaotutu.deskmate.presentation.component.base.AnimationType
-import top.yaotutu.deskmate.presentation.component.base.CounterContent
-import top.yaotutu.deskmate.presentation.component.base.FlipContent
+import top.yaotutu.deskmate.presentation.component.base.AnimationScope
 import top.yaotutu.deskmate.presentation.theme.MetroTypography
 import top.yaotutu.deskmate.presentation.theme.MetroSpacing
 import top.yaotutu.deskmate.presentation.theme.MetroPadding
@@ -49,7 +46,7 @@ object MediumTilePresets {
      * @param color 颜色（默认白色）
      */
     @Composable
-    fun TitleSubtitle(
+    fun AnimationScope.TitleSubtitle(
         title: String,
         subtitle: String,
         backSubtitle: String = subtitle,
@@ -57,8 +54,8 @@ object MediumTilePresets {
         subtitleSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
-        // 固定使用 FLIP 动画
-        FlipContent(
+        // 使用 AnimationScope 的 flip DSL
+        flip(
             front = {
                 // 正面：标题 + 副标题
                 Column(
@@ -216,7 +213,7 @@ object MediumTilePresets {
      * @param color 颜色（默认白色）
      */
     @Composable
-    fun Counter(
+    fun AnimationScope.Counter(
         value: String,
         unit: String = "",
         label: String = "",
@@ -225,13 +222,11 @@ object MediumTilePresets {
         labelSize: TextUnit = MetroTypography.bodyMedium(),
         color: Color = Color.White
     ) {
-        // 固定使用 COUNTER 动画
+        // 使用 AnimationScope 的 counter DSL
         // 尝试将字符串转换为整数，如果失败则使用默认值
         val numericValue = value.toIntOrNull() ?: 0
 
-        CounterContent(
-            targetValue = numericValue
-        ) { currentValue ->
+        counter(targetValue = numericValue) { currentValue ->
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -431,7 +426,7 @@ object MediumTilePresets {
      * @param color 颜色（默认白色）
      */
     @Composable
-    fun LargeNumber(
+    fun AnimationScope.LargeNumber(
         number: String,
         label: String,
         backLabel: String = label,
@@ -439,8 +434,8 @@ object MediumTilePresets {
         labelSize: TextUnit = MetroTypography.bodyLarge(),
         color: Color = Color.White
     ) {
-        // 固定使用 FLIP 动画
-        FlipContent(
+        // 使用 AnimationScope 的 flip DSL
+        flip(
             front = {
                 // 正面：大数字 + 标签
                 Column(

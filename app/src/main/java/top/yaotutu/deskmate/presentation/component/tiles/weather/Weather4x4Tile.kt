@@ -33,9 +33,11 @@ fun Weather4x4Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        LargeTilePresets.Dashboard(
-            title = "天气概况",
-            metrics = metrics
-        )
+        with(LargeTilePresets) {
+            Dashboard(
+                title = "天气概况",
+                metrics = metrics
+            )
+        }
     }
 }

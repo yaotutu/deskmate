@@ -37,10 +37,12 @@ fun MusicTile(
         onClick = onClick,
         modifier = modifier
     ) {
-        MediumTilePresets.IconTitleSubtitle(
-            icon = if (isPlaying) "⏸" else "▶",
-            title = songName,
-            subtitle = artist
-        )
+        with(MediumTilePresets) {
+            IconTitleSubtitle(
+                icon = if (isPlaying) "⏸" else "▶",
+                title = songName,
+                subtitle = artist
+            )
+        }
     }
 }

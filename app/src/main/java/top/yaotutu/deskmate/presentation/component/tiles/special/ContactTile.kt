@@ -49,38 +49,40 @@ fun ContactTile(
         onClick = onClick,
         modifier = modifier
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(if (isSmall) 4.dp else 8.dp)
+        single {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                // 头像圆形
-                Box(
-                    modifier = Modifier
-                        .size(if (isSmall) 32.dp else 48.dp)
-                        .clip(CircleShape)
-                        .background(Color.White.copy(alpha = 0.3f)),
-                    contentAlignment = Alignment.Center
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(if (isSmall) 4.dp else 8.dp)
                 ) {
-                    Text(
-                        text = avatar,
-                        fontSize = if (isSmall) MetroTypography.bodyMedium() else MetroTypography.bodyLarge(),
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    )
-                }
+                    // 头像圆形
+                    Box(
+                        modifier = Modifier
+                            .size(if (isSmall) 32.dp else 48.dp)
+                            .clip(CircleShape)
+                            .background(Color.White.copy(alpha = 0.3f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = avatar,
+                            fontSize = if (isSmall) MetroTypography.bodyMedium() else MetroTypography.bodyLarge(),
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
 
-                // 姓名（仅在2×2及以上显示）
-                if (!isSmall) {
-                    Text(
-                        text = name,
-                        fontSize = MetroTypography.bodySmall(),
-                        fontWeight = FontWeight.Light,
-                        color = Color.White
-                    )
+                    // 姓名（仅在2×2及以上显示）
+                    if (!isSmall) {
+                        Text(
+                            text = name,
+                            fontSize = MetroTypography.bodySmall(),
+                            fontWeight = FontWeight.Light,
+                            color = Color.White
+                        )
+                    }
                 }
             }
         }

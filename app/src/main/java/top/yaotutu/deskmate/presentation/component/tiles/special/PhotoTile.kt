@@ -34,9 +34,11 @@ fun PhotoTile(
         onClick = onClick,
         modifier = modifier
     ) {
-        MediumTilePresets.IconTitle(
-            icon = "📷",
-            title = caption
-        )
+        with(MediumTilePresets) {
+            IconTitle(
+                icon = "📷",
+                title = caption
+            )
+        }
     }
 }

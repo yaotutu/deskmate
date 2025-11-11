@@ -48,46 +48,48 @@ fun MailTile(
         onClick = onClick,
         modifier = modifier
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            // 主内容
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(MetroSpacing.large())
+        single {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    imageVector = Icons.Default.Email,
-                    contentDescription = "邮件",
-                    tint = Color.White,
-                    modifier = Modifier.size(48.dp)
-                )
-                if (unreadCount > 0) {
-                    Text(
-                        text = "$unreadCount 封未读",
-                        fontSize = MetroTypography.bodyMedium(),
-                        fontWeight = FontWeight.Light,
-                        color = Color.White
+                // 主内容
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(MetroSpacing.large())
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Email,
+                        contentDescription = "邮件",
+                        tint = Color.White,
+                        modifier = Modifier.size(48.dp)
                     )
-                } else {
-                    Text(
-                        text = "无新邮件",
-                        fontSize = MetroTypography.bodyMedium(),
-                        fontWeight = FontWeight.Light,
-                        color = Color.White
+                    if (unreadCount > 0) {
+                        Text(
+                            text = "$unreadCount 封未读",
+                            fontSize = MetroTypography.bodyMedium(),
+                            fontWeight = FontWeight.Light,
+                            color = Color.White
+                        )
+                    } else {
+                        Text(
+                            text = "无新邮件",
+                            fontSize = MetroTypography.bodyMedium(),
+                            fontWeight = FontWeight.Light,
+                            color = Color.White
+                        )
+                    }
+                }
+
+                // 角标显示在右上角
+                if (unreadCount > 0) {
+                    MetroBadge(
+                        count = unreadCount,
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(MetroPadding.small())
                     )
                 }
-            }
-
-            // 角标显示在右上角
-            if (unreadCount > 0) {
-                MetroBadge(
-                    count = unreadCount,
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(MetroPadding.small())
-                )
             }
         }
     }

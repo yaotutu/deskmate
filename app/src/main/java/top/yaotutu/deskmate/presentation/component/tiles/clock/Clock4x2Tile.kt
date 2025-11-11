@@ -46,43 +46,45 @@ fun Clock4x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        // 垂直布局，从上到下排列
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(MetroSpacing.large(), Alignment.CenterVertically),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // 时间
-            Text(
-                text = time,
-                fontSize = MetroTypography.displayLarge(),
-                fontWeight = FontWeight.Thin,
-                color = Color.White,
-                lineHeight = MetroTypography.displayLarge()
-            )
+        single {
+            // 垂直布局，从上到下排列
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(MetroSpacing.large(), Alignment.CenterVertically),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // 时间
+                Text(
+                    text = time,
+                    fontSize = MetroTypography.displayLarge(),
+                    fontWeight = FontWeight.Thin,
+                    color = Color.White,
+                    lineHeight = MetroTypography.displayLarge()
+                )
 
-            // 分隔线（可选，使用字符）
-            Text(
-                text = "━",
-                fontSize = MetroTypography.bodyLarge(),
-                color = Color.White.copy(alpha = 0.3f)
-            )
+                // 分隔线（可选，使用字符）
+                Text(
+                    text = "━",
+                    fontSize = MetroTypography.bodyLarge(),
+                    color = Color.White.copy(alpha = 0.3f)
+                )
 
-            // 日期
-            Text(
-                text = date,
-                fontSize = MetroTypography.bodyLarge(),
-                fontWeight = FontWeight.Light,
-                color = Color.White
-            )
+                // 日期
+                Text(
+                    text = date,
+                    fontSize = MetroTypography.bodyLarge(),
+                    fontWeight = FontWeight.Light,
+                    color = Color.White
+                )
 
-            // 星期
-            Text(
-                text = weekday,
-                fontSize = MetroTypography.bodyMedium(),
-                fontWeight = FontWeight.ExtraLight,
-                color = Color.White.copy(alpha = 0.9f)
-            )
+                // 星期
+                Text(
+                    text = weekday,
+                    fontSize = MetroTypography.bodyMedium(),
+                    fontWeight = FontWeight.ExtraLight,
+                    color = Color.White.copy(alpha = 0.9f)
+                )
+            }
         }
     }
 }

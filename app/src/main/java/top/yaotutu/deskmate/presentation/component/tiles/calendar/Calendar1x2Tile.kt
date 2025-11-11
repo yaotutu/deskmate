@@ -35,9 +35,11 @@ fun Calendar1x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        CompactTilePresets.ProgressBar(
-            label = weekday,
-            progress = day
-        )
+        with(CompactTilePresets) {
+            ProgressBar(
+                label = weekday,
+                progress = day
+            )
+        }
     }
 }

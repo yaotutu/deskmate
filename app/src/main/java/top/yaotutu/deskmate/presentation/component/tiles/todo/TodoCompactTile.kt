@@ -35,9 +35,11 @@ fun TodoCompactTile(
         onClick = onClick,
         modifier = modifier
     ) {
-        CompactTilePresets.ProgressBar(
-            label = label,
-            progress = progress
-        )
+        with(CompactTilePresets) {
+            ProgressBar(
+                label = label,
+                progress = progress
+            )
+        }
     }
 }

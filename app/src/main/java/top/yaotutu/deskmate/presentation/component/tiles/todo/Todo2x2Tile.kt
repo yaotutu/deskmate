@@ -35,10 +35,12 @@ fun Todo2x2Tile(
         onClick = onClick,
         modifier = modifier
     ) {
-        MediumTilePresets.Counter(
-            value = completedCount.toString(),
-            unit = "/$totalCount",
-            label = "任务完成"
-        )
+        with(MediumTilePresets) {
+            Counter(
+                value = completedCount.toString(),
+                unit = "/$totalCount",
+                label = "任务完成"
+            )
+        }
     }
 }
