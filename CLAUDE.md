@@ -51,7 +51,7 @@ app/src/main/
 │   ├── navigation/          # 导航配置 (NavGraph, Screen)
 │   └── presentation/
 │       ├── component/
-│       │   ├── base/       # 基础组件 (BaseTile, TileGrid, TileSpec)
+│       │   ├── base/       # 基础组件 (BaseTile, TileGrid, TileSpec, AnimationScope)
 │       │   ├── factory/    # 工厂层 ⭐ (TileFactory, TileRegistryInit)
 │       │   └── tiles/      # 业务瓷砖 (clock/, weather/, calendar/, todo/, news/)
 │       ├── screen/         # 页面 (DashboardScreen - 唯一主页)
@@ -184,7 +184,7 @@ Column(
 - **4×2（高版）**：垂直列表，多项展示
 - **4×4（大型版）**：仪表盘视图，全面分析
 
-## 添加新瓷砖变体流程
+## 添加新瓷砖变体流程 ⭐ 2025-01-10 更新
 
 ### Step 1: 创建瓷砖文件
 ```kotlin
@@ -193,17 +193,34 @@ Column(
 fun Clock2x2Tile(
     time: String,
     date: String,
+    weekday: String,
     modifier: Modifier = Modifier
 ) {
     BaseTile(
-        spec = TileSpec.medium(MetroColors.Blue),  // 使用预设 spec
+        spec = TileSpec.square(MetroColors.Blue, AnimationType.FLIP),  // ⭐ 指定动画类型
         modifier = modifier
     ) {
-        // 自定义布局或使用 Preset
-        MediumTilePresets.TitleSubtitle(
-            title = time,
-            subtitle = date
-        )
+        // ⭐ 方式 1：使用 Preset（推荐）
+        with(MediumTilePresets) {
+            TitleSubtitle(
+                title = time,
+                subtitle = date,
+                backSubtitle = weekday  // Preset 自动处理翻转动画
+            )
+        }
+
+        // ⭐ 方式 2：自定义动画内容
+        // flip(
+        //     front = {
+        //         Column {
+        //             Text(time, fontSize = MetroTypography.displayLarge())
+        //             Text(date, fontSize = MetroTypography.bodyMedium())
+        //         }
+        //     },
+        //     back = {
+        //         Text(weekday, fontSize = MetroTypography.titleLarge())
+        //     }
+        // )
     }
 }
 ```
@@ -220,7 +237,8 @@ TileRegistry.register(
     ) { config, uiState ->
         Clock2x2Tile(
             time = uiState.currentTime,
-            date = uiState.currentDate
+            date = uiState.currentDate,
+            weekday = uiState.currentWeekday
         )
     }
 )
@@ -260,65 +278,260 @@ TileRegistry.register(
 
 ## ⭐ 2025-01-10 动画系统重大重构
 
-### 新的 AnimationScope DSL API
+### 架构升级概述
 
-所有动画现在统一通过 AnimationScope DSL 配置,实现了：
-- ✅ **API 一致性** - 简单动画和复杂动画使用相同模式
-- ✅ **零配置体验** - Preset 自动选择最佳动画
-- ✅ **类型安全** - 编译时检查动画配置
-- ✅ **代码简洁** - 消除 400+ 行样板代码
+**动机**：之前的动画系统存在 API 不一致问题 - 简单动画（PULSE、ROTATE）自动处理，复杂动画（FLIP、SLIDE）需要手动使用辅助函数（FlipContent、SlideContent）。
 
-### 使用示例
+**解决方案**：通过 AnimationScope DSL 统一所有动画 API，基于 Kotlin Lambda Receiver 模式实现零配置、类型安全的动画系统。
+
+### 核心改进
+
+| 指标 | 改进 |
+|------|------|
+| **代码简洁性** | BaseTile 从 567 行减少到 98 行（-82%）|
+| **API 一致性** | 所有动画使用统一 DSL，消除手动包装器 |
+| **类型安全** | 编译时检查动画配置 |
+| **可维护性** | 删除 400+ 行样板代码 |
+
+### AnimationScope DSL API ⭐ 核心接口
+
+**BaseTile 新签名**：
+```kotlin
+@Composable
+fun BaseTile(
+    spec: TileSpec,
+    onClick: () -> Unit = {},
+    modifier: Modifier = Modifier,
+    content: @Composable AnimationScope.() -> Unit  // ⭐ Lambda Receiver
+)
+```
+
+**使用模式**：
 
 ```kotlin
-// 1. 简单内容
-BaseTile(spec = TileSpec.small(color)) {
-    single { Text("内容") }
-}
-
-// 2. 使用 Preset（推荐）
+// ✅ 模式 1: 使用 Preset（最推荐）
 BaseTile(spec = TileSpec.square(color)) {
-    with(MediumTilePresets) {
-        TitleSubtitle(title = "标题", subtitle = "副标题")
+    with(MediumTilePresets) {  // ⭐ 建立 AnimationScope 上下文
+        TitleSubtitle(
+            title = "标题",
+            subtitle = "副标题"
+        )
     }
 }
 
-// 3. 翻转动画
+// ✅ 模式 2: 单一内容（简单动画）
+BaseTile(spec = TileSpec.small(color, AnimationType.PULSE)) {
+    single {  // ⭐ DSL 方法
+        Text("内容", style = MaterialTheme.typography.bodyLarge)
+    }
+}
+
+// ✅ 模式 3: 翻转动画
 BaseTile(spec = TileSpec.square(color, AnimationType.FLIP)) {
-    flip(
+    flip(  // ⭐ DSL 方法
         front = { Text("正面") },
         back = { Text("背面") }
     )
 }
 
-// 4. 滑动动画
+// ✅ 模式 4: 滑动轮播
 BaseTile(spec = TileSpec.wideMedium(color, AnimationType.SLIDE)) {
-    slide(
+    slide(  // ⭐ DSL 方法
         { NewsItem("新闻1") },
         { NewsItem("新闻2") },
         { NewsItem("新闻3") }
+    )
+}
+
+// ❌ 旧模式（已删除）：
+BaseTile(spec) {
+    FlipContent(  // ✗ 不再支持
+        front = { ... },
+        back = { ... }
     )
 }
 ```
 
 ### 完整的 AnimationScope DSL 方法
 
-| DSL 方法 | 适用动画 | 说明 |
-|---------|---------|------|
-| `single { }` | PULSE, ROTATE, SHIMMER 等 | 单一内容 |
-| `flip(front, back)` | FLIP | 翻转动画 |
-| `slide(...)` | SLIDE | 滑动轮播 |
-| `fade(...)` | FADE | 淡入淡出 |
-| `counter(value) { }` | COUNTER | 数字滚动 |
-| `peek(main, peek)` | PEEK | 探出动画 |
-| `marquee { }` | MARQUEE | 跑马灯 |
-| `wipe(...)` | WIPE | 擦除切换 |
+| DSL 方法 | 适用动画类型 | 参数 | 说明 |
+|---------|-------------|------|------|
+| `single { }` | PULSE, ROTATE, SHIMMER, DEPTH, BOUNCE, SHAKE | content: @Composable () -> Unit | 单一内容，自动应用简单动画 |
+| `flip(front, back)` | FLIP | front, back: @Composable () -> Unit | 翻转动画，默认 3 秒间隔 |
+| `slide(...)` | SLIDE | vararg contents: @Composable () -> Unit | 滑动轮播，默认 3 秒间隔 |
+| `fade(...)` | FADE | vararg contents: @Composable () -> Unit | 淡入淡出切换 |
+| `counter(value) { }` | COUNTER | targetValue: Int, content: @Composable (Int) -> Unit | 数字滚动动画 |
+| `peek(main, peek)` | PEEK | mainContent, peekContent: @Composable () -> Unit | 探出动画 |
+| `marquee { }` | MARQUEE | content: @Composable () -> Unit | 跑马灯滚动 |
+| `wipe(...)` | WIPE | contents: List<@Composable () -> Unit> | 擦除切换 |
+
+### Preset 系统集成 ⭐ 重要
+
+所有 Preset 函数现在都是 `AnimationScope` 的扩展函数，必须通过 `with()` 调用：
+
+**Preset 文件列表**：
+- `SmallTilePresets.kt` - 1×1 瓷砖预设
+- `MediumTilePresets.kt` - 2×2 瓷砖预设
+- `WideTilePresets.kt` - 2×4 瓷砖预设
+- `TallTilePresets.kt` - 4×2 瓷砖预设
+- `LargeTilePresets.kt` - 4×4 瓷砖预设
+- `CompactTilePresets.kt` - 1×2 瓷砖预设
+
+**示例**：
+```kotlin
+// ✅ 正确：使用 with() 建立上下文
+BaseTile(spec = TileSpec.square(MetroColors.Blue)) {
+    with(MediumTilePresets) {
+        TitleSubtitle(
+            title = "18:17",
+            subtitle = "星期二",
+            backSubtitle = "11月10日"
+        )
+    }
+}
+
+// ❌ 错误：直接调用会编译失败
+BaseTile(spec = TileSpec.square(MetroColors.Blue)) {
+    MediumTilePresets.TitleSubtitle(...)  // ✗ 编译错误
+}
+```
+
+### 技术实现细节
+
+**AnimationScope 接口** (`presentation/component/base/AnimationScope.kt`):
+```kotlin
+interface AnimationScope {
+    fun single(content: @Composable () -> Unit)
+    fun flip(front: @Composable () -> Unit, back: @Composable () -> Unit)
+    fun slide(vararg contents: @Composable () -> Unit)
+    fun fade(vararg contents: @Composable () -> Unit)
+    fun counter(targetValue: Int, durationMillis: Int = 2000, content: @Composable (Int) -> Unit)
+    fun peek(mainContent: @Composable () -> Unit, peekContent: @Composable () -> Unit, ...)
+    fun marquee(direction: MarqueeDirection = MarqueeDirection.LEFT, speed: Float = 30f, ...)
+    fun wipe(contents: List<@Composable () -> Unit>, ...)
+}
+```
+
+**AnimationScopeImpl** 实现：
+- 根据 `AnimationType` 自动路由到对应动画组件
+- 简单动画（PULSE、ROTATE）通过 `single()` 自动包装
+- 复杂动画（FLIP、SLIDE）通过专用方法调用
+
+**BaseTile 简化** (`presentation/component/base/BaseTile.kt`):
+```kotlin
+@Composable
+fun BaseTile(
+    spec: TileSpec,
+    onClick: () -> Unit = {},
+    modifier: Modifier = Modifier,
+    content: @Composable AnimationScope.() -> Unit
+) {
+    val baseCellSize = LocalBaseCellSize.current
+    val dynamicGap = LocalDynamicGap.current
+
+    var animatedContent: (@Composable () -> Unit)? = null
+
+    // ⭐ 创建 AnimationScope 实例
+    val scope = AnimationScopeImpl(
+        animationType = spec.animation,
+        applyAnimation = { composable -> animatedContent = composable }
+    )
+
+    // ⭐ 在 AnimationScope 上下文中执行 content lambda
+    scope.content()
+
+    Tile(
+        rows = spec.rows,
+        columns = spec.columns,
+        backgroundColor = spec.color,
+        baseCellSize = baseCellSize,
+        dynamicGap = dynamicGap,
+        onClick = onClick,
+        clickEffect = TileClickEffect.PRESS_SCALE,
+        modifier = modifier,
+        content = animatedContent ?: {}
+    )
+}
+```
 
 ### 迁移完成状态
 
-- ✅ 核心框架（AnimationScope.kt, BaseTile.kt）
-- ✅ Preset 系统（6个文件）
-- ✅ 业务瓷砖（38个文件）
-- ✅ TileRegistryInit.kt
-- ✅ 演示页面（AnimationDemoScreen.kt, AnimationDemoTiles.kt）
-- ✅ 编译验证通过
+**已更新文件**（共 48 个）：
+- ✅ **核心框架** (2 个)
+  - `AnimationScope.kt` - 新创建的 DSL 接口
+  - `BaseTile.kt` - 从 567 行简化到 98 行
+
+- ✅ **Preset 系统** (6 个)
+  - `SmallTilePresets.kt`
+  - `MediumTilePresets.kt`
+  - `WideTilePresets.kt`
+  - `TallTilePresets.kt`
+  - `LargeTilePresets.kt`
+  - `CompactTilePresets.kt`
+
+- ✅ **业务瓷砖** (38 个)
+  - `clock/` - 6 个文件
+  - `weather/` - 7 个文件
+  - `calendar/` - 7 个文件
+  - `todo/` - 6 个文件
+  - `news/` - 6 个文件
+  - `special/` - 4 个文件（Contact, Mail, Music, Photo）
+
+- ✅ **工厂注册** (1 个)
+  - `TileRegistryInit.kt` - 所有注册代码更新
+
+- ✅ **演示页面** (2 个)
+  - `AnimationDemoScreen.kt`
+  - `AnimationDemoTiles.kt`
+
+**验证结果**：
+- ✅ 编译成功：`BUILD SUCCESSFUL in 11s`
+- ✅ 运行验证：所有 16 个瓷砖正常渲染
+- ✅ 动画工作：FLIP、SLIDE、PULSE 等动画正常
+- ✅ 无性能问题：消除了之前的 Infinity.dp 问题
+
+### 其他修复（2025-01-10）
+
+在重构过程中同时修复了以下问题：
+
+1. **配置文件尺寸错误**
+   - 修复 `B1` 和 `C2` 瓷砖变体从 `2x2` 改为 `1x2`
+   - 原因：配置中声明为 2×2，但实际在 areas 中只占 1×2 区域
+
+2. **horizontalScroll 导致的 Infinity.dp 问题**
+   - 问题：`TileGridContainer` 在 `horizontalScroll` 内接收无限宽度约束
+   - 解决：在 `DashboardScreen.kt` 中跳过 `TileGridContainer`，直接计算布局参数
+   - 结果：contentWidth 从 `Infinity.dp` 变为正常值（~1325.dp）
+
+### 最佳实践更新
+
+**使用 AnimationScope DSL 的注意事项**：
+
+1. ✅ **优先使用 Preset** - Preset 已经封装了最佳实践，减少重复代码
+2. ✅ **使用 with() 调用 Preset** - 必须建立 AnimationScope 上下文
+3. ✅ **根据动画类型选择方法** - FLIP 用 flip()，SLIDE 用 slide()
+4. ❌ **不要导入旧的辅助函数** - FlipContent、SlideContent 等已删除
+5. ❌ **不要跳过 AnimationScope** - 所有 BaseTile 内容必须使用 DSL
+
+**常见错误**：
+```kotlin
+// ❌ 错误 1：忘记使用 with()
+BaseTile(spec) {
+    MediumTilePresets.TitleSubtitle(...)  // 编译错误
+}
+
+// ✅ 修复：
+BaseTile(spec) {
+    with(MediumTilePresets) {
+        TitleSubtitle(...)
+    }
+}
+
+// ❌ 错误 2：导入已删除的函数
+import top.yaotutu.deskmate.presentation.component.base.FlipContent  // 不存在
+
+// ✅ 修复：使用 DSL
+BaseTile(spec) {
+    flip(front = { ... }, back = { ... })
+}
+```
